@@ -52,10 +52,11 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_SQUASH_HEAD,       REANIM_ZOMBIE,              3,      25,     10,     2000,   _S("SQUASH_ZOMBIE")},
     { ZOMBIE_TALLNUT_HEAD,      REANIM_ZOMBIE,              4,      32,     10,     2000,   _S("TALLNUT_ZOMBIE")} ,
     { ZOMBIE_CONE_REPEATER_HEAD, REANIM_ZOMBIE,              3,      32,     5,      3000,   _S("REPEATER_ZOMBIE") },
-    { ZOMBIE_SUPER_NEWSPAPER,   REANIM_ZOMBIE_NEWSPAPER,     6,      32,      10,      1000,   _S("SUPER_NEWSPAPER_ZOMBIE") },
+    { ZOMBIE_SUPER_NEWSPAPER,   REANIM_ZOMBIE_NEWSPAPER,     6,      32,      10,      1000,   _S("AMBUSH_NEWSPAPER_ZOMBIE") },
     { ZOMBIE_CACTUS_HEAD,       REANIM_ZOMBIE,              2,      32,     5,      2000,   _S("CACTUS_ZOMBIE")},
-    { ZOMBIE_SUPER_JACK,          REANIM_JACKINTHEBOX,      5,      32,     10,      700,   _S("SUPER_JACK_ZOMBIE")},
-    { ZOMBIE_SUPER_ALLSTAR,       REANIM_ZOMBIE_FOOTBALL,    13,      32,     10,      1000,   _S("SUPER_ALLSTAR_ZOMBIE")},
+    { ZOMBIE_SUPER_JACK,          REANIM_JACKINTHEBOX,      5,      32,     10,      700,   _S("TICKING_JACK_ZOMBIE")},
+    { ZOMBIE_SUPER_ALLSTAR,       REANIM_ZOMBIE_FOOTBALL,    13,      32,     10,      1000,   _S("RUSHING_ALLSTAR_ZOMBIE")},
+    { ZOMBIE_SUPER_HYPNO_FLAG,       REANIM_ZOMBIE,    1,      1,     1,      4000,   _S("HYPNO_GATLING_FLAG_ZOMBIE")},
 };
 
 static ZombieType gBossZombieList[] = {  
@@ -565,6 +566,28 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("Zombie_flaghand");
         AttachReanim(aTrackInstance->mAttachmentID, aFlagReanim, 0.0f, 0.0f);
         aBodyReanim->mFrameBasePose = 0;
+
+        mPosX = WIDE_BOARD_WIDTH;
+        break;
+    }
+    case ZombieType::ZOMBIE_SUPER_HYPNO_FLAG:
+    {
+        mHasObject = true;
+        LoadPlainZombieReanim();
+
+        Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
+        Reanimation* aFlagReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_FLAG);
+        aFlagReanim->PlayReanim("Zombie_flag", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
+        mSpecialHeadReanimID = mApp->ReanimationGetID(aFlagReanim);
+        ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("Zombie_flaghand");
+        AttachReanim(aTrackInstance->mAttachmentID, aFlagReanim, 0.0f, 0.0f);
+        aBodyReanim->mFrameBasePose = 0;
+        LoadPlainZombieReanim();
+        ReanimShowPrefix("anim_bucket", RENDER_GROUP_NORMAL);
+        ReanimShowPrefix("anim_hair", RENDER_GROUP_HIDDEN);
+        mHelmType = HelmType::HELMTYPE_PAIL;
+        mHelmHealth = 1370;
+        break;
 
         mPosX = WIDE_BOARD_WIDTH;
         break;
@@ -5931,9 +5954,15 @@ void Zombie::DrawReanim(Graphics* g, const ZombieDrawPosition& theDrawPos, int t
         aExtraAdditiveColor = aColorOverride;
         aEnableExtraAdditiveDraw = true;
     }
+    else if (mZombieType == ZombieType::ZOMBIE_SUPER_HYPNO_FLAG)
+    {
+        aColorOverride = Color(245, 66, 242, aFadeAlpha);
+        aExtraAdditiveColor = aColorOverride;
+        aEnableExtraAdditiveDraw = true;
+    }
     else if (mZombieType == ZombieType::ZOMBIE_SUPER_JACK)
     {
-        aColorOverride = Color(136, 6, 206, aFadeAlpha);
+        aColorOverride = Color(245, 158, 66, aFadeAlpha);
         aExtraAdditiveColor = aColorOverride;
         aEnableExtraAdditiveDraw = true;
     }
@@ -7309,6 +7338,11 @@ void Zombie::EatPlant(Plant* thePlant)
     }
 
     thePlant->mPlantHealth -= DAMAGE_PER_EAT;
+    if (mZombieType == ZombieType::ZOMBIE_SUPER_NEWSPAPER || mZombieType == ZombieType::ZOMBIE_SUPER_ALLSTAR)
+    {
+        thePlant->mPlantHealth -= DAMAGE_PER_EAT;
+    }
+
     thePlant->mRecentlyEatenCountdown = 50;
     if (mApp->IsIZombieLevel() && mJustGotShotCounter < -500)
     {
