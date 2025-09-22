@@ -307,7 +307,7 @@ MemoryImage* ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 			aReanim.AssignRenderGroupToTrack("anim_hair", RENDER_GROUP_HIDDEN);
 			aReanim.AssignRenderGroupToTrack("anim_cone", RENDER_GROUP_NORMAL);
 		}
-		else if (theZombieType == ZombieType::ZOMBIE_GATLING_HEAD)
+		else if (theZombieType == ZombieType::ZOMBIE_GATLING_HEAD || theZombieType == ZombieType::ZOMBIE_SUPER_HYPNO_FLAG)
 		{
 			Reanimation aReanimHead;
 			aReanimHead.ReanimationInitializeType(aPosX + 72, aPosY - 2, ReanimationType::REANIM_GATLINGPEA);
