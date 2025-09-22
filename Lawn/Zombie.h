@@ -381,6 +381,7 @@ public:
     void                            UpdateZombiquarium();
     bool                            ZombiquariumFindClosestBrain();
     void                            UpdateZombieGatlingHead();
+    void                            UpdateZombieHypnoGatlingHead();
     void                            UpdateZombieSquashHead();
     bool                            IsTanglekelpTarget();
     bool                            HasYuckyFaceImage();

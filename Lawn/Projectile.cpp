@@ -28,7 +28,8 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_BUTTER,        0,  55  },
 	{ ProjectileType::PROJECTILE_ZOMBIE_PEA,    0,  15  },
 	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  45 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40 }
+	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40 },
+	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  20 }
 };
 
 Projectile::Projectile()
@@ -148,7 +149,7 @@ Plant* Projectile::FindCollisionTargetPlant()
 		if (aPlant->mRow != mRow)
 			continue;
 
-		if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE)
+		if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 		{
 			if (aPlant->mSeedType == SeedType::SEED_PUFFSHROOM ||
 				aPlant->mSeedType == SeedType::SEED_SUNSHROOM ||
@@ -162,7 +163,7 @@ Plant* Projectile::FindCollisionTargetPlant()
 		Rect aPlantRect = aPlant->GetPlantRect();
 		if (GetRectOverlap(aProjectileRect, aPlantRect) > 8)
 		{
-			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE)
+			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 			{
 				return mBoard->GetTopPlantAt(aPlant->mPlantCol, aPlant->mRow, PlantPriority::TOPPLANT_EATING_ORDER);
 			}
@@ -294,13 +295,33 @@ void Projectile::CheckForCollision()
 		return;
 	}
 
-	if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE)
+	if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 	{
 		Plant* aPlant = FindCollisionTargetPlant();
 		if (aPlant)
 		{
 			const ProjectileDefinition& aProjectileDef = GetProjectileDef();
 			aPlant->mPlantHealth -= aProjectileDef.mDamage;
+			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA && aPlant->mPlantHealth < 1)
+			{
+				if (!mBoard->RowCanHaveZombieType(mRow, ZombieType::ZOMBIE_PEA_HEAD))
+					return;
+
+				Zombie* aZombie = mBoard->AddZombie(ZombieType::ZOMBIE_PEA_HEAD, 0);
+				if (aZombie == nullptr)
+					return;
+
+				aZombie->mPosX = mPosX - 80;
+				float aPosY = mBoard->GetPosYBasedOnRow(mPosX + 40.0f, mRow) - 30.0f;
+				aZombie->mPosY = aPosY;
+				aZombie->SetRow(mRow);
+				aZombie->mX = (int)aZombie->mPosX;
+				aZombie->mY = (int)aZombie->mPosY;
+				aZombie->PickRandomSpeed();
+
+				aZombie->mAltitude = 0;
+				aZombie->mPhaseCounter = 150;
+			}
 			aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
 
 			mApp->PlayFoley(FoleyType::FOLEY_SPLAT);
@@ -560,7 +581,7 @@ void Projectile::UpdateLobMotion()
 
 	Plant* aPlant = nullptr;
 	Zombie* aZombie = nullptr;
-	if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE)
+	if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 	{
 		aPlant = FindCollisionTargetPlant();
 	}
@@ -962,6 +983,7 @@ void Projectile::Update()
 		mProjectileType == ProjectileType::PROJECTILE_BUTTER || 
 		mProjectileType == ProjectileType::PROJECTILE_COBBIG || 
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || 
+		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE ||
 		mProjectileType == ProjectileType::PROJECTILE_SPIKE)
 	{
@@ -993,7 +1015,7 @@ void Projectile::Draw(Graphics* g)
 		aImage = IMAGE_REANIM_COBCANNON_COB;
 		aScale = 0.9f;
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA)
+	else if (mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 	{
 		aImage = IMAGE_PROJECTILEPEA;
 	}
@@ -1129,6 +1151,7 @@ void Projectile::DrawShadow(Graphics* g)
 	{
 	case ProjectileType::PROJECTILE_PEA:
 	case ProjectileType::PROJECTILE_ZOMBIE_PEA:
+	case ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA:
 		aOffsetX += 3.0f;
 		break;
 
@@ -1194,7 +1217,8 @@ Rect Projectile::GetProjectileRect()
 {
 	if (mProjectileType == ProjectileType::PROJECTILE_PEA || 
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA ||
-		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA)
+		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA ||
+		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 	{
 		return Rect(mX - 15, mY, mWidth + 15, mHeight);
 	}
