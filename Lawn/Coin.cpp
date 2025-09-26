@@ -411,7 +411,7 @@ bool Coin::IsMoney()
 
 bool Coin::IsSun()
 {
-    return mType == CoinType::COIN_SUN || mType == CoinType::COIN_SMALLSUN || mType == CoinType::COIN_LARGESUN;
+    return mType == CoinType::COIN_SUN || mType == CoinType::COIN_SMALLSUN || mType == CoinType::COIN_LARGESUN || mType == CoinType::COIN_ZOMBIE_SUN;
 }
 
 bool Coin::IsPresentWithAdvice()
@@ -1286,7 +1286,7 @@ float Coin::GetSunScale()
 
 int Coin::GetSunValue()
 {
-    return mType == CoinType::COIN_SUN ? 15 : mType == CoinType::COIN_SMALLSUN ? 5 : mType == CoinType::COIN_LARGESUN ? 25 : 0;
+    return mType == CoinType::COIN_SUN ? 15 : mType == CoinType::COIN_SMALLSUN ? 5 : mType == CoinType::COIN_LARGESUN ? 25 : mType == CoinType::COIN_ZOMBIE_SUN ? -15 : 0;
 }
 
 int Coin::GetCoinValue(CoinType theCoinType)

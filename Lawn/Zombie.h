@@ -209,6 +209,9 @@ public:
     void                            StopZombieSound();
     void                            UpdateZombieJackInTheBox();
     void                            UpdateZombieSuperJack();
+    void                            UpdateZombieSunflowerHead();
+    void                            UpdateZombieVaseHead();
+    void                            SpawnZombie(int theX, int theRow, ZombieType theZombieType);
     void                            UpdateZombieSuperAllStar();
     void                            DrawZombieHead(Graphics* g, const ZombieDrawPosition& theDrawPos, int theFrame);
     void                            UpdateZombiePosition();

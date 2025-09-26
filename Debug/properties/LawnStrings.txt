@@ -4,6 +4,12 @@ Peashooter
 [PEASHOOTER_TOOLTIP]
 Shoots peas at the enemy, but faster than usual (Peas are weaker)
 
+[SUPER_GATLING]
+Mega Gatling Pea
+
+[SUPER_GATLING_TOOLTIP]
+Shoots random projectiles in 3 lanes
+
 [ICEBERG]
 Iceberg Lettuce
 
@@ -413,8 +419,33 @@ Squash Zombie
 [TALLNUT_ZOMBIE]
 Tallnut Zombie
 
+[AMBUSH_NEWSPAPER_ZOMBIE]
+Ambush Newspaper Zombie
+
 [REPEATER_ZOMBIE]
-Conehead Repeater Zombie
+Repeater Conehead Zombie
+
+[CACTUS_ZOMBIE]
+Cactus Zombie
+
+[TICKING_JACK_ZOMBIE]
+Ticking Jack-In-The-Box Zombie
+
+[RUSHING_ALLSTAR_ZOMBIE]
+Rushing All Star Zombie
+
+[HYPNO_GATLING_FLAG_ZOMBIE]
+Hypno Gatling Pea Zombie
+
+[SUNFLOWER_ZOMBIE]
+Sunflower Zombie
+
+[TWIN_SUNFLOWER_ZOMBIE]
+Twin Sunflower Zombie
+
+[VASE_HEAD_ZOMBIE]
+Vase Zombie
+
 
 [IMP]
 Imp
@@ -521,6 +552,10 @@ Fume-shrooms shoot fumes that can pass through screen doors.
 {KEYWORD}Modded Change: {STAT}+100 Sun Cost, +15 Projectile Damage, x2 Speed, x1.6 Health
 {FLAVOR}"I was in a dead-end job producing yeast spores for a bakery," says Fume-shroom. 
 "Then Puff-shroom, bless 'im, told me about this great opportunity blasting zombies. Now I really feel like I'm making a difference."
+
+[SUPER_GATLING_DESCRIPTION]
+{KEYWORD}Damage:{STAT} very high
+{KEYWORD}Range:{STAT} 3 lanes
 
 [GRAVE_BUSTER_DESCRIPTION]
 Plant Grave Busters on graves to remove the graves.
@@ -1361,7 +1396,7 @@ I choose... these three!
 {NO_SOUND}{NO_CLICK}Iceberg Lettuce freezes zombies right in their tracks!
 
 [CRAZY_DAVE_2036]
-{NO_SOUND}{NO_CLICK}super gatling test!
+{NO_SOUND}{NO_CLICK}Mega Gatling Pea shoots random projectiles in 3 lanes!
 
 [CRAZY_DAVE_2100]
 Hey, check it out, you found a watering can!
@@ -3238,8 +3273,53 @@ Walks rapidly and squashes the first plant it reaches.
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium - 720
 
+[AMBUSH_NEWSPAPER_ZOMBIE_DESCRIPTION]
+Has increased health and movement speed, when angered, spawns a newspaper ambush.
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} high - 1500
 
+[CACTUS_ZOMBIE_DESCRIPTION]
+Shoots stronger projectiles than Pea Head Zombie.
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} medium - 1200
 
+[TICKING_JACK_ZOMBIE_DESCRIPTION]
+Explodes faster and has a much larger blast radius.
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} very high - 2500
+
+[RUSHING_ALLSTAR_ZOMBIE_DESCRIPTION]
+Has very high health and speed, Runs into a plant and crushes it, then slows down
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} extremely high - 4000
+
+[HYPNO_GATLING_FLAG_ZOMBIE_DESCRIPTION]
+Shoots a volley of stronger peas that turn defeated plants into zombotanies, also has increased toughness.
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} extremly high - 3300
+
+[SUNFLOWER_ZOMBIE_DESCRIPTION]
+Generates Anti-Sun which reduces your sun count.
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} medium - 1000
+
+[TWIN_SUNFLOWER_ZOMBIE_DESCRIPTION]
+Generates Two Anti-Suns which reduce your sun count.
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} high - 1500
+
+[VASE_HEAD_ZOMBIE_DESCRIPTION]
+Spawns a random zombie upon death:
+Basic - 5%
+Cone Head - 25%
+Bucket Head - 15%
+Pea Head - 15%
+Sunflower Head - 10%
+Newspaper - 10%
+Dancer - 10%
+Pole Vaulter - 10%
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} medium - 1300
 
 
 

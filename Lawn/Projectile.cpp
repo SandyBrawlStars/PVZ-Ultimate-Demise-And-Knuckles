@@ -29,7 +29,7 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_ZOMBIE_PEA,    0,  15  },
 	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  45 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  20 }
+	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 }
 };
 
 Projectile::Projectile()
@@ -250,6 +250,27 @@ Zombie* Projectile::FindCollisionTarget()
 	return aBestZombie;
 }
 
+void Projectile::SpawnZombie(int theX, int theRow, ZombieType theZombieType)
+{
+	if (!mBoard->RowCanHaveZombieType(mRow, theZombieType))
+		return;
+
+	Zombie* aZombie = mBoard->AddZombie(theZombieType, 0);
+	if (aZombie == nullptr)
+		return;
+
+	aZombie->mPosX = theX;
+	aZombie->SetRow(theRow);
+	float aPosY = mBoard->GetPosYBasedOnRow(mPosX + 40.0f, mRow) - 30.0f;
+	aZombie->mPosY = aPosY;
+	aZombie->mX = (int)aZombie->mPosX;
+	aZombie->mY = (int)aZombie->mPosY;
+	aZombie->PickRandomSpeed();
+
+	aZombie->mAltitude = 0;
+	aZombie->mPhaseCounter = 150;
+}
+
 void Projectile::CheckForCollision()
 {
 	if (mMotionType == ProjectileMotion::MOTION_PUFF && mProjectileAge >= 75)
@@ -295,6 +316,8 @@ void Projectile::CheckForCollision()
 		return;
 	}
 
+
+
 	if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 	{
 		Plant* aPlant = FindCollisionTargetPlant();
@@ -304,23 +327,37 @@ void Projectile::CheckForCollision()
 			aPlant->mPlantHealth -= aProjectileDef.mDamage;
 			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA && aPlant->mPlantHealth < 1)
 			{
-				if (!mBoard->RowCanHaveZombieType(mRow, ZombieType::ZOMBIE_PEA_HEAD))
-					return;
-
-				Zombie* aZombie = mBoard->AddZombie(ZombieType::ZOMBIE_PEA_HEAD, 0);
-				if (aZombie == nullptr)
-					return;
-
-				aZombie->mPosX = mPosX - 80;
-				float aPosY = mBoard->GetPosYBasedOnRow(mPosX + 40.0f, mRow) - 30.0f;
-				aZombie->mPosY = aPosY;
-				aZombie->SetRow(mRow);
-				aZombie->mX = (int)aZombie->mPosX;
-				aZombie->mY = (int)aZombie->mPosY;
-				aZombie->PickRandomSpeed();
-
-				aZombie->mAltitude = 0;
-				aZombie->mPhaseCounter = 150;
+				switch (aPlant->mSeedType)
+				{
+					case SEED_WALLNUT:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_WALLNUT_HEAD);
+						break;
+					case SEED_SUNFLOWER:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_SUNFLOWER_HEAD);
+						break;
+					case SEED_TWINSUNFLOWER:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_TWIN_SUNFLOWER_HEAD);
+						break;
+					case SEED_GATLINGPEA:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_GATLING_HEAD);
+						break;
+					case SEED_TALLNUT:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_TALLNUT_HEAD);
+						break;
+					case SEED_REPEATER:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_CONE_REPEATER_HEAD);
+						break;
+					case SEED_CACTUS:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_CACTUS_HEAD);
+						break;
+					case SEED_SQUASH:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_SQUASH_HEAD);
+						break;
+					default:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_PEA_HEAD);
+						break;
+				}
+				
 			}
 			aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
 

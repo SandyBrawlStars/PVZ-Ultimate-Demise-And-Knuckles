@@ -64,6 +64,7 @@ public:
     void                    Draw(Graphics* g);
     void                    DrawShadow(Graphics* g);
     void                    Die();
+    void                    SpawnZombie(int theX, int theRow, ZombieType theZombieType);
     void                    DoImpact(Zombie* theZombie);
     void                    UpdateMotion();
     void                    CheckForCollision();
