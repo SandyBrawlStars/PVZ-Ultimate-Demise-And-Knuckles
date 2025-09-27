@@ -188,13 +188,17 @@ public:
     bool                    mSquished;                      
     bool                    mIsAsleep;                      
     bool                    mIsOnBoard;                     
-    bool                    mHighlighted;                   
+    bool                    mHighlighted;   
+    int                     mChilledCounter;
+    int                     mShadowPowered;
 
 public:
     Plant();
 
     void                    PlantInitialize(int theGridX, int theGridY, SeedType theSeedType, SeedType theImitaterType);
     void                    Update();
+    bool                    IsShadowPlant(SeedType theSeedType);
+    void                    UpdateShadowPlant();
     void                    Animate();
     void                    Draw(Graphics* g);
     void                    MouseDown(int x, int y, int theClickCount);
@@ -293,6 +297,9 @@ public:
     void                    GoldMagnetFindTargets();
     bool                    IsAGoldMagnetAboutToSuck();
     bool                    DrawMagnetItemsOnTop();
+    void                    FreezePlant(bool theFreezeType);
+    bool                    IsFirePlant(SeedType theSeedType);
+    bool                    IsFrozenPlant(SeedType theSeedType);
 };
 
 float                       PlantDrawHeightOffset(Board* theBoard, Plant* thePlant, SeedType theSeedType, int theCol, int theRow);

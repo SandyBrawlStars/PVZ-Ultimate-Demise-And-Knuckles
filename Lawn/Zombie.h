@@ -116,7 +116,8 @@ public:
     bool                            mHitUmbrella;                               
     Rect                            mZombieRect;                                
     Rect                            mZombieAttackRect;                          
-    int                             mChilledCounter;                            
+    int                             mChilledCounter;       
+    int                             mPoisonedCounter;
     int                             mButteredCounter;                           
     int                             mIceTrapCounter;                            
     bool                            mMindControlled;                            
@@ -184,6 +185,7 @@ public:
     /*inline*/ void                 SetRow(int theRow);
     float                           GetPosYBasedOnRow(int theRow);
     void                            ApplyChill(bool theIsIceTrap);
+    void                            ApplyPoison();
     void                            UpdateZombieBungee();
     void                            BungeeLanding();
     bool                            EffectedByDamage(unsigned int theDamageRangeFlags);
@@ -210,6 +212,7 @@ public:
     void                            UpdateZombieJackInTheBox();
     void                            UpdateZombieSuperJack();
     void                            UpdateZombieSunflowerHead();
+    void                            UpdateZombieIceShroomHead();
     void                            UpdateZombieVaseHead();
     void                            SpawnZombie(int theX, int theRow, ZombieType theZombieType);
     void                            UpdateZombieSuperAllStar();

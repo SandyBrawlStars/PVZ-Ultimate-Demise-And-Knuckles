@@ -707,7 +707,7 @@ void Board::PickZombieWaves()
 			}
 		}
 
-		if (mLevel == 50 && aIsFinalWave)
+		if (mLevel == 60 && aIsFinalWave)
 		{
 			PutZombieInWave(ZombieType::ZOMBIE_GARGANTUAR, aWave, &aZombiePicker);
 		}
@@ -852,11 +852,11 @@ void Board::PickBackground()
 		{
 			mBackground = BackgroundType::BACKGROUND_4_FOG;
 		}
-		else if (mLevel < FINAL_LEVEL)
+		else if (mLevel <= 5 * LEVELS_PER_AREA)
 		{
 			mBackground = BackgroundType::BACKGROUND_5_ROOF;
 		}
-		else if (mLevel == FINAL_LEVEL)
+		else if (mLevel <= 6 * LEVELS_PER_AREA)
 		{
 			mBackground = BackgroundType::BACKGROUND_6_BOSS;
 		}
@@ -1347,9 +1347,15 @@ void Board::InitLevel()
 	}
 	else
 	{
-		mSunMoney = 125;
+		if ((mApp->IsFirstTimeAdventureMode() && mLevel >= 2 && mLevel <= 50) || (mApp->mQuickLevel >= 1 && mApp->mQuickLevel <= 50))
+		{
+			mSunMoney = 125;
+		}
+		else if ((mApp->IsFirstTimeAdventureMode() && mLevel >= 51) || (mApp->mQuickLevel >= 51))
+		{
+			mSunMoney = 175;
+		}
 	}
-
 	memset(mRowPickingArray, 0, sizeof(mRowPickingArray));
 	for (int aRow = 0; aRow < MAX_GRID_SIZE_Y; aRow++)
 	{
@@ -9804,8 +9810,42 @@ void Board::DrawHealthbar(Graphics* g, Rect rect, Color maxColor, int maxNumber,
 	g->SetColor(lastColor);
 }
 
+void Board::PowerUpShadow(int theX ,int theY, int theRow, int theColumn)
+{
+		Plant* aPlant = nullptr;
+		while (IteratePlants(aPlant))
+		{
+			if (aPlant->IsShadowPlant(aPlant->mSeedType))
+			{
+				int aRow = theRow;
+				int aColumn = theColumn;
+				if ((aRow == aPlant->mRow || aRow == aPlant->mRow + 1 || aRow == aPlant->mRow - 1) && (aColumn == aPlant->mPlantCol || aColumn == aPlant->mPlantCol + 1 || aColumn == aPlant->mPlantCol - 1))
+				{
+					aPlant->mShadowPowered = 2;
+				}
+					
+			}
+		}
+}
 
+void Board::PoisonZombiesRadius(int theRow, int theX, int theY, int theRadius, int theRowRange)
+{
+	Zombie* aZombie = nullptr;
+	while (IterateZombies(aZombie))
+	{
+		Rect aZombieRect = aZombie->GetZombieRect();
+		int aRowDist = aZombie->mRow - theRow;
+		if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
+		{
+			aRowDist = 0;
+		}
 
+		if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
+		{
+			aZombie->ApplyPoison();
+		}
+	}
+}
 
 
 

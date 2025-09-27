@@ -233,6 +233,8 @@ public:
 	virtual ~Board();
 
 	void							DisposeBoard();
+	void							PowerUpShadow(int theX, int theY, int theRow, int theColumn);
+	void                            PoisonZombiesRadius(int theRow, int theX, int theY, int theRadius, int theRowRange);
 	int								CountSunBeingCollected();
 	void							DrawGameObjects(Graphics* g);
 	void							ClearCursor();

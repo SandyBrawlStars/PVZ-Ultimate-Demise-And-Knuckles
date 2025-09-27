@@ -36,11 +36,13 @@ int gZombieWaves[NUM_LEVELS] = {
 	10, 20, 20, 30, 20, 20, 30, 20, 30, 30,
 	10, 20, 10, 20, 20, 10, 20, 10, 20, 20,
 	10, 20, 20, 30, 20, 20, 30, 20, 30, 30,
+	10, 20, 20, 30, 20, 20, 30, 20, 30, 30,
 };
 
 ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {  
 	{ ZOMBIE_NORMAL,
 		{
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -55,10 +57,12 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		}
 	},
 	{ ZOMBIE_TRAFFIC_CONE,
 		{
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -72,7 +76,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			1, 0, 0, 1, 1, 0, 0, 0, 0, 0,
 			0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_PAIL,
@@ -81,7 +86,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 1, 0, 0, 1, 0, 0, 0, 0, 0,
 			0, 1, 0, 1, 0, 0, 1, 0, 1, 1,
 			0, 0, 0, 0, 0, 0, 1, 0, 1, 1,
-			0, 1, 0, 0, 1, 0, 0, 0, 1, 0,
+			0, 1, 0, 0, 1, 0, 0, 0, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_NEWSPAPER,
@@ -90,6 +96,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			1, 1, 0, 0, 1, 0, 0, 0, 0, 0,
 			0, 1, 0, 1, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -99,6 +106,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 1, 1, 0, 0, 1, 0, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -108,7 +116,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 1, 1, 0, 0, 1,
 			0, 1, 0, 0, 1, 0, 0, 0, 0, 0,
 			0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_DANCER,
@@ -117,6 +126,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -126,7 +136,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_DUCKY_TUBE, { 0 } },
@@ -137,6 +148,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_ZAMBONI,
@@ -145,6 +157,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 1, 1, 0, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -153,6 +166,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 1, 1, 0, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
@@ -164,6 +178,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
 			0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_JACK_IN_THE_BOX,
@@ -172,7 +187,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			1, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-			0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_BALLOON,
@@ -181,6 +197,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 1, 1, 0, 0, 0, 0, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -191,6 +208,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 1, 1, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_POGO,
@@ -199,7 +217,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-			0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_YETI, {0} },
@@ -209,7 +228,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			1, 1, 0, 0, 0, 0, 1, 0, 1, 0,
+			1, 1, 0, 0, 0, 0, 1, 0, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_LADDER,
@@ -218,7 +238,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 1, 1, 1, 0, 1, 0, 1, 0,
+			0, 0, 1, 1, 1, 0, 1, 0, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_CATAPULT,
@@ -228,6 +249,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 1, 1, 0, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_GARGANTUAR,
@@ -237,6 +259,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_IMP,
@@ -246,9 +269,11 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_BOSS, {
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -260,6 +285,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		} },
 	{ ZOMBIE_PEA_HEAD, {
@@ -267,15 +293,18 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		} },
 	{ ZOMBIE_WALLNUT_HEAD, {
 		0, 0, 0, 0, 1, 0, 0, 0, 1, 1,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,} },
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0,} },
 	{ ZOMBIE_JALAPENO_HEAD, {
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -286,7 +315,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		} },
 	{ ZOMBIE_SQUASH_HEAD, {
@@ -294,6 +323,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		} },
 	{ ZOMBIE_TALLNUT_HEAD, {
@@ -301,6 +331,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		} },
 	{ZOMBIE_CONE_REPEATER_HEAD, {
@@ -308,7 +339,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, }
+	 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, }
  },
 	{ ZOMBIE_SUPER_NEWSPAPER,
 		{
@@ -316,6 +348,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -325,11 +358,13 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
 	{ ZOMBIE_SUPER_JACK,
 		{
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -343,6 +378,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -352,6 +388,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -361,6 +398,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -370,6 +408,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
@@ -379,9 +418,40 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		}
 	},
+	{ ZOMBIE_SNOW_PEA_HEAD,
+		{
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		}
+	},
+	{ ZOMBIE_ICE_SHROOM_HEAD,
+	{
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	}
+},
+	{ ZOMBIE_SUPER_POLE_VAULTER,
+	{
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	}
+},
 };
 
 SeedType gArtChallengeWallnut[MAX_GRID_SIZE_Y][MAX_GRID_SIZE_X] = {  
@@ -1871,6 +1941,31 @@ void Challenge::UpdateConveyorBelt()
 		aSeedPickArray[3].mItem = SEED_CHERRYBOMB;
 		aSeedPickArray[3].mWeight = 35;
 	}
+	else if (mApp->IsLevel50())
+	{
+		aSeedPickCount = 10;
+		aSeedPickArray[0].mItem = SEED_FLOWERPOT;
+		aSeedPickArray[0].mWeight = 90;
+		aSeedPickArray[1].mItem = SEED_CABBAGEPULT;
+		aSeedPickArray[1].mWeight = 20;
+		aSeedPickArray[2].mItem = SEED_ICEBERG;
+		aSeedPickArray[2].mWeight = 20;
+		aSeedPickArray[3].mItem = SEED_MELONPULT;
+		aSeedPickArray[3].mWeight = 5;
+		aSeedPickArray[9].mItem = SEED_WINTERMELON;
+		aSeedPickArray[9].mWeight = 5;
+		aSeedPickArray[4].mItem = SEED_UMBRELLA;
+		aSeedPickArray[4].mWeight = 5;
+		aSeedPickArray[5].mItem = SEED_ICESHROOM;
+		aSeedPickArray[5].mWeight = 10;
+		aSeedPickArray[6].mItem = SEED_DOOMSHROOM;
+		aSeedPickArray[6].mWeight = 8;
+		aSeedPickArray[7].mItem = SEED_INSTANT_COFFEE;
+		aSeedPickArray[7].mWeight = 18;
+		aSeedPickArray[8].mItem = SEED_PUMPKINSHELL;
+		aSeedPickArray[8].mWeight = 20;
+		}
+
 	else if (mApp->IsStormyNightLevel())
 	{
 		aSeedPickCount = 5;
@@ -2765,11 +2860,13 @@ void Challenge::InitZombieWaves()
 	else if (aGameMode == GAMEMODE_CHALLENGE_WAR_AND_PEAS)
 	{
 		aList[ZOMBIE_PEA_HEAD] = true;
+		aList[ZOMBIE_NORMAL] = true;
 		aList[ZOMBIE_WALLNUT_HEAD] = true;
 	}
 	else if (aGameMode == GAMEMODE_CHALLENGE_WAR_AND_PEAS_2)
 	{
 		aList[ZOMBIE_PEA_HEAD] = true;
+		aList[ZOMBIE_NORMAL] = true;
 		aList[ZOMBIE_WALLNUT_HEAD] = true;
 		aList[ZOMBIE_JALAPENO_HEAD] = true;
 		aList[ZOMBIE_GATLING_HEAD] = true;

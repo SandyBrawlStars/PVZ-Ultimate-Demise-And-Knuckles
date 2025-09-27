@@ -263,6 +263,17 @@ void Coin::CoinInitialize(int theX, int theY, CoinType theCoinType, CoinMotion t
             SeedType aSeedType = (SeedType)TodPickFromArray((int*)aSeedList, LENGTH(aSeedList));
             mPottedPlantSpec.InitializePottedPlant(aSeedType);
         }
+        else if (mBoard->mBackground == BackgroundType::BACKGROUND_6_BOSS)
+        {
+            SeedType aSeedList[] = {
+                SeedType::SEED_SHADOW_SHROOM,
+                SeedType::SEED_ICEBERG,
+            };
+
+            SeedType aSeedType = (SeedType)TodPickFromArray((int*)aSeedList, LENGTH(aSeedList));
+            mPottedPlantSpec.InitializePottedPlant(aSeedType);
+        }
+
         else
         {
             SeedType aSeedType = mApp->mZenGarden->PickRandomSeedType();
@@ -1175,7 +1186,7 @@ void Coin::Collect()
                 FanOutCoins(CoinType::COIN_GOLD, 5);
             }
         }
-        else if (mApp->IsAdventureMode() && mBoard->mLevel == 50)
+        else if (mApp->IsAdventureMode() && mBoard->mLevel == 60)
         {
             FanOutCoins(CoinType::COIN_DIAMOND, 3);
         }

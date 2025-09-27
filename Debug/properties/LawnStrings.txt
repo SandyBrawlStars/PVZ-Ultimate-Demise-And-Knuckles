@@ -8,7 +8,7 @@ Shoots peas at the enemy, but faster than usual (Peas are weaker)
 Mega Gatling Pea
 
 [SUPER_GATLING_TOOLTIP]
-Shoots random projectiles in 3 lanes
+Shoots many projectiles in 3 lanes
 
 [ICEBERG]
 Iceberg Lettuce
@@ -752,6 +752,12 @@ Iceberg Lettuces hurl frozen lettuces at the enemy.
 {KEYWORD}Range:{STAT} lobbed
 {FLAVOR}Ok im too lazy to come up with lore just use the cool ice plant.
 kirby.funkopop made the visual shit
+
+[SHADOW_SHROOM_DESCRIPTION]
+Poisons Zombies When Eaten.
+{KEYWORD}Damage:{STAT} Large damage over time
+{NOCTURNAL}Sleeps during the day
+
 
 [FLOWER_POT_DESCRIPTION]
 Flower Pots let you plant on the roof.

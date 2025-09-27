@@ -29,7 +29,8 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_ZOMBIE_PEA,    0,  15  },
 	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  45 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 }
+	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 },
+	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20 }
 };
 
 Projectile::Projectile()
@@ -149,7 +150,7 @@ Plant* Projectile::FindCollisionTargetPlant()
 		if (aPlant->mRow != mRow)
 			continue;
 
-		if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
+		if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 		{
 			if (aPlant->mSeedType == SeedType::SEED_PUFFSHROOM ||
 				aPlant->mSeedType == SeedType::SEED_SUNSHROOM ||
@@ -163,7 +164,7 @@ Plant* Projectile::FindCollisionTargetPlant()
 		Rect aPlantRect = aPlant->GetPlantRect();
 		if (GetRectOverlap(aProjectileRect, aPlantRect) > 8)
 		{
-			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
+			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 			{
 				return mBoard->GetTopPlantAt(aPlant->mPlantCol, aPlant->mRow, PlantPriority::TOPPLANT_EATING_ORDER);
 			}
@@ -318,13 +319,14 @@ void Projectile::CheckForCollision()
 
 
 
-	if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
+	if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 	{
 		Plant* aPlant = FindCollisionTargetPlant();
 		if (aPlant)
 		{
 			const ProjectileDefinition& aProjectileDef = GetProjectileDef();
 			aPlant->mPlantHealth -= aProjectileDef.mDamage;
+			
 			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA && aPlant->mPlantHealth < 1)
 			{
 				switch (aPlant->mSeedType)
@@ -353,6 +355,12 @@ void Projectile::CheckForCollision()
 					case SEED_SQUASH:
 						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_SQUASH_HEAD);
 						break;
+					case SEED_SNOWPEA:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_SNOW_PEA_HEAD);
+						break;
+					case SEED_ICESHROOM:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_ICE_SHROOM_HEAD);
+						break;
 					default:
 						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_PEA_HEAD);
 						break;
@@ -360,6 +368,12 @@ void Projectile::CheckForCollision()
 				
 			}
 			aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
+
+			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
+			{
+				aPlant->Plant::FreezePlant(false);
+			}
+
 
 			mApp->PlayFoley(FoleyType::FOLEY_SPLAT);
 			mApp->AddTodParticle(mPosX - 3.0f, mPosY + 17.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_PEA_SPLAT);
@@ -618,7 +632,7 @@ void Projectile::UpdateLobMotion()
 
 	Plant* aPlant = nullptr;
 	Zombie* aZombie = nullptr;
-	if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
+	if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 	{
 		aPlant = FindCollisionTargetPlant();
 	}
@@ -1020,6 +1034,7 @@ void Projectile::Update()
 		mProjectileType == ProjectileType::PROJECTILE_BUTTER || 
 		mProjectileType == ProjectileType::PROJECTILE_COBBIG || 
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || 
+		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE ||
 		mProjectileType == ProjectileType::PROJECTILE_SPIKE)
@@ -1056,7 +1071,7 @@ void Projectile::Draw(Graphics* g)
 	{
 		aImage = IMAGE_PROJECTILEPEA;
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA)
+	else if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 	{
 		aImage = IMAGE_PROJECTILESNOWPEA;
 	}
@@ -1193,6 +1208,7 @@ void Projectile::DrawShadow(Graphics* g)
 		break;
 
 	case ProjectileType::PROJECTILE_SNOWPEA:
+	case ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA:
 		aOffsetX += -1.0f;
 		aScale = 1.3f;
 		break;
@@ -1255,6 +1271,7 @@ Rect Projectile::GetProjectileRect()
 	if (mProjectileType == ProjectileType::PROJECTILE_PEA || 
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA ||
+		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 	{
 		return Rect(mX - 15, mY, mWidth + 15, mHeight);

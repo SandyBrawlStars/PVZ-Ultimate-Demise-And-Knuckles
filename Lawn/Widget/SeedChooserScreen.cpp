@@ -670,7 +670,7 @@ void SeedChooserScreen::OnStartButton()
 		}
 	}
 	if (!PickedPlantType(SEED_SUNFLOWER) && !PickedPlantType(SEED_TWINSUNFLOWER) && !PickedPlantType(SEED_SUNSHROOM) &&
-		!PickedPlantType(SEED_MARIGOLD) && !mBoard->mCutScene->IsSurvivalRepick() && mApp->mGameMode != GAMEMODE_CHALLENGE_LAST_STAND)
+		!PickedPlantType(SEED_MARIGOLD) && !PickedPlantType(SEED_MOON_LAMP) && !mBoard->mCutScene->IsSurvivalRepick() && mApp->mGameMode != GAMEMODE_CHALLENGE_LAST_STAND)
 	{
 		if (mApp->IsFirstTimeAdventureMode() && mBoard->mLevel == 11)
 		{

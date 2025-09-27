@@ -2383,6 +2383,17 @@ bool LawnApp::IsLittleTroubleLevel()
 	return IsAdventureMode() && mPlayerInfo->mLevel == 25;
 }
 
+bool LawnApp::IsLevel50()
+{
+	if (mBoard == nullptr)
+		return false;
+
+	if (mPlayedQuickplay)
+		return mQuickLevel == 50;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 50;
+}
+
 bool LawnApp::IsScaryPotterLevel()
 {
 	if (mGameMode >= GameMode::GAMEMODE_SCARY_POTTER_1 && mGameMode <= GameMode::GAMEMODE_SCARY_POTTER_ENDLESS)
@@ -2432,11 +2443,11 @@ bool LawnApp::IsMiniBossLevel()
 
 	if (mPlayedQuickplay)
 	{
-		return mQuickLevel == 10 || mQuickLevel == 20 || mQuickLevel == 30;
+		return mQuickLevel == 10 || mQuickLevel == 20 || mQuickLevel == 30 || mQuickLevel == 50;
 	}
 	else
 	{
-		return mPlayerInfo->mLevel == 10 || mPlayerInfo->mLevel == 20 || mPlayerInfo->mLevel == 30;
+		return mPlayerInfo->mLevel == 10 || mPlayerInfo->mLevel == 20 || mPlayerInfo->mLevel == 30 || mPlayerInfo->mLevel == 50;
 	}
 }
 
@@ -2449,9 +2460,9 @@ bool LawnApp::IsFinalBossLevel()
 		return true;
 
 	if (mPlayedQuickplay)
-		return mQuickLevel == 50;
+		return mQuickLevel == 60;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 50;
+	return IsAdventureMode() && mPlayerInfo->mLevel == 60;
 }
 
 bool LawnApp::IsChallengeWithoutSeedBank()
@@ -2479,11 +2490,11 @@ bool LawnApp::IsNight()
 
 	if (mPlayedQuickplay)
 	{
-		return (mQuickLevel >= 11 && mQuickLevel <= 20) || (mQuickLevel >= 31 && mQuickLevel <= 40) || mQuickLevel == 50;
+		return (mQuickLevel >= 11 && mQuickLevel <= 20) || (mQuickLevel >= 31 && mQuickLevel <= 40) || (mQuickLevel >= 51 && mQuickLevel <= 60);
 	}
 	else
 	{
-		return (mPlayerInfo->mLevel >= 11 && mPlayerInfo->mLevel <= 20) || (mPlayerInfo->mLevel >= 31 && mPlayerInfo->mLevel <= 40) || mPlayerInfo->mLevel == 50;
+		return (mPlayerInfo->mLevel >= 11 && mPlayerInfo->mLevel <= 20) || (mPlayerInfo->mLevel >= 31 && mPlayerInfo->mLevel <= 40) || (mPlayerInfo->mLevel >= 51 && mPlayerInfo->mLevel <= 60);
 	}
 }
 
@@ -2549,9 +2560,9 @@ SeedType LawnApp::GetAwardSeedForLevel(int theLevel)
 	{
 		aSeedsHasGot -= 1;  
 	}
-	if (aSeedsHasGot > 40)
+	if (aSeedsHasGot > 43)
 	{
-		aSeedsHasGot = 40;
+		aSeedsHasGot = 43;
 	}
 	
 	return (SeedType)aSeedsHasGot;
@@ -2560,13 +2571,13 @@ SeedType LawnApp::GetAwardSeedForLevel(int theLevel)
 int LawnApp::GetSeedsAvailable()
 {
 	int aLevel = mPlayerInfo->mLevel;
-	if (HasFinishedAdventure() || aLevel > 50)
+	if (HasFinishedAdventure() || aLevel > 60)
 	{
-		return 49;
+		return 59;
 	}
 
 	SeedType aSeedTypeMax = GetAwardSeedForLevel(aLevel);
-	return min(49, aSeedTypeMax);
+	return min(59, aSeedTypeMax);
 }
 
 bool LawnApp::HasSeedType(SeedType theSeedType)
@@ -2591,13 +2602,13 @@ bool LawnApp::HasSeedType(SeedType theSeedType)
 	{
 		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_CATTAIL] > 0;
 	}
-	if (theSeedType == SeedType::SEED_ICEBERG)
-	{
-		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_ICEBERG] > 0;
-	}
 	if (theSeedType == SeedType::SEED_SUPERGATLING)
 	{
 		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_SUPERGATLING] > 0;
+	}
+	if (theSeedType == SeedType::SEED_GATLINGPEA)
+	{
+		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_GATLINGPEA] > 0;
 	}
 	if (theSeedType == SeedType::SEED_WINTERMELON)
 	{
