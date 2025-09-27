@@ -751,12 +751,14 @@ Iceberg Lettuces hurl frozen lettuces at the enemy.
 {KEYWORD}Damage:{STAT} slightly heavy
 {KEYWORD}Range:{STAT} lobbed
 {FLAVOR}Ok im too lazy to come up with lore just use the cool ice plant.
-kirby.funkopop made the visual shit
+{Flavor} Sprites And Animation by Kirby.funkopop on the MA Discord
 
 [SHADOW_SHROOM_DESCRIPTION]
 Poisons Zombies When Eaten.
 {KEYWORD}Damage:{STAT} Large damage over time
+{KEYWORD}Shadow Buff:{STAT} Poisons in a 3x3 area
 {NOCTURNAL}Sleeps during the day
+{Flavor} Sprites And Animation by pepper on the MA Discord
 
 
 [FLOWER_POT_DESCRIPTION]
@@ -3327,8 +3329,11 @@ Pole Vaulter - 10%
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium - 1300
 
-
-
+[GOO_PEA_DESCRIPTION]
+Slows down zombies and poisons them, Ignores Roof Slope
+{KEYWORD}Damage: Large Over Time
+{KEYWORD}Shadow Buff:{STAT} Shoots More Peas
+Sprites And Animations by Reat on the MA Discord
 
 
 

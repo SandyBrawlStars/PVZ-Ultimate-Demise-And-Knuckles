@@ -120,6 +120,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
     mShieldRecoilCounter = 0;
     mChilledCounter = 0;
     mPoisonedCounter = 0;
+    mPoisonedType = false;
     mIceTrapCounter = 0;
     mButteredCounter = 0;
     mMindControlled = false;
@@ -445,7 +446,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
     }
 
     case ZombieType::ZOMBIE_ZAMBONI:  
-        mBodyHealth = 3350;
+        mBodyHealth = 2350;
         mAnimFrames = 2;
         mAnimTicksPerFrame = 8;
         mPosX = WIDE_BOARD_WIDTH + Rand(10);
@@ -4520,7 +4521,7 @@ void Zombie::UpdateDamageStates(unsigned int theDamageFlags)
 float Zombie::ZombieTargetLeadX(float theTime)
 {
     float aSpeed = mVelX;
-    if (mChilledCounter > 0)
+    if ((mChilledCounter > 0) || (mPoisonedCounter > 0 && mPoisonedType))
     {
         aSpeed *= CHILLED_SPEED_FACTOR;
     }
@@ -5263,7 +5264,15 @@ void Zombie::UpdatePlaying()
     if (mPoisonedCounter > 0)
     {
         mPoisonedCounter--;
-        TakeBodyDamage(1, 3);
+        if (mPoisonedType == false)
+        {
+            TakeBodyDamage(1, 3);
+        }
+        else if (mPoisonedCounter % 10 == 0)
+        {
+            TakeBodyDamage(1, 3);
+            UpdateAnimSpeed();
+        }
     }
 
     if (mZombiePhase == ZombiePhase::PHASE_RISING_FROM_GRAVE)
@@ -5490,7 +5499,7 @@ void Zombie::AnimateChewSound()
             }
             aPlant->Die();
 
-            ApplyPoison();
+            ApplyPoison(800, false);
             mApp->AddTodParticle(mPosX + 60.0f, mPosY + 40.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_MIND_CONTROL);
 
             mVelX = 0.17f;
@@ -5606,7 +5615,7 @@ void Zombie::Animate()
     if (mIsEating && mHasHead)
     {
         int aFrameLength = 6;
-        if (mChilledCounter > 0)
+        if ((mChilledCounter > 0) || (mPoisonedCounter>0 && mPoisonedType))
         {
             aFrameLength = 12;
         }
@@ -7275,7 +7284,7 @@ bool Zombie::IsImmobilizied()
 
 bool Zombie::IsMovingAtChilledSpeed()
 {
-    if (mChilledCounter > 0)
+    if ((mChilledCounter > 0) || (mPoisonedCounter > 0 && mPoisonedType))
         return true;
 
     if (mZombieType == ZombieType::ZOMBIE_DANCER || mZombieType == ZombieType::ZOMBIE_BACKUP_DANCER)
@@ -7292,7 +7301,7 @@ bool Zombie::IsMovingAtChilledSpeed()
 
         if (aLeader)
         {
-            if (aLeader->mChilledCounter > 0)
+            if ((aLeader->mChilledCounter > 0) || (aLeader->mPoisonedCounter > 0 && aLeader->mPoisonedType))
             {
                 return true;
             }
@@ -7552,7 +7561,7 @@ void Zombie::CheckIfPreyCaught()
         return;
     
     int aTicksBetweenEats = TICKS_BETWEEN_EATS;
-    if (mChilledCounter > 0)
+    if ((mChilledCounter > 0) || (mPoisonedCounter > 0 && mPoisonedType))
     {
         aTicksBetweenEats *= 2;
     }
@@ -7778,7 +7787,7 @@ void Zombie::EatPlant(Plant* thePlant)
         return;
     }
 
-    if (mChilledCounter > 0 && mZombieAge % 2 == 1)
+    if ((mChilledCounter > 0 && mZombieAge % 2 == 1) || (mZombieAge%2 == 1 && mPoisonedCounter > 0 && mPoisonedType))
         return;
 
     if (mApp->IsIZombieLevel() && thePlant->mSeedType == SeedType::SEED_SUNFLOWER)
@@ -8247,9 +8256,11 @@ void Zombie::ApplyChill(bool theIsIceTrap)
     UpdateAnimSpeed();
 }
 
-void Zombie::ApplyPoison()
+void Zombie::ApplyPoison(int theAmount, int theType)
 {
-    mPoisonedCounter = 800;
+    mPoisonedCounter = theAmount;
+    mPoisonedType = theType;
+    UpdateAnimSpeed();
 }
 
 void Zombie::DropShield(unsigned int theDamageFlags)
@@ -11003,7 +11014,7 @@ void Zombie::UpdateBoss()
             mBossHeadCounter--;
         }
 
-        if (mChilledCounter > 0)
+        if ((mChilledCounter > 0) || (mPoisonedCounter > 0 && mPoisonedType))
         {
             aHeadReanim->mAnimRate = 6.0f;
         }

@@ -30,7 +30,8 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  45 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20 }
+	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20 },
+	{ ProjectileType::PROJECTILE_GOO_PEA,    0,  10 }
 };
 
 Projectile::Projectile()
@@ -307,7 +308,7 @@ void Projectile::CheckForCollision()
 		return;
 	}
 
-	if ((mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_STAR) && mShadowY - mPosY > 90.0f)
+	if ((mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_STAR || mProjectileType == ProjectileType::PROJECTILE_GOO_PEA) && mShadowY - mPosY > 90.0f)
 	{
 		return;
 	}
@@ -917,7 +918,7 @@ void Projectile::DoImpact(Zombie* theZombie)
 		mApp->PlaySample(SOUND_DOOMSHROOM);
 		mBoard->ShakeBoard(3, -4);
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_PEA)
+	else if (mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
 	{
 		aSplatPosX -= 15.0f;
 		aEffect = ParticleEffect::PARTICLE_PEA_SPLAT;
@@ -1025,6 +1026,7 @@ void Projectile::Update()
 
 	int aTime = 20;
 	if (mProjectileType == ProjectileType::PROJECTILE_PEA || 
+		mProjectileType == ProjectileType::PROJECTILE_GOO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || 
 		mProjectileType == ProjectileType::PROJECTILE_CABBAGE || 
 		mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE ||
@@ -1068,6 +1070,10 @@ void Projectile::Draw(Graphics* g)
 		aScale = 0.9f;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
+	{
+		aImage = IMAGE_PROJECTILEPEA;
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
 	{
 		aImage = IMAGE_PROJECTILEPEA;
 	}

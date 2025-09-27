@@ -9842,7 +9842,7 @@ void Board::PoisonZombiesRadius(int theRow, int theX, int theY, int theRadius, i
 
 		if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
 		{
-			aZombie->ApplyPoison();
+			aZombie->ApplyPoison(800,false);
 		}
 	}
 }

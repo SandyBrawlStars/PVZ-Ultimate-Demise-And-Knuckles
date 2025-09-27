@@ -64,6 +64,7 @@ PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES] = {
     { SeedType::SEED_MELONPULT,         nullptr, ReanimationType::REANIM_MELONPULT,     14, 500,    300,    PlantSubClass::SUBCLASS_SHOOTER,    130,    _S("MELON_PULT") },
     { SeedType::SEED_SHADOW_SHROOM,       nullptr, ReanimationType::REANIM_SHADOW_SHROOM,   10, 75,    1500,   PlantSubClass::SUBCLASS_NORMAL,     0,      _S("SHADOW_SHROOM") },
     { SeedType::SEED_MOON_LAMP,           nullptr, ReanimationType::REANIM_PLANTERN,       27, 100,    300,    PlantSubClass::SUBCLASS_NORMAL,    1250,    _S("MOON_LAMP") },
+    { SeedType::SEED_GOO_PEA,       nullptr, ReanimationType::REANIM_GOO_PEA,            10, 200,    300,   PlantSubClass::SUBCLASS_SHOOTER,     150,      _S("GOO_PEA") },
     { SeedType::SEED_ICEBERG,           nullptr, ReanimationType::REANIM_ICEBERG,       27, 325,    300,    PlantSubClass::SUBCLASS_SHOOTER,    130,    _S("ICEBERG") },
     { SeedType::SEED_GATLINGPEA,        nullptr, ReanimationType::REANIM_GATLINGPEA,    5,  325,    2500,   PlantSubClass::SUBCLASS_SHOOTER,    78,    _S("GATLING_PEA") },
     { SeedType::SEED_TWINSUNFLOWER,     nullptr, ReanimationType::REANIM_TWIN_SUNFLOWER,1,  250,    2500,   PlantSubClass::SUBCLASS_NORMAL,     833,   _S("TWIN_SUNFLOWER") },
@@ -200,6 +201,7 @@ void Plant::PlantInitialize(int theGridX, int theGridY, SeedType theSeedType, Se
         break;
     }
     case SeedType::SEED_PEASHOOTER:
+    case SeedType::SEED_GOO_PEA:
     case SeedType::SEED_SNOWPEA:
     case SeedType::SEED_REPEATER:
     case SeedType::SEED_LEFTPEATER:
@@ -2519,7 +2521,7 @@ void Plant::UpdateBowling()
 
 bool Plant::IsShadowPlant(SeedType theSeedType)
 {
-    if (theSeedType == SEED_SHADOW_SHROOM)
+    if (theSeedType == SEED_SHADOW_SHROOM || theSeedType == SEED_GOO_PEA)
     {
         return true;
     }
@@ -3046,7 +3048,7 @@ Reanimation* Plant::AttachBlinkAnim(Reanimation* theReanimBody)
             aTrackToAttach = "anim_face2";
         }
     }
-    else if (mSeedType == SeedType::SEED_PEASHOOTER || mSeedType == SeedType::SEED_SNOWPEA || mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_LEFTPEATER || mSeedType == SeedType::SEED_GATLINGPEA || mSeedType == SeedType::SEED_SUPERGATLING)
+    else if (mSeedType == SeedType::SEED_PEASHOOTER || mSeedType == SeedType::SEED_SNOWPEA || mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_LEFTPEATER || mSeedType == SeedType::SEED_GATLINGPEA || mSeedType == SeedType::SEED_SUPERGATLING || mSeedType == SeedType::SEED_GOO_PEA)
     {
         if (theReanimBody->TrackExists("anim_stem"))
         {
@@ -3603,6 +3605,7 @@ float PlantFlowerPotHeightOffset(SeedType theSeedType, float theFlowerPotScale)
     case SeedType::SEED_HYPNOSHROOM:
     case SeedType::SEED_MAGNETSHROOM:
     case SeedType::SEED_PEASHOOTER:
+    case SeedType::SEED_GOO_PEA:
     case SeedType::SEED_REPEATER:
     case SeedType::SEED_LEFTPEATER:
     case SeedType::SEED_SNOWPEA:
@@ -4603,6 +4606,9 @@ void Plant::Fire(Zombie* theTargetZombie, int theRow, PlantWeapon thePlantWeapon
     case SeedType::SEED_LEFTPEATER:
         aProjectileType = ProjectileType::PROJECTILE_PEA;
         break;
+    case SeedType::SEED_GOO_PEA:
+        aProjectileType = ProjectileType::PROJECTILE_GOO_PEA;
+        break;
     case SeedType::SEED_SCAREDYSHROOM:
     case SeedType::SEED_SNOWPEA:
         aProjectileType = ProjectileType::PROJECTILE_SNOWPEA;
@@ -4696,7 +4702,7 @@ void Plant::Fire(Zombie* theTargetZombie, int theRow, PlantWeapon thePlantWeapon
         aOriginX = mX + 12;
         aOriginY = mY - 56;
     }
-    else if (mSeedType == SeedType::SEED_PEASHOOTER || mSeedType == SeedType::SEED_SNOWPEA || mSeedType == SeedType::SEED_REPEATER)
+    else if (mSeedType == SeedType::SEED_PEASHOOTER || mSeedType == SeedType::SEED_SNOWPEA || mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_GOO_PEA)
     {
         int aOffsetX, aOffsetY;
         GetPeaHeadOffset(aOffsetX, aOffsetY);
@@ -4923,7 +4929,7 @@ Zombie* Plant::FindTargetZombie(int theRow, PlantWeapon thePlantWeapon)
         bool needPortalCheck = false;
         if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_PORTAL_COMBAT)
         {
-            if (mSeedType == SeedType::SEED_PEASHOOTER || mSeedType == SeedType::SEED_CACTUS || mSeedType == SeedType::SEED_REPEATER)
+            if (mSeedType == SeedType::SEED_PEASHOOTER || mSeedType == SeedType::SEED_CACTUS || mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_GOO_PEA)
             {
                 needPortalCheck = true;
             }

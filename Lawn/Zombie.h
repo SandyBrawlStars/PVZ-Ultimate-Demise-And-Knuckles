@@ -118,6 +118,7 @@ public:
     Rect                            mZombieAttackRect;                          
     int                             mChilledCounter;       
     int                             mPoisonedCounter;
+    bool                            mPoisonedType;
     int                             mButteredCounter;                           
     int                             mIceTrapCounter;                            
     bool                            mMindControlled;                            
@@ -185,7 +186,7 @@ public:
     /*inline*/ void                 SetRow(int theRow);
     float                           GetPosYBasedOnRow(int theRow);
     void                            ApplyChill(bool theIsIceTrap);
-    void                            ApplyPoison();
+    void                            ApplyPoison(int theAmount, int theType);
     void                            UpdateZombieBungee();
     void                            BungeeLanding();
     bool                            EffectedByDamage(unsigned int theDamageRangeFlags);
