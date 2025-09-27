@@ -121,6 +121,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
     mChilledCounter = 0;
     mPoisonedCounter = 0;
     mPoisonedType = false;
+    mPoisonedMult = 10;
     mIceTrapCounter = 0;
     mButteredCounter = 0;
     mMindControlled = false;
@@ -5268,10 +5269,14 @@ void Zombie::UpdatePlaying()
         {
             TakeBodyDamage(1, 3);
         }
-        else if (mPoisonedCounter % 10 == 0)
+        else if (mPoisonedCounter % mPoisonedMult == 0)
         {
             TakeBodyDamage(1, 3);
             UpdateAnimSpeed();
+            if (mPoisonedMult < 10)
+            {
+                mPoisonedMult ++;
+            }
         }
     }
 
@@ -8260,6 +8265,7 @@ void Zombie::ApplyPoison(int theAmount, int theType)
 {
     mPoisonedCounter = theAmount;
     mPoisonedType = theType;
+    mPoisonedMult = 1;
     UpdateAnimSpeed();
 }
 

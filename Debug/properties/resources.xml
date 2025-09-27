@@ -186,6 +186,8 @@
 
 <!-- Various strips -->
 <Image id="PROJECTILEPEA" path="projectilepea" />
+<Image id="PROJECTILEGOOPEA" path="ProjectileGooPea" />
+<Image id="PROJECTILEICEBERG" path="icebergprojectile" />
 <Image id="PROJECTILESNOWPEA" path="projectilesnowpea" />
 <Image id="PROJECTILECACTUS" path="ProjectileCactus" />
 <Image id="DIRTSMALL" path="dirtsmall" cols="8" rows="2" />

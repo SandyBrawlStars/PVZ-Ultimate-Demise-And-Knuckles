@@ -2560,9 +2560,9 @@ SeedType LawnApp::GetAwardSeedForLevel(int theLevel)
 	{
 		aSeedsHasGot -= 1;  
 	}
-	if (aSeedsHasGot > 43)
+	if (aSeedsHasGot > 44)
 	{
-		aSeedsHasGot = 43;
+		aSeedsHasGot = 44;
 	}
 	
 	return (SeedType)aSeedsHasGot;
@@ -2573,11 +2573,11 @@ int LawnApp::GetSeedsAvailable()
 	int aLevel = mPlayerInfo->mLevel;
 	if (HasFinishedAdventure() || aLevel > 60)
 	{
-		return 59;
+		return 54;
 	}
 
 	SeedType aSeedTypeMax = GetAwardSeedForLevel(aLevel);
-	return min(59, aSeedTypeMax);
+	return min(54, aSeedTypeMax);
 }
 
 bool LawnApp::HasSeedType(SeedType theSeedType)

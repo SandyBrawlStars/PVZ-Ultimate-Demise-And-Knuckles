@@ -741,7 +741,7 @@ bool Plant::FindTargetAndFire(int theRow, PlantWeapon thePlantWeapon)
         aHeadReanim->SetFramesForLayer("anim_shooting");
 
         mShootingCounter = 33;
-        if (mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_SPLITPEA || mSeedType == SeedType::SEED_LEFTPEATER)
+        if ((mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_SPLITPEA || mSeedType == SeedType::SEED_LEFTPEATER) || (mSeedType == SeedType::SEED_GOO_PEA && mShadowPowered > 0))
         {
             aHeadReanim->mAnimRate = 45.0f;
             mShootingCounter = 26;
@@ -987,7 +987,7 @@ void Plant::UpdateShooter()
     }
     if (mLaunchCounter == 25)
     {
-        if (mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_LEFTPEATER)
+        if ((mSeedType == SeedType::SEED_REPEATER || mSeedType == SeedType::SEED_LEFTPEATER) || (mSeedType == SeedType::SEED_GOO_PEA && mShadowPowered > 0))
         {
             FindTargetAndFire(mRow, PlantWeapon::WEAPON_PRIMARY);
         }

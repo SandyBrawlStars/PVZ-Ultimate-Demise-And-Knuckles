@@ -119,6 +119,7 @@ public:
     int                             mChilledCounter;       
     int                             mPoisonedCounter;
     bool                            mPoisonedType;
+    int                             mPoisonedMult;
     int                             mButteredCounter;                           
     int                             mIceTrapCounter;                            
     bool                            mMindControlled;                            

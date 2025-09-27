@@ -403,6 +403,7 @@ bool Projectile::CantHitHighGround()
 	return (
 		mProjectileType == ProjectileType::PROJECTILE_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA ||
+		mProjectileType == ProjectileType::PROJECTILE_GOO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_STAR ||
 		mProjectileType == ProjectileType::PROJECTILE_PUFF ||
 		mProjectileType == ProjectileType::PROJECTILE_FIREBALL
@@ -416,6 +417,7 @@ void Projectile::CheckForHighGround()
 	if (mProjectileType == ProjectileType::PROJECTILE_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA ||
 		mProjectileType == ProjectileType::PROJECTILE_FIREBALL ||
+		mProjectileType == ProjectileType::PROJECTILE_GOO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_SPIKE ||
 		mProjectileType == ProjectileType::PROJECTILE_COBBIG)
 	{
@@ -445,6 +447,7 @@ void Projectile::CheckForHighGround()
 		{
 			DoImpact(nullptr);
 		}
+
 	}
 }
 
@@ -895,7 +898,13 @@ void Projectile::DoImpact(Zombie* theZombie)
 	{
 		unsigned int aDamageFlags = GetDamageFlags(theZombie);
 		theZombie->TakeDamage(GetProjectileDef().mDamage, aDamageFlags);
+		if (mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
+		{
+			theZombie->ApplyPoison(300, true);
+		}
 	}
+
+
 
 	float aLastPosX = mPosX - mVelX;
 	float aLastPosY = mPosY + mPosZ - mVelY - mVelZ;
@@ -1075,7 +1084,7 @@ void Projectile::Draw(Graphics* g)
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
 	{
-		aImage = IMAGE_PROJECTILEPEA;
+		aImage = IMAGE_PROJECTILEGOOPEA;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 	{
@@ -1112,7 +1121,7 @@ void Projectile::Draw(Graphics* g)
 	{
 		Color aColorOverride;
 		aColorOverride = Color(75, 75, 255);
-		aImage = IMAGE_REANIM_CABBAGEPULT_CABBAGE;
+		aImage = IMAGE_PROJECTILEICEBERG;
 		aScale = 1.0f;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_KERNEL)
@@ -1246,6 +1255,11 @@ void Projectile::DrawShadow(Graphics* g)
 	case ProjectileType::PROJECTILE_FIREBALL:
 		aScale = 1.4f;
 		break;
+
+	case ProjectileType::PROJECTILE_GOO_PEA:
+		aOffsetX += -1.0f;
+		aScale = 1.3f; 
+		break;
 	}
 
 	if (mMotionType == ProjectileMotion::MOTION_LOBBED)
@@ -1253,6 +1267,7 @@ void Projectile::DrawShadow(Graphics* g)
 		float aHeight = ClampFloat(-mPosZ, 0.0f, 200.0f);
 		aScale *= 200.0f / (aHeight + 200.0f);
 	}
+
 
 	TodDrawImageCelScaledF(g, IMAGE_PEA_SHADOWS, aOffsetX, (mShadowY - mPosY + aOffsetY), aCelCol, 0, aScale * aStretch, aScale);
 }
