@@ -5267,11 +5267,25 @@ void Zombie::UpdatePlaying()
         mPoisonedCounter--;
         if (mPoisonedType == false)
         {
-            TakeBodyDamage(1, 3);
+            if ((mZombieType == ZombieType::ZOMBIE_WALLNUT_HEAD || mZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD) && mHelmHealth > 0)
+            {
+                TakeDamage(1, 3);
+            }
+            else
+            {
+                TakeBodyDamage(1, 3);
+            }
         }
         else if (mPoisonedCounter % mPoisonedMult == 0)
         {
-            TakeBodyDamage(1, 3);
+            if ((mZombieType == ZombieType::ZOMBIE_WALLNUT_HEAD || mZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD) && mHelmHealth > 0)
+            {
+                TakeDamage(1, 3);
+            }
+            else
+            {
+                TakeBodyDamage(1, 3);
+            }
             UpdateAnimSpeed();
             if (mPoisonedMult < 10)
             {

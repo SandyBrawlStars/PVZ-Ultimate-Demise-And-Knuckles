@@ -834,7 +834,7 @@ But to no avail. Twin Sunflower was alive, ALIVE!
 [GLOOM_SHROOM_DESCRIPTION]
 Gloom-shrooms release heavy fumes in an area around themselves.
 {KEYWORD}Indepent from fume-shrooms
-{KEYWORD}Modded Change: {STAT}+100 Sun Cost, +15 Projectile Damage, x3 Speed, x1.6 Health
+{KEYWORD}Modded Change: {STAT}+100 Sun Cost, +15 Projectile Damage,x1.15 Speed, x1.6 Health
 {FLAVOR}"I've always enjoyed releasing heavy fumes," says Gloom Shroom. "I know a lot of people aren't 
 cool with that. They say it's rude or that it smells bad. All I can say is, would you rather have your 
 brain eaten by zombies?"

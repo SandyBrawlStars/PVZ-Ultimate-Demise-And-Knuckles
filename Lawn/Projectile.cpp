@@ -31,7 +31,8 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20 },
-	{ ProjectileType::PROJECTILE_GOO_PEA,    0,  10 }
+	{ ProjectileType::PROJECTILE_GOO_PEA,    0,  10 },
+	{ ProjectileType::PROJECTILE_HYPNO_BLAST,    0,  400 }
 };
 
 Projectile::Projectile()
@@ -896,6 +897,14 @@ void Projectile::DoImpact(Zombie* theZombie)
 	}
 	else if (theZombie)
 	{
+		if (mProjectileType == ProjectileType::PROJECTILE_HYPNO_BLAST)
+		{
+			if (theZombie->mBodyHealth < 1500)
+			{
+				theZombie->StartMindControlled();
+				return;
+			}
+		}
 		unsigned int aDamageFlags = GetDamageFlags(theZombie);
 		theZombie->TakeDamage(GetProjectileDef().mDamage, aDamageFlags);
 		if (mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
@@ -1048,6 +1057,7 @@ void Projectile::Update()
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE ||
+		mProjectileType == ProjectileType::PROJECTILE_HYPNO_BLAST ||
 		mProjectileType == ProjectileType::PROJECTILE_SPIKE)
 	{
 		aTime = 0;
@@ -1095,6 +1105,10 @@ void Projectile::Draw(Graphics* g)
 		aImage = nullptr;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE)
+	{
+		aImage = IMAGE_PROJECTILECACTUS;
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_HYPNO_BLAST)
 	{
 		aImage = IMAGE_PROJECTILECACTUS;
 	}
@@ -1310,6 +1324,10 @@ Rect Projectile::GetProjectileRect()
 		return Rect(mX, mY, mWidth - 10, mHeight);
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE)
+	{
+		return Rect(mX - 25, mY, mWidth + 25, mHeight);
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_HYPNO_BLAST)
 	{
 		return Rect(mX - 25, mY, mWidth + 25, mHeight);
 	}

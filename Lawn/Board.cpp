@@ -8412,6 +8412,10 @@ void Board::KeyChar(SexyChar theChar)
 		{
 			AddZombie(ZombieType::ZOMBIE_DOLPHIN_RIDER, Zombie::ZOMBIE_WAVE_DEBUG);
 		}
+		else
+		{
+			AddZombie(ZombieType::ZOMBIE_SUPER_ALLSTAR, Zombie::ZOMBIE_WAVE_DEBUG);
+		}
 		return;
 	}
 	else if(theChar == _S('j'))
