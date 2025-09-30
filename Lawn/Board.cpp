@@ -1351,9 +1351,16 @@ void Board::InitLevel()
 		{
 			mSunMoney = 125;
 		}
-		else if ((mApp->IsFirstTimeAdventureMode() && mLevel >= 51) || (mApp->mQuickLevel >= 51))
+		else if ((mApp->IsFirstTimeAdventureMode() && mLevel >= 51 && mLevel <= 60) || (mApp->mQuickLevel >= 51 && mApp->mQuickLevel <= 60))
 		{
-			mSunMoney = 175;
+			if (mApp->mGameMode == GameMode::GAMEMODE_ADVENTURE)
+			{
+				mSunMoney = 175;
+			}
+			else
+			{
+				mSunMoney = 125;
+			}
 		}
 	}
 	memset(mRowPickingArray, 0, sizeof(mRowPickingArray));
@@ -9555,7 +9562,7 @@ bool Board::PlantingRequirementsMet(SeedType theSeedType)
 	}
 }
 
-void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags)
+void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags, bool theShadow)
 {
 	Zombie* aZombie = nullptr;
 	while (IterateZombies(aZombie))
@@ -9578,8 +9585,13 @@ void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius
 				else
 				{
 					aZombie->TakeDamage(1800, 18U);
+
 				}
 			}
+		}
+		if (theShadow)
+		{
+			aZombie->ApplyPoison(1800, false);
 		}
 	}
 

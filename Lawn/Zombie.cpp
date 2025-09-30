@@ -44,12 +44,12 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_GARGANTUAR,        REANIM_GARGANTUAR,          10,     48,     15,     1500,   _S("GARGANTUAR")},
     { ZOMBIE_IMP,               REANIM_IMP,                 10,     48,     1,      0,      _S("IMP")},
     { ZOMBIE_BOSS,              REANIM_BOSS,                10,     60,     1,      0,      _S("BOSS")},
-    { ZOMBIE_REDEYE_GARGANTUAR, REANIM_GARGANTUAR,          20,     48,     15,     1500,   _S("REDEYED_GARGANTUAR")},
+    { ZOMBIE_REDEYE_GARGANTUAR, REANIM_GARGANTUAR,          20,     48,     15,     750,   _S("REDEYED_GARGANTUAR")},
     { ZOMBIE_PEA_HEAD,          REANIM_ZOMBIE,              1,      10,     3,      3500,   _S("PEASHOOTER_ZOMBIE")},
     { ZOMBIE_WALLNUT_HEAD,      REANIM_ZOMBIE,              4,      5,     5,      3000,   _S("WALLNUT_ZOMBIE")},
     { ZOMBIE_JALAPENO_HEAD,     REANIM_ZOMBIE,              3,      32,     10,     1000,   _S("JALAPENO_ZOMBIE")},
     { ZOMBIE_GATLING_HEAD,      REANIM_ZOMBIE,              3,      32,     10,     2000,   _S("GATLING_ZOMBIE")},
-    { ZOMBIE_SQUASH_HEAD,       REANIM_ZOMBIE,              3,      25,     10,     2000,   _S("SQUASH_ZOMBIE")},
+    { ZOMBIE_SQUASH_HEAD,       REANIM_ZOMBIE,              3,      32,     10,     2000,   _S("SQUASH_ZOMBIE")},
     { ZOMBIE_TALLNUT_HEAD,      REANIM_ZOMBIE,              4,      32,     10,     2000,   _S("TALLNUT_ZOMBIE")} ,
     { ZOMBIE_CONE_REPEATER_HEAD, REANIM_ZOMBIE,              3,      32,     5,      3000,   _S("REPEATER_ZOMBIE") },
     { ZOMBIE_SUPER_NEWSPAPER,   REANIM_ZOMBIE_NEWSPAPER,     6,      32,      10,      1000,   _S("AMBUSH_NEWSPAPER_ZOMBIE") },
@@ -59,10 +59,10 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_SUPER_HYPNO_FLAG,       REANIM_ZOMBIE,           12,      32,     10,      1500,   _S("HYPNO_GATLING_FLAG_ZOMBIE")},
     { ZOMBIE_SUNFLOWER_HEAD,          REANIM_ZOMBIE,           2,      32,     5,      3500,   _S("SUNFLOWER_ZOMBIE")},
     { ZOMBIE_TWIN_SUNFLOWER_HEAD,          REANIM_ZOMBIE,      4,      32,     10,      2500,   _S("TWIN_SUNFLOWER_ZOMBIE")},
-    { ZOMBIE_VASE_HEAD,               REANIM_ZOMBIE,              3,      32,     10,      4000,   _S("VASE_HEAD_ZOMBIE")},
-    { ZOMBIE_SNOW_PEA_HEAD,          REANIM_ZOMBIE,              5,      32,     15,      1500,   _S("SNOWPEA_ZOMBIE")},
+    { ZOMBIE_VASE_HEAD,               REANIM_ZOMBIE,          3,      32,     10,      4000,   _S("VASE_HEAD_ZOMBIE")},
+    { ZOMBIE_SNOW_PEA_HEAD,          REANIM_ZOMBIE,           5,      32,     15,      1500,   _S("SNOWPEA_ZOMBIE")},
     { ZOMBIE_ICE_SHROOM_HEAD,     REANIM_ZOMBIE,              4,      32,     10,     1500,   _S("ICE_SHROOM_ZOMBIE")},
-    { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,              13,      32,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
+    { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,      13,      32,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
 
 
 };
@@ -2378,11 +2378,11 @@ void Zombie::UpdateZombieJackInTheBox()
             int aPosY = mY + mHeight / 2;
             if (mMindControlled)
             {
-                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 127);
+                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 127, false);
             }
             else
             {
-                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 255);
+                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 255 , false);
                 mBoard->KillAllPlantsInRadius(aPosX, aPosY, JackInTheBoxPlantRadius);
             }
 
@@ -2427,11 +2427,11 @@ void Zombie::UpdateZombieSuperJack()
             int aPosY = mY + mHeight / 2;
             if (mMindControlled)
             {
-                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 127);
+                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 127, false);
             }
             else
             {
-                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 255);
+                mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 255, false);
                 mBoard->KillAllPlantsInRadius(aPosX, aPosY, JackInTheBoxPlantRadius);
                 mBoard->KillAllPlantsInRadius(aPosX + 80, aPosY + 0, JackInTheBoxPlantRadius);
                 mBoard->KillAllPlantsInRadius(aPosX - 80, aPosY + 0, JackInTheBoxPlantRadius);

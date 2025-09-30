@@ -35,7 +35,7 @@ PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES] = {
     { SeedType::SEED_FUMESHROOM,        nullptr, ReanimationType::REANIM_FUMESHROOM,    9,  175,    300,    PlantSubClass::SUBCLASS_SHOOTER,    75,    _S("FUME_SHROOM") },
     { SeedType::SEED_GRAVEBUSTER,       nullptr, ReanimationType::REANIM_GRAVE_BUSTER,  40, 25,     300,    PlantSubClass::SUBCLASS_NORMAL,     0,      _S("GRAVE_BUSTER") },
     { SeedType::SEED_HYPNOSHROOM,       nullptr, ReanimationType::REANIM_HYPNOSHROOM,   10, 150,    1500,   PlantSubClass::SUBCLASS_SHOOTER,     3500,      _S("HYPNO_SHROOM") },
-    { SeedType::SEED_SCAREDYSHROOM,     nullptr, ReanimationType::REANIM_SCRAREYSHROOM, 33, 100,    300,    PlantSubClass::SUBCLASS_SHOOTER,    125,    _S("SCAREDY_SHROOM") },
+    { SeedType::SEED_SCAREDYSHROOM,     nullptr, ReanimationType::REANIM_SCRAREYSHROOM, 33, 100,    300,    PlantSubClass::SUBCLASS_SHOOTER,    150,    _S("SCAREDY_SHROOM") },
     { SeedType::SEED_ICESHROOM,         nullptr, ReanimationType::REANIM_ICESHROOM,     36, 100,    2500,   PlantSubClass::SUBCLASS_NORMAL,     0,      _S("ICE_SHROOM") },
     { SeedType::SEED_DOOMSHROOM,        nullptr, ReanimationType::REANIM_DOOMSHROOM,    20, 275,    2500,   PlantSubClass::SUBCLASS_NORMAL,     0,      _S("DOOM_SHROOM") },
     { SeedType::SEED_LILYPAD,           nullptr, ReanimationType::REANIM_LILYPAD,       19, 15,     300,    PlantSubClass::SUBCLASS_NORMAL,     0,      _S("LILY_PAD") },
@@ -63,7 +63,7 @@ PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES] = {
     { SeedType::SEED_MARIGOLD,          nullptr, ReanimationType::REANIM_MARIGOLD,      24, 120,    500,   PlantSubClass::SUBCLASS_NORMAL,     1388,   _S("MARIGOLD") },
     { SeedType::SEED_MELONPULT,         nullptr, ReanimationType::REANIM_MELONPULT,     14, 500,    300,    PlantSubClass::SUBCLASS_SHOOTER,    130,    _S("MELON_PULT") },
     { SeedType::SEED_SHADOW_SHROOM,       nullptr, ReanimationType::REANIM_SHADOW_SHROOM,   10, 75,    1500,   PlantSubClass::SUBCLASS_NORMAL,     0,      _S("SHADOW_SHROOM") },
-    { SeedType::SEED_MOON_LAMP,           nullptr, ReanimationType::REANIM_PLANTERN,       27, 100,    300,    PlantSubClass::SUBCLASS_NORMAL,    1250,    _S("MOON_LAMP") },
+    { SeedType::SEED_MOON_LAMP,           nullptr, ReanimationType::REANIM_PLANTERN,       27, 125,    300,    PlantSubClass::SUBCLASS_NORMAL,    1250,    _S("MOON_LAMP") },
     { SeedType::SEED_GOO_PEA,       nullptr, ReanimationType::REANIM_GOO_PEA,            10, 200,    300,   PlantSubClass::SUBCLASS_SHOOTER,     150,      _S("GOO_PEA") },
     { SeedType::SEED_ICEBERG,           nullptr, ReanimationType::REANIM_ICEBERG,       27, 325,    300,    PlantSubClass::SUBCLASS_SHOOTER,    130,    _S("ICEBERG") },
     { SeedType::SEED_GATLINGPEA,        nullptr, ReanimationType::REANIM_GATLINGPEA,    5,  325,    2500,   PlantSubClass::SUBCLASS_SHOOTER,    78,    _S("GATLING_PEA") },
@@ -141,6 +141,7 @@ void Plant::PlantInitialize(int theGridX, int theGridY, SeedType theSeedType, Se
     mRenderOrder = CalcRenderOrder();
     mChilledCounter = 0;
     mShadowPowered = 0;
+    mHealCounter = 0;
 
     Reanimation* aBodyReanim = nullptr;
     if (aPlantDef.mReanimationType != ReanimationType::REANIM_NONE)
@@ -161,7 +162,7 @@ void Plant::PlantInitialize(int theGridX, int theGridY, SeedType theSeedType, Se
             else if (mSeedType == SeedType::SEED_GIANT_WALLNUT)
                 aBodyReanim->mAnimRate = RandRangeFloat(6.0f, 10.0f);
         }
-
+        
         aBodyReanim->mIsAttachment = true;
         mBodyReanimID = mApp->ReanimationGetID(aBodyReanim);
         mBlinkCountdown = 400 + Sexy::Rand(400);
@@ -1078,9 +1079,9 @@ void Plant::UpdateProductionPlant()
                 {
                     mBoard->AddCoin(mX, mY, CoinType::COIN_SMALLSUN, CoinMotion::COIN_MOTION_FROM_PLANT);
                 }
-            }
-            mBoard->AddCoin(mX, mY, CoinType::COIN_SMALLSUN, CoinMotion::COIN_MOTION_FROM_PLANT);
+            }        
         }
+
         else if (mSeedType == SeedType::SEED_SUNFLOWER)
         {
             mBoard->AddCoin(mX, mY, CoinType::COIN_SUN, CoinMotion::COIN_MOTION_FROM_PLANT);
@@ -1362,7 +1363,7 @@ void Plant::UpdateScaredyShroom()
     {
         Rect aZombieRect = aZombie->GetZombieRect();
         int aDiffY = (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS) ? 0 : (aZombie->mRow - mRow);
-        if (!aZombie->mMindControlled && !aZombie->IsDeadOrDying() && aDiffY <= 1 && aDiffY >= -1 && GetCircleRectOverlap(mX, mY + 20.0f, 120, aZombieRect))
+        if (!aZombie->mMindControlled && !aZombie->IsDeadOrDying() && aDiffY <= 1 && aDiffY >= -1 && GetCircleRectOverlap(mX, mY + 20.0f, 110, aZombieRect))
         {
             aHasZombieNearby = true;
             break;
@@ -1384,6 +1385,7 @@ void Plant::UpdateScaredyShroom()
         {
             mState = PlantState::STATE_SCAREDYSHROOM_SCARED;
             PlayBodyReanim("anim_scaredidle", ReanimLoopType::REANIM_LOOP, 10, 0.0f);
+
         }
     }
     else if (mState == PlantState::STATE_SCAREDYSHROOM_SCARED)
@@ -1395,6 +1397,20 @@ void Plant::UpdateScaredyShroom()
             float aAnimRate = RandRangeFloat(7.0f, 12.0f);
             PlayBodyReanim("anim_grow", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 10, aAnimRate);
         }
+        if (mShadowPowered > 0)
+        {
+            mHealCounter++;
+            if (mHealCounter % 2 == 1)
+            {
+                mPlantHealth += 1;
+            }
+            if (mPlantHealth > 500)
+            {
+                mPlantHealth = 500;
+                mHealCounter = 0;
+            }
+        }
+
     }
     else if (mState == PlantState::STATE_SCAREDYSHROOM_RAISING)
     {
@@ -2449,7 +2465,7 @@ void Plant::UpdateBowling()
             mApp->PlaySample(SOUND_BOWLINGIMPACT2);
 
             int aDamageRangeFlags = GetDamageRangeFlags(PlantWeapon::WEAPON_PRIMARY) | 32U;
-            mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 90, 1, true, aDamageRangeFlags);
+            mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 90, 1, true, aDamageRangeFlags , false);
             mApp->AddTodParticle(aPosX, aPosY, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_POWIE);
             mBoard->ShakeBoard(3, -4);
 
@@ -2630,13 +2646,14 @@ void Plant::UpdateAbilities()
     else if (mSeedType == SeedType::SEED_GOLD_MAGNET)                                           UpdateGoldMagnetShroom();
     else if (mSeedType == SeedType::SEED_SUNSHROOM)                                             UpdateSunShroom();
     else if (MakesSun() || mSeedType == SeedType::SEED_MARIGOLD)                                UpdateProductionPlant();
-    else if (IsShadowPlant(mSeedType))                                                          UpdateShadowPlant();
     else if (mSeedType == SeedType::SEED_GRAVEBUSTER)                                           UpdateGraveBuster();
     else if (mSeedType == SeedType::SEED_TORCHWOOD)                                             UpdateTorchwood();
     else if (mSeedType == SeedType::SEED_POTATOMINE)                                            UpdatePotato();
     else if (mSeedType == SeedType::SEED_SPIKEWEED || mSeedType == SeedType::SEED_SPIKEROCK)    UpdateSpikeweed();
     else if (mSeedType == SeedType::SEED_TANGLEKELP)                                            UpdateTanglekelp();
     else if (mSeedType == SeedType::SEED_SCAREDYSHROOM)                                         UpdateScaredyShroom();
+    if (IsShadowPlant(mSeedType))                                                          UpdateShadowPlant();
+
 
     if (mSubclass == PlantSubClass::SUBCLASS_SHOOTER)
     {
@@ -4337,12 +4354,18 @@ void Plant::MouseDown(int x, int y, int theClickCount)
     }
 }
 
-void Plant::IceZombies()
+void Plant::IceZombies(bool theShadow)
 {
     Zombie* aZombie = nullptr;
     while (mBoard->IterateZombies(aZombie))
     {
         aZombie->HitIceTrap();
+        if (theShadow)
+        {
+            aZombie->TakeDamage(200, 1U);
+            aZombie->ApplyPoison(100, 0);
+            aZombie->mPosX += 30;
+        }
     }
 
     mBoard->mIceTrapCounter = 300;
@@ -4426,6 +4449,9 @@ void Plant::DoSpecial()
     int aPosY = mY + mHeight / 2;
     int aDamageRangeFlags = GetDamageRangeFlags(PlantWeapon::WEAPON_PRIMARY);
 
+
+    bool aShadow = mShadowPowered > 0;
+
     switch (mSeedType)
     {
     case SeedType::SEED_BLOVER:
@@ -4446,7 +4472,7 @@ void Plant::DoSpecial()
         {
             mApp->GetAchievement(ACHIEVEMENT_EXPLODONATOR);
         }
-        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1, true, aDamageRangeFlags);
+        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1, true, aDamageRangeFlags, false);
 
 
         mApp->AddTodParticle(aPosX, aPosY, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_POWIE);
@@ -4459,7 +4485,8 @@ void Plant::DoSpecial()
     {
         mApp->PlaySample(SOUND_DOOMSHROOM);
 
-        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 250, 3, true, aDamageRangeFlags);
+
+        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 250, 3, true, aDamageRangeFlags, aShadow);
         KillAllPlantsNearDoom();
 
         mApp->AddTodParticle(aPosX, aPosY, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_DOOM);
@@ -4498,7 +4525,7 @@ void Plant::DoSpecial()
     case SeedType::SEED_ICESHROOM:
     {
         mApp->PlayFoley(FoleyType::FOLEY_FROZEN);
-        IceZombies();
+        IceZombies(aShadow);
         mApp->AddTodParticle(aPosX, aPosY, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_ICE_TRAP);
 
         Die();
@@ -4510,7 +4537,7 @@ void Plant::DoSpecial()
         aPosY = mY + mHeight / 2;
 
         mApp->PlaySample(SOUND_POTATO_MINE);
-        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 60, 0, false, aDamageRangeFlags);
+        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 60, 0, false, aDamageRangeFlags, false);
         if(!mApp->IsIZombieLevel() && !mApp->mPlayedQuickplay)
             mApp->GetAchievement(AchievementType::ACHIEVEMENT_SPUDOW);
 

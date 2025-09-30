@@ -191,6 +191,7 @@ public:
     bool                    mHighlighted;   
     int                     mChilledCounter;
     int                     mShadowPowered;
+    int                     mHealCounter;
 
 public:
     Plant();
@@ -230,7 +231,7 @@ public:
     /*inline*/ bool         NotOnGround();
     void                    DoSquashDamage();
     void                    BurnRow(int theRow);
-    void                    IceZombies();
+    void                    IceZombies(bool theShadow);
     void                    BlowAwayFliers(int theX, int theRow);
     void                    UpdateGraveBuster();
     TodParticleSystem*      AddAttachedParticle(int thePosX, int thePosY, int theRenderPosition, ParticleEffect theEffect);

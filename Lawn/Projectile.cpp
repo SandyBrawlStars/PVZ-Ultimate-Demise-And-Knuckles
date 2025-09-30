@@ -690,7 +690,7 @@ void Projectile::UpdateLobMotion()
 			if (mBoard->mGargantuarsKilled >= 2 && !mApp->mPlayedQuickplay)
 				mApp->GetAchievement(ACHIEVEMENT_POPCORN_PARTY);
 		}
-		mBoard->KillAllZombiesInRadius(mRow, mPosX + 80, mPosY + 40, 115, 1, true, mDamageRangeFlags);
+		mBoard->KillAllZombiesInRadius(mRow, mPosX + 80, mPosY + 40, 115, 1, true, mDamageRangeFlags, false);
 		DoImpact(nullptr);
 	}
 	else

@@ -562,7 +562,8 @@ enum GridSquareType
     GRIDSQUARE_GRASS = 1,
     GRIDSQUARE_DIRT = 2,
     GRIDSQUARE_POOL = 3,
-    GRIDSQUARE_HIGH_GROUND = 4
+    GRIDSQUARE_HIGH_GROUND = 4,
+    GRIDSQUARE_WOOD = 5
 };
 enum HelmType
 {
@@ -778,7 +779,8 @@ enum PlantRowType
     PLANTROW_DIRT = 0,
     PLANTROW_NORMAL = 1,
     PLANTROW_POOL = 2,
-    PLANTROW_HIGH_GROUND = 3
+    PLANTROW_HIGH_GROUND = 3,
+    PLANTROW_WOOD = 3
 };
 enum PottedPlantAge
 {

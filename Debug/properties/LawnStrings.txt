@@ -579,7 +579,7 @@ Winter-shrooms are long-ranged shooters that hide when enemies get near them.
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Special:{STAT} stops shooting when enemy is close
 {NOCTURNAL}Sleeps during the day
-{KEYWORD}Modded Change: {STAT}+75 Sun Cost, -5 Projectile Damage, x1.2 Speed, x1.6 Health, Shoots Frozen Peas
+{KEYWORD}Modded Change: {STAT}+75 Sun Cost, -5 Projectile Damage, x1.6 Health, Shoots Frozen Peas
 {FLAVOR}Winter-Shroom found a way to deal with his fear of zombies, the solution? Slow them so they won't reach him. The problem? He doesn't know what to do if they reach him.
 
 [ICE_SHROOM_DESCRIPTION]
