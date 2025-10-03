@@ -32,7 +32,9 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20 },
 	{ ProjectileType::PROJECTILE_GOO_PEA,    0,  10 },
-	{ ProjectileType::PROJECTILE_HYPNO_BLAST,    0,  400 }
+	{ ProjectileType::PROJECTILE_HYPNO_BLAST,    0,  400 },
+	{ ProjectileType::PROJECTILE_ZOMBIE_MELON,    0,  150 },
+	{ ProjectileType::PROJECTILE_ZOMBIE_BUTTER,    0,  55 },
 };
 
 Projectile::Projectile()
@@ -122,7 +124,7 @@ void Projectile::ProjectileInitialize(int theX, int theY, int theRenderOrder, in
 		TodParticleSystem* aParticle = mApp->AddTodParticle(mPosX + 13.0f, mPosY + 13.0f, 400000, ParticleEffect::PARTICLE_PUFFSHROOM_TRAIL);
 		AttachParticle(mAttachmentID, aParticle, 13.0f, 13.0f);
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL)
+	else if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER)
 	{
 		mRotation = RandRangeFloat(0.0f, 2 * PI);
 		mRotationSpeed = RandRangeFloat(0.05f, 0.1f);
@@ -363,6 +365,12 @@ void Projectile::CheckForCollision()
 					case SEED_ICESHROOM:
 						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_ICE_SHROOM_HEAD);
 						break;
+					case SEED_MELONPULT:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_MELON_PULT_HEAD);
+						break;
+					case SEED_KERNELPULT:
+						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_BUTTER_PULT_HEAD);
+						break;
 					default:
 						SpawnZombie(mPosX - 80, mRow, ZombieType::ZOMBIE_PEA_HEAD);
 						break;
@@ -522,6 +530,27 @@ bool Projectile::IsZombieHitBySplash(Zombie* theZombie)
 	return theZombie->EffectedByDamage((unsigned int)mDamageRangeFlags) && GetRectOverlap(aProjectileRect, aZombieRect) >= 0;
 }
 
+bool Projectile::IsPlantHitBySplash(Plant* thePlant)
+{
+	Rect aProjectileRect = GetProjectileRect();
+
+	int aRowDeviation = thePlant->mRow - mRow;
+	int aGridX = mBoard->PixelToGridX(mPosX, mPosY);
+	int aColumnDeviation = thePlant->mPlantCol - aGridX;
+	Rect aZombieRect = thePlant->GetPlantRect();
+
+	if (aRowDeviation > 1 || aRowDeviation < -1)
+	{
+		return false;
+	}
+	if (aColumnDeviation > 1 || aColumnDeviation < -1)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 void Projectile::DoSplashDamage(Zombie* theZombie)
 {
 	const ProjectileDefinition& aProjectileDef = GetProjectileDef();
@@ -569,6 +598,51 @@ void Projectile::DoSplashDamage(Zombie* theZombie)
 	}
 }
 
+
+void Projectile::DoSplashDamagePlant(Plant* thePlant)
+{
+	const ProjectileDefinition& aProjectileDef = GetProjectileDef();
+
+	int aPlantsGetSplashed = 0;
+	Plant* aPlant = nullptr;
+	while (mBoard->IteratePlants(aPlant))
+	{
+		if (aPlant != thePlant && IsPlantHitBySplash(aPlant))
+		{
+			aPlantsGetSplashed++;
+		}
+	}
+
+	int aOriginalDamage = aProjectileDef.mDamage;
+	int aSplashDamage = aProjectileDef.mDamage / 3;
+	int aMaxSplashDamageAmount = aSplashDamage * 7;
+
+	int aSplashDamageAmount = aSplashDamage * aPlantsGetSplashed;
+	if (aSplashDamageAmount > aMaxSplashDamageAmount)
+	{
+		//aSplashDamage *= aMaxSplashDamageAmount / aSplashDamage;
+		aSplashDamage = aOriginalDamage * aMaxSplashDamageAmount / (aSplashDamageAmount * 3);
+		aSplashDamage = max(aSplashDamage, 1);
+	}
+
+	aPlant = nullptr;
+	while (mBoard->IteratePlants(aPlant))
+	{
+		if (IsPlantHitBySplash(aPlant))
+		{
+			if (aPlant == thePlant)
+			{
+			}
+			else
+			{
+				aPlant->mPlantHealth -= aSplashDamage;
+				if (aPlant->mPlantHealth < 0)
+					aPlant->Die();
+			}
+		}
+	}
+}
+
 void Projectile::UpdateLobMotion()
 {
 	if (mProjectileType == ProjectileType::PROJECTILE_COBBIG && mPosZ < -700.0f)
@@ -592,7 +666,7 @@ void Projectile::UpdateLobMotion()
 	mPosZ += mVelZ;
 
 	bool isRising = mVelZ < 0.0f;
-	if (isRising && (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_COBBIG))
+	if (isRising && (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_COBBIG || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER))
 	{
 		return;
 	}
@@ -608,7 +682,7 @@ void Projectile::UpdateLobMotion()
 		{
 			aMinCollisionZ = -32.0f;
 		}
-		else if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL)
+		else if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER)
 		{
 			aMinCollisionZ = 60.0f;
 		}
@@ -637,7 +711,7 @@ void Projectile::UpdateLobMotion()
 
 	Plant* aPlant = nullptr;
 	Zombie* aZombie = nullptr;
-	if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
+	if (mProjectileType == ProjectileType::PROJECTILE_BASKETBALL || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER)
 	{
 		aPlant = FindCollisionTargetPlant();
 	}
@@ -680,6 +754,17 @@ void Projectile::UpdateLobMotion()
 			aPlant->mPlantHealth -= GetProjectileDef().mDamage;
 			aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
 			mApp->PlayFoley(FoleyType::FOLEY_SPLAT);
+			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON)
+			{
+				float aLastPosX = mPosX - mVelX;
+				float aLastPosY = mPosY + mPosZ - mVelY - mVelZ;
+				DoSplashDamagePlant(aPlant);
+				mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_MELONSPLASH);
+			}
+			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER)
+			{
+				aPlant->mChilledCounter = 1200;
+			}
 			Die();
 		}
 	}
@@ -857,7 +942,7 @@ void Projectile::PlayImpactSound(Zombie* theZombie)
 		aPlayHelmSound = false;
 		aPlaySplatSound = false;
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON)
+	else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON)
 	{
 		mApp->PlayFoley(FoleyType::FOLEY_MELONIMPACT);
 		aPlaySplatSound = false;
@@ -920,7 +1005,7 @@ void Projectile::DoImpact(Zombie* theZombie)
 	ParticleEffect aEffect = ParticleEffect::PARTICLE_NONE;
 	float aSplatPosX = mPosX + 12.0f;
 	float aSplatPosY = mPosY + 12.0f;
-	if (mProjectileType == ProjectileType::PROJECTILE_MELON)
+	if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON)
 	{
 		mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_MELONSPLASH);
 	}
@@ -1049,6 +1134,7 @@ void Projectile::Update()
 		mProjectileType == ProjectileType::PROJECTILE_CABBAGE || 
 		mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE ||
 		mProjectileType == ProjectileType::PROJECTILE_MELON || 
+		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON ||
 		mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || 
 		mProjectileType == ProjectileType::PROJECTILE_KERNEL || 
 		mProjectileType == ProjectileType::PROJECTILE_BUTTER || 
@@ -1126,6 +1212,11 @@ void Projectile::Draw(Graphics* g)
 		aImage = IMAGE_REANIM_ZOMBIE_CATAPULT_BASKETBALL;
 		aScale = 1.1f;
 	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON)
+	{
+		aImage = IMAGE_REANIM_MELONPULT_MELON;
+		aScale = 1.0f;
+	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE)
 	{
 		aImage = IMAGE_REANIM_CABBAGEPULT_CABBAGE;
@@ -1143,7 +1234,7 @@ void Projectile::Draw(Graphics* g)
 		aImage = IMAGE_REANIM_CORNPULT_KERNAL;
 		aScale = 0.95f;
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_BUTTER)
+	else if (mProjectileType == ProjectileType::PROJECTILE_BUTTER || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER)
 	{
 		aImage = IMAGE_REANIM_CORNPULT_BUTTER;
 		aScale = 0.8f;

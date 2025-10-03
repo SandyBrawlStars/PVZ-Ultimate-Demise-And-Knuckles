@@ -66,6 +66,7 @@ public:
     void                    Die();
     void                    SpawnZombie(int theX, int theRow, ZombieType theZombieType);
     void                    DoImpact(Zombie* theZombie);
+    void                    DoSplashDamagePlant(Plant* thePlant);
     void                    UpdateMotion();
     void                    CheckForCollision();
     Zombie*                 FindCollisionTarget();
@@ -83,6 +84,7 @@ public:
     bool                    IsSplashDamage(Zombie* theZombie/* = nullptr*/);
     void                    PlayImpactSound(Zombie* theZombie);
     bool                    IsZombieHitBySplash(Zombie* theZombie);
+    bool                    IsPlantHitBySplash(Plant* thePlant);
     bool                    PeaAboutToHitTorchwood();
     bool                    GetGargantuars(int theRow, int theX, int theY, int theRadius, int theRowRange);
 

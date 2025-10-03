@@ -63,7 +63,8 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_SNOW_PEA_HEAD,          REANIM_ZOMBIE,           5,      32,     15,      1500,   _S("SNOWPEA_ZOMBIE")},
     { ZOMBIE_ICE_SHROOM_HEAD,     REANIM_ZOMBIE,              4,      32,     10,     1500,   _S("ICE_SHROOM_ZOMBIE")},
     { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,      13,      32,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
-
+    { ZOMBIE_MELON_PULT_HEAD,          REANIM_ZOMBIE,              5,      32,     10,      1500,   _S("MELON_PULT_ZOMBIE")},
+    { ZOMBIE_BUTTER_PULT_HEAD,          REANIM_ZOMBIE,              3,      32,     10,      4500,   _S("BUTTER_PULT_ZOMBIE")},
 
 };
 
@@ -809,6 +810,60 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         break;
     }
 
+    case ZombieType::ZOMBIE_MELON_PULT_HEAD:
+    {
+        LoadPlainZombieReanim();
+        ReanimShowPrefix("anim_hair", RENDER_GROUP_HIDDEN);
+        ReanimShowPrefix("anim_head2", RENDER_GROUP_HIDDEN);
+
+        Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
+        if (IsOnBoard())
+        {
+            aBodyReanim->SetFramesForLayer("anim_walk2");
+        }
+
+        ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("anim_head1");
+        aTrackInstance->mImageOverride = IMAGE_BLANK;
+        Reanimation* aHeadReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_MELONPULT);
+        aHeadReanim->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
+        mSpecialHeadReanimID = mApp->ReanimationGetID(aHeadReanim);
+        AttachEffect* aAttachEffect = AttachReanim(aTrackInstance->mAttachmentID, aHeadReanim, 0.0f, 0.0f);
+        aBodyReanim->mFrameBasePose = 0;
+        TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 65.0f, -20.0f, 0.2f, -1.0f, 1.0f);
+
+        mPhaseCounter = 150;
+        mBodyHealth = 1350;
+        mVariant = false;
+        break;
+    }
+
+    case ZombieType::ZOMBIE_BUTTER_PULT_HEAD:
+    {
+        LoadPlainZombieReanim();
+        ReanimShowPrefix("anim_hair", RENDER_GROUP_HIDDEN);
+        ReanimShowPrefix("anim_head2", RENDER_GROUP_HIDDEN);
+
+        Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
+        if (IsOnBoard())
+        {
+            aBodyReanim->SetFramesForLayer("anim_walk2");
+        }
+
+        ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("anim_head1");
+        aTrackInstance->mImageOverride = IMAGE_BLANK;
+        Reanimation* aHeadReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_KERNELPULT);
+        aHeadReanim->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
+        mSpecialHeadReanimID = mApp->ReanimationGetID(aHeadReanim);
+        AttachEffect* aAttachEffect = AttachReanim(aTrackInstance->mAttachmentID, aHeadReanim, 0.0f, 0.0f);
+        aBodyReanim->mFrameBasePose = 0;
+        TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 65.0f, -20.0f, 0.2f, -1.0f, 1.0f);
+
+        mPhaseCounter = 150;
+        mBodyHealth = 1450;
+        mVariant = false;
+        break;
+    }
+
     case ZombieType::ZOMBIE_SNOW_PEA_HEAD:
     {
         LoadPlainZombieReanim();
@@ -985,7 +1040,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         aBodyReanim->mFrameBasePose = 0;
         TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 37.0f, 0.0f, 0.2f, -0.8f, 0.8f);
 
-        mHelmType = HelmType::HELMTYPE_WALLNUT;
+        mHelmType = HelmType::HELMTYPE_TALLNUT;
         mHelmHealth = 7500;
         mVariant = false;
         mPosX += 30.0f;
@@ -1824,20 +1879,60 @@ void Zombie::ZombieCatapultFire(Plant* thePlant)
         aTargetY = 0.0f;
     }
 
-    mApp->PlayFoley(FoleyType::FOLEY_BASKETBALL);
-
-    Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_BASKETBALL);
-    float aRangeX = aOriginX - aTargetX - 20.0f;
-    float aRangeY = aTargetY - aOriginY;
-    if (aRangeX < 40.0f)
+    if (mZombieType == ZombieType::ZOMBIE_CATAPULT)
     {
-        aRangeX = 40.0f;
+        mApp->PlayFoley(FoleyType::FOLEY_BASKETBALL);
     }
-    aProjectile->mMotionType = ProjectileMotion::MOTION_LOBBED;
-    aProjectile->mVelX = -aRangeX / 120.0f;
-    aProjectile->mVelY = 0.0f;
-    aProjectile->mVelZ = aRangeY / 120.0f - 7.0f;
-    aProjectile->mAccZ = 0.115f;
+
+
+    switch (mZombieType)
+    {
+    case ZombieType::ZOMBIE_CATAPULT:
+    {
+        Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_BASKETBALL);
+        float aRangeX = aOriginX - aTargetX - 20.0f;
+        float aRangeY = aTargetY - aOriginY;
+        if (aRangeX < 40.0f)
+        {
+            aRangeX = 40.0f;
+        }
+        aProjectile->mMotionType = ProjectileMotion::MOTION_LOBBED;
+        aProjectile->mVelX = -aRangeX / 120.0f;
+        aProjectile->mVelY = 0.0f;
+        aProjectile->mVelZ = aRangeY / 120.0f - 7.0f;
+        aProjectile->mAccZ = 0.115f;
+    }
+    case ZombieType::ZOMBIE_MELON_PULT_HEAD:
+    {
+        Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_MELON);
+        float aRangeX = aOriginX - aTargetX - 20.0f;
+        float aRangeY = aTargetY - aOriginY;
+        if (aRangeX < 40.0f)
+        {
+            aRangeX = 40.0f;
+        }
+        aProjectile->mMotionType = ProjectileMotion::MOTION_LOBBED;
+        aProjectile->mVelX = -aRangeX / 120.0f;
+        aProjectile->mVelY = 0.0f;
+        aProjectile->mVelZ = aRangeY / 120.0f - 7.0f;
+        aProjectile->mAccZ = 0.115f;
+    }
+    case ZombieType::ZOMBIE_BUTTER_PULT_HEAD:
+    {
+        Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_BUTTER);
+        float aRangeX = aOriginX - aTargetX - 20.0f;
+        float aRangeY = aTargetY - aOriginY;
+        if (aRangeX < 40.0f)
+        {
+            aRangeX = 40.0f;
+        }
+        aProjectile->mMotionType = ProjectileMotion::MOTION_LOBBED;
+        aProjectile->mVelX = -aRangeX / 120.0f;
+        aProjectile->mVelY = 0.0f;
+        aProjectile->mVelZ = aRangeY / 120.0f - 7.0f;
+        aProjectile->mAccZ = 0.115f;
+    }
+    }    
 }
 
 Plant* Zombie::FindCatapultTarget()
@@ -2706,9 +2801,16 @@ void Zombie::UpdateZombiePeaHead()
     }
     else if (mPhaseCounter == 0)
     {
+
         Reanimation* aHeadReanim = mApp->ReanimationGet(mSpecialHeadReanimID);
         aHeadReanim->PlayReanim("anim_head_idle", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 20, 15.0f);
         mApp->PlayFoley(FoleyType::FOLEY_THROW);
+
+        if (mZombieType == ZombieType::ZOMBIE_MELON_PULT_HEAD || mZombieType == ZombieType::ZOMBIE_BUTTER_PULT_HEAD)
+        {
+            Reanimation* aHeadReanim = mApp->ReanimationGet(mSpecialHeadReanimID);
+            aHeadReanim->PlayReanim("anim_idle", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 20, 15.0f);
+        }
 
         Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
         int aTrackIndex = aBodyReanim->FindTrackIndex("anim_head1");
@@ -2719,35 +2821,82 @@ void Zombie::UpdateZombiePeaHead()
         float aOriginY = mPosY + aTransform.mTransY + 6.0f - mAltitude;
         if (mMindControlled)  
         {
-            if (mZombieType != ZombieType::ZOMBIE_SNOW_PEA_HEAD)
+            switch (mZombieType)
+            {
+            case ZombieType::ZOMBIE_PEA_HEAD:
             {
                 aOriginX += 90.0f * mScaleZombie;
                 Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_PEA);
                 aProjectile->mDamageRangeFlags = 1;
+                break;
             }
-            else
+            case ZombieType::ZOMBIE_SNOW_PEA_HEAD:
             {
                 aOriginX += 90.0f * mScaleZombie;
                 Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_SNOWPEA);
                 aProjectile->mDamageRangeFlags = 1;
+                break;
+            }
+            case ZombieType::ZOMBIE_MELON_PULT_HEAD:
+            {
+                aOriginX += 90.0f * mScaleZombie;
+                Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_MELON);
+                aProjectile->mDamageRangeFlags = 1;
+                break;
+            }
+            case ZombieType::ZOMBIE_BUTTER_PULT_HEAD:
+            {
+                aOriginX += 90.0f * mScaleZombie;
+                Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_BUTTER);
+                aProjectile->mDamageRangeFlags = 1;
+                break;
+            }
+            default:
+            {
+                aOriginX += 90.0f * mScaleZombie;
+                Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_PEA);
+                aProjectile->mDamageRangeFlags = 1;
+                break;
+            }
             }
             
         }
         else
         {
-            if (mZombieType != ZombieType::ZOMBIE_SNOW_PEA_HEAD)
+            switch (mZombieType)
+            {
+            case ZombieType::ZOMBIE_PEA_HEAD:
             {
                 Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_PEA);
                 aProjectile->mMotionType = ProjectileMotion::MOTION_BACKWARDS;
+                break;
             }
-            else
+            case ZombieType::ZOMBIE_SNOW_PEA_HEAD:
             {
-                Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA);
+                Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA);       
                 aProjectile->mMotionType = ProjectileMotion::MOTION_BACKWARDS;
+                break;
             }
+            case ZombieType::ZOMBIE_MELON_PULT_HEAD:
+            case ZombieType::ZOMBIE_BUTTER_PULT_HEAD:
+            {
+                Plant* aPlant = FindCatapultTarget();
+                ZombieCatapultFire(aPlant);
+                break;
+            }
+            }
+
         }
 
         mPhaseCounter = 75;
+        if (mZombieType == ZombieType::ZOMBIE_MELON_PULT_HEAD)
+        {
+            mPhaseCounter = 250;
+        }
+        if (mZombieType == ZombieType::ZOMBIE_BUTTER_PULT_HEAD)
+        {
+            mPhaseCounter = 550;
+        }
     }
 }
 void Zombie::UpdateZombieSunflowerHead()
@@ -5122,7 +5271,7 @@ void Zombie::UpdateActions()
     {
         UpdateZombieImp();
     }
-    if (mZombieType == ZombieType::ZOMBIE_PEA_HEAD || mZombieType == ZombieType::ZOMBIE_SNOW_PEA_HEAD)
+    if (mZombieType == ZombieType::ZOMBIE_PEA_HEAD || mZombieType == ZombieType::ZOMBIE_SNOW_PEA_HEAD || mZombieType == ZombieType::ZOMBIE_MELON_PULT_HEAD || mZombieType == ZombieType::ZOMBIE_BUTTER_PULT_HEAD)
     {
         UpdateZombiePeaHead();
     }

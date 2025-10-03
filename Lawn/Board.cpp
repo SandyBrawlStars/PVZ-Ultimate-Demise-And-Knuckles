@@ -8174,6 +8174,26 @@ void Board::KeyChar(SexyChar theChar)
 			AddZombie(ZombieType::ZOMBIE_WALLNUT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
 			return;
 		}
+		if (theChar == _S('p'))
+		{
+			AddZombie(ZombieType::ZOMBIE_PEA_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('P'))
+		{
+			AddZombie(ZombieType::ZOMBIE_SNOW_PEA_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('b'))
+		{
+			AddZombie(ZombieType::ZOMBIE_BUTTER_PULT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('i'))
+		{
+			AddZombie(ZombieType::ZOMBIE_ICE_SHROOM_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
 		if (theChar == _S('t'))
 		{
 			AddZombie(ZombieType::ZOMBIE_TALLNUT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
@@ -8189,9 +8209,39 @@ void Board::KeyChar(SexyChar theChar)
 			AddZombie(ZombieType::ZOMBIE_GATLING_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
 			return;
 		}
+		if (theChar == _S('G'))
+		{
+			AddZombie(ZombieType::ZOMBIE_SUPER_HYPNO_FLAG, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('c'))
+		{
+			AddZombie(ZombieType::ZOMBIE_CACTUS_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('S'))
+		{
+			AddZombie(ZombieType::ZOMBIE_SUNFLOWER_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('T'))
+		{
+			AddZombie(ZombieType::ZOMBIE_TWIN_SUNFLOWER_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('r'))
+		{
+			AddZombie(ZombieType::ZOMBIE_CONE_REPEATER_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
 		if (theChar == _S('s'))
 		{
 			AddZombie(ZombieType::ZOMBIE_SQUASH_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('m'))
+		{
+			AddZombie(ZombieType::ZOMBIE_MELON_PULT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
 			return;
 		}
 	}
