@@ -532,7 +532,7 @@ Puff-shrooms are cheap, but can only fire a short distance.
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} short
 {NOCTURNAL}Sleeps during the day
-{KEYWORD}Modded Change: {STAT}+5 Sun Cost, -5 Projectile Damage, x2 Speed, x1.6 Health
+{KEYWORD}Modded Change: {STAT}+10 Sun Cost, -5 Projectile Damage, x2 Speed, x1.6 Health
 {FLAVOR}"I only recently became aware of the existence of zombies," says Puff-shroom. "Like many fungi, 
 I'd just assumed they were fairy tales or movie monsters. This whole experience has been a huge eye-opener for me."
 
@@ -3330,7 +3330,7 @@ Pole Vaulter - 10%
 {KEYWORD}Toughness:{STAT} medium - 1300
 
 [GOO_PEA_DESCRIPTION]
-Slows down zombies and poisons them, Ignores Roof Slope
+Slows down zombies and poisons them
 {KEYWORD}Damage: Large Over Time
 {KEYWORD}Shadow Buff:{STAT} Shoots More Peas
 Sprites And Animations by Reat on the MA Discord

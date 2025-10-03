@@ -636,6 +636,7 @@ void Projectile::DoSplashDamagePlant(Plant* thePlant)
 			else
 			{
 				aPlant->mPlantHealth -= aSplashDamage;
+				aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
 				if (aPlant->mPlantHealth < 0)
 					aPlant->Die();
 			}
@@ -752,6 +753,10 @@ void Projectile::UpdateLobMotion()
 		else
 		{
 			aPlant->mPlantHealth -= GetProjectileDef().mDamage;
+			if (aPlant->mPlantHealth <= 0)
+			{
+				aPlant->Die();
+			}
 			aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
 			mApp->PlayFoley(FoleyType::FOLEY_SPLAT);
 			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON)
@@ -761,7 +766,7 @@ void Projectile::UpdateLobMotion()
 				DoSplashDamagePlant(aPlant);
 				mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_MELONSPLASH);
 			}
-			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER)
+			else if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_BUTTER)
 			{
 				aPlant->mChilledCounter = 1200;
 			}

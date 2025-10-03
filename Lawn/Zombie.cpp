@@ -25,47 +25,47 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_PAIL,              REANIM_ZOMBIE,              4,      5,      1,      3000,   _S("BUCKETHEAD_ZOMBIE")},
     { ZOMBIE_NEWSPAPER,         REANIM_ZOMBIE_NEWSPAPER,    2,      2,     1,      1000,   _S("NEWSPAPER_ZOMBIE")},
     { ZOMBIE_DOOR,              REANIM_ZOMBIE,              4,      4,     5,      3500,   _S("SCREEN_DOOR_ZOMBIE")},
-    { ZOMBIE_FOOTBALL,          REANIM_ZOMBIE_FOOTBALL,     7,      16,     5,      2000,   _S("FOOTBALL_ZOMBIE")},
+    { ZOMBIE_FOOTBALL,          REANIM_ZOMBIE_FOOTBALL,     7,      14,     5,      2000,   _S("FOOTBALL_ZOMBIE")},
     { ZOMBIE_DANCER,            REANIM_DANCER,              5,      2,     5,      1000,   _S("DANCING_ZOMBIE")},
     { ZOMBIE_BACKUP_DANCER,     REANIM_BACKUP_DANCER,       1,      2,     1,      0,      _S("BACKUP_DANCER")},
     { ZOMBIE_DUCKY_TUBE,        REANIM_ZOMBIE,              1,      21,     5,      0,      _S("DUCKY_TUBE_ZOMBIE")},
-    { ZOMBIE_SNORKEL,           REANIM_SNORKEL,             3,      23,     10,     2000,   _S("SNORKEL_ZOMBIE")},
-    { ZOMBIE_ZAMBONI,           REANIM_ZOMBIE_ZAMBONI,      7,      26,     10,     2000,   _S("ZOMBONI")},
-    { ZOMBIE_BOBSLED,           REANIM_BOBSLED,             3,      26,     10,     2000,   _S("ZOMBIE_BOBSLED_TEAM")},
-    { ZOMBIE_DOLPHIN_RIDER,     REANIM_ZOMBIE_DOLPHINRIDER, 3,      28,     10,     1500,   _S("DOLPHIN_RIDER_ZOMBIE")},
+    { ZOMBIE_SNORKEL,           REANIM_SNORKEL,             3,      22,     10,     2000,   _S("SNORKEL_ZOMBIE")},
+    { ZOMBIE_ZAMBONI,           REANIM_ZOMBIE_ZAMBONI,      7,      24,     10,     2000,   _S("ZOMBONI")},
+    { ZOMBIE_BOBSLED,           REANIM_BOBSLED,             3,      24,     10,     2000,   _S("ZOMBIE_BOBSLED_TEAM")},
+    { ZOMBIE_DOLPHIN_RIDER,     REANIM_ZOMBIE_DOLPHINRIDER, 3,      26,     10,     1500,   _S("DOLPHIN_RIDER_ZOMBIE")},
     { ZOMBIE_JACK_IN_THE_BOX,   REANIM_JACKINTHEBOX,        3,      31,     10,     1000,   _S("JACK_IN_THE_BOX_ZOMBIE")},
     { ZOMBIE_BALLOON,           REANIM_BALLOON,             2,      33,     10,     2000,   _S("BALLOON_ZOMBIE")},
-    { ZOMBIE_DIGGER,            REANIM_DIGGER,              4,      36,     10,     1000,   _S("DIGGER_ZOMBIE")},
-    { ZOMBIE_POGO,              REANIM_POGO,                4,      38,     10,     1000,   _S("POGO_ZOMBIE")},
+    { ZOMBIE_DIGGER,            REANIM_DIGGER,              4,      35,     10,     1000,   _S("DIGGER_ZOMBIE")},
+    { ZOMBIE_POGO,              REANIM_POGO,                4,      34,     10,     1000,   _S("POGO_ZOMBIE")},
     { ZOMBIE_YETI,              REANIM_YETI,                4,      40,     1,      1,      _S("ZOMBIE_YETI")},
-    { ZOMBIE_BUNGEE,            REANIM_BUNGEE,              3,      41,     10,     1000,   _S("BUNGEE_ZOMBIE") },
+    { ZOMBIE_BUNGEE,            REANIM_BUNGEE,              3,      36,     10,     1000,   _S("BUNGEE_ZOMBIE") },
     { ZOMBIE_LADDER,            REANIM_LADDER,              4,      43,     10,     1000,   _S("LADDER_ZOMBIE")},
-    { ZOMBIE_CATAPULT,          REANIM_CATAPULT,            5,      46,     10,     1500,   _S("CATAPULT_ZOMBIE")},
-    { ZOMBIE_GARGANTUAR,        REANIM_GARGANTUAR,          10,     48,     15,     1500,   _S("GARGANTUAR")},
-    { ZOMBIE_IMP,               REANIM_IMP,                 10,     48,     1,      0,      _S("IMP")},
+    { ZOMBIE_CATAPULT,          REANIM_CATAPULT,            5,      42,     10,     1500,   _S("CATAPULT_ZOMBIE")},
+    { ZOMBIE_GARGANTUAR,        REANIM_GARGANTUAR,          10,     29,     15,     1500,   _S("GARGANTUAR")},
+    { ZOMBIE_IMP,               REANIM_IMP,                 10,     29,     1,      0,      _S("IMP")},
     { ZOMBIE_BOSS,              REANIM_BOSS,                10,     60,     1,      0,      _S("BOSS")},
-    { ZOMBIE_REDEYE_GARGANTUAR, REANIM_GARGANTUAR,          20,     48,     15,     750,   _S("REDEYED_GARGANTUAR")},
+    { ZOMBIE_REDEYE_GARGANTUAR, REANIM_GARGANTUAR,          20,     49,     15,     750,   _S("REDEYED_GARGANTUAR")},
     { ZOMBIE_PEA_HEAD,          REANIM_ZOMBIE,              1,      10,     3,      3500,   _S("PEASHOOTER_ZOMBIE")},
     { ZOMBIE_WALLNUT_HEAD,      REANIM_ZOMBIE,              4,      5,     5,      3000,   _S("WALLNUT_ZOMBIE")},
-    { ZOMBIE_JALAPENO_HEAD,     REANIM_ZOMBIE,              3,      32,     10,     1000,   _S("JALAPENO_ZOMBIE")},
-    { ZOMBIE_GATLING_HEAD,      REANIM_ZOMBIE,              3,      32,     10,     2000,   _S("GATLING_ZOMBIE")},
-    { ZOMBIE_SQUASH_HEAD,       REANIM_ZOMBIE,              3,      32,     10,     2000,   _S("SQUASH_ZOMBIE")},
-    { ZOMBIE_TALLNUT_HEAD,      REANIM_ZOMBIE,              4,      32,     10,     2000,   _S("TALLNUT_ZOMBIE")} ,
-    { ZOMBIE_CONE_REPEATER_HEAD, REANIM_ZOMBIE,              3,      32,     5,      3000,   _S("REPEATER_ZOMBIE") },
-    { ZOMBIE_SUPER_NEWSPAPER,   REANIM_ZOMBIE_NEWSPAPER,     6,      32,      10,      1000,   _S("AMBUSH_NEWSPAPER_ZOMBIE") },
-    { ZOMBIE_CACTUS_HEAD,       REANIM_ZOMBIE,              2,      32,     5,      2000,   _S("CACTUS_ZOMBIE")},
-    { ZOMBIE_SUPER_JACK,          REANIM_JACKINTHEBOX,      5,      32,     10,      700,   _S("TICKING_JACK_ZOMBIE")},
-    { ZOMBIE_SUPER_ALLSTAR,       REANIM_ZOMBIE_FOOTBALL,    13,      32,     10,      1000,   _S("RUSHING_ALLSTAR_ZOMBIE")},
-    { ZOMBIE_SUPER_HYPNO_FLAG,       REANIM_ZOMBIE,           12,      32,     10,      1500,   _S("HYPNO_GATLING_FLAG_ZOMBIE")},
-    { ZOMBIE_SUNFLOWER_HEAD,          REANIM_ZOMBIE,           2,      32,     5,      3500,   _S("SUNFLOWER_ZOMBIE")},
-    { ZOMBIE_TWIN_SUNFLOWER_HEAD,          REANIM_ZOMBIE,      4,      32,     10,      2500,   _S("TWIN_SUNFLOWER_ZOMBIE")},
-    { ZOMBIE_VASE_HEAD,               REANIM_ZOMBIE,          3,      32,     10,      4000,   _S("VASE_HEAD_ZOMBIE")},
-    { ZOMBIE_SNOW_PEA_HEAD,          REANIM_ZOMBIE,           5,      32,     15,      1500,   _S("SNOWPEA_ZOMBIE")},
-    { ZOMBIE_ICE_SHROOM_HEAD,     REANIM_ZOMBIE,              4,      32,     10,     1500,   _S("ICE_SHROOM_ZOMBIE")},
-    { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,      13,      32,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
-    { ZOMBIE_MELON_PULT_HEAD,          REANIM_ZOMBIE,              5,      32,     10,      1500,   _S("MELON_PULT_ZOMBIE")},
-    { ZOMBIE_BUTTER_PULT_HEAD,          REANIM_ZOMBIE,              3,      32,     10,      4500,   _S("BUTTER_PULT_ZOMBIE")},
-
+    { ZOMBIE_JALAPENO_HEAD,     REANIM_ZOMBIE,              3,      27,     10,     1000,   _S("JALAPENO_ZOMBIE")},
+    { ZOMBIE_GATLING_HEAD,      REANIM_ZOMBIE,              3,      28,     10,     2000,   _S("GATLING_ZOMBIE")},
+    { ZOMBIE_SQUASH_HEAD,       REANIM_ZOMBIE,              3,      12,     10,     2000,   _S("SQUASH_ZOMBIE")},
+    { ZOMBIE_TALLNUT_HEAD,      REANIM_ZOMBIE,              4,      46,     10,     2000,   _S("TALLNUT_ZOMBIE")} ,
+    { ZOMBIE_CONE_REPEATER_HEAD, REANIM_ZOMBIE,              3,      17,     5,      3000,   _S("REPEATER_ZOMBIE") },
+    { ZOMBIE_SUPER_NEWSPAPER,   REANIM_ZOMBIE_NEWSPAPER,     6,      39,      10,      1000,   _S("AMBUSH_NEWSPAPER_ZOMBIE") },
+    { ZOMBIE_CACTUS_HEAD,       REANIM_ZOMBIE,              2,      37,     5,      2000,   _S("CACTUS_ZOMBIE")},
+    { ZOMBIE_SUPER_JACK,          REANIM_JACKINTHEBOX,      5,      58,     10,      700,   _S("TICKING_JACK_ZOMBIE")},
+    { ZOMBIE_SUPER_ALLSTAR,       REANIM_ZOMBIE_FOOTBALL,    13,      59,     10,      1000,   _S("RUSHING_ALLSTAR_ZOMBIE")},
+    { ZOMBIE_SUPER_HYPNO_FLAG,       REANIM_ZOMBIE,           12,      57,     10,      1500,   _S("HYPNO_GATLING_FLAG_ZOMBIE")},
+    { ZOMBIE_SUNFLOWER_HEAD,          REANIM_ZOMBIE,           2,      16,     5,      3500,   _S("SUNFLOWER_ZOMBIE")},
+    { ZOMBIE_TWIN_SUNFLOWER_HEAD,          REANIM_ZOMBIE,      4,      47,     10,      2500,   _S("TWIN_SUNFLOWER_ZOMBIE")},
+    { ZOMBIE_VASE_HEAD,               REANIM_ZOMBIE,          3,      38,     10,      200,   _S("VASE_HEAD_ZOMBIE")},
+    { ZOMBIE_SNOW_PEA_HEAD,          REANIM_ZOMBIE,           5,      13,     10,      2500,   _S("SNOWPEA_ZOMBIE")},
+    { ZOMBIE_ICE_SHROOM_HEAD,     REANIM_ZOMBIE,              4,      18,     10,     1500,   _S("ICE_SHROOM_ZOMBIE")},
+    { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,      13,      48,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
+    { ZOMBIE_MELON_PULT_HEAD,          REANIM_ZOMBIE,              5,      54,     10,      1500,   _S("MELON_PULT_ZOMBIE")},
+    { ZOMBIE_BUTTER_PULT_HEAD,          REANIM_ZOMBIE,              3,      53,     10,      4500,   _S("BUTTER_PULT_ZOMBIE")},
+    { ZOMBIE_SUPER_VASE_HEAD,               REANIM_ZOMBIE,          15,      56,     10,      1000,   _S("MYSTERY_VASE_HEAD_ZOMBIE")},
 };
 
 static ZombieType gBossZombieList[] = {  
@@ -210,6 +210,19 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         mBodyHealth = 2000;
         break;
     }
+
+    case ZombieType::ZOMBIE_SUPER_VASE_HEAD:
+    {
+        LoadPlainZombieReanim();
+        ReanimShowPrefix("anim_hair", RENDER_GROUP_HIDDEN);
+        ReanimShowPrefix("anim_head2", RENDER_GROUP_HIDDEN);
+        Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
+        ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("anim_head1");
+        aTrackInstance->mImageOverride = IMAGE_SCARY_POT;
+        mBodyHealth = 4000;
+        break;
+    }
+
     case ZombieType::ZOMBIE_DUCKY_TUBE:  
         LoadPlainZombieReanim();
         break;
@@ -1084,7 +1097,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         mSpecialHeadReanimID = mApp->ReanimationGetID(aHeadReanim);
         AttachEffect* aAttachEffect = AttachReanim(aTrackInstance->mAttachmentID, aHeadReanim, 0.0f, 0.0f);
         aBodyReanim->mFrameBasePose = 0;
-        TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 55.0f, -5.0f, 0.2f, -1.0f, 1.0f);
+        TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 60.0f, -20.0f, 0.2f, -1.0f, 1.0f);
 
         mVariant = false;
         mBodyHealth = 1500;
@@ -1901,11 +1914,12 @@ void Zombie::ZombieCatapultFire(Plant* thePlant)
         aProjectile->mVelY = 0.0f;
         aProjectile->mVelZ = aRangeY / 120.0f - 7.0f;
         aProjectile->mAccZ = 0.115f;
+        break;
     }
     case ZombieType::ZOMBIE_MELON_PULT_HEAD:
     {
-        Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_MELON);
-        float aRangeX = aOriginX - aTargetX - 20.0f;
+        Projectile* aProjectile = mBoard->AddProjectile(aOriginX - 50, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_MELON);
+        float aRangeX = aOriginX - 50 - aTargetX - 20.0f;
         float aRangeY = aTargetY - aOriginY;
         if (aRangeX < 40.0f)
         {
@@ -1916,11 +1930,12 @@ void Zombie::ZombieCatapultFire(Plant* thePlant)
         aProjectile->mVelY = 0.0f;
         aProjectile->mVelZ = aRangeY / 120.0f - 7.0f;
         aProjectile->mAccZ = 0.115f;
+        break;
     }
     case ZombieType::ZOMBIE_BUTTER_PULT_HEAD:
     {
-        Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_BUTTER);
-        float aRangeX = aOriginX - aTargetX - 20.0f;
+        Projectile* aProjectile = mBoard->AddProjectile(aOriginX - 50, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_BUTTER);
+        float aRangeX = aOriginX - 50 - aTargetX - 20.0f;
         float aRangeY = aTargetY - aOriginY;
         if (aRangeX < 40.0f)
         {
@@ -1931,6 +1946,7 @@ void Zombie::ZombieCatapultFire(Plant* thePlant)
         aProjectile->mVelY = 0.0f;
         aProjectile->mVelZ = aRangeY / 120.0f - 7.0f;
         aProjectile->mAccZ = 0.115f;
+        break;
     }
     }    
 }
@@ -2954,7 +2970,7 @@ void Zombie::UpdateZombieSunflowerHead()
 }
 void Zombie::UpdateZombieVaseHead()
 {
-    if (mBodyHealth < 700)
+    if (mBodyHealth < 700 && mZombieType == ZombieType::ZOMBIE_VASE_HEAD)
     {       
         int randomvase = RandRangeInt(0, 100);
         if (randomvase >= 0 && randomvase <= 5)
@@ -2988,6 +3004,43 @@ void Zombie::UpdateZombieVaseHead()
         if (randomvase >= 91 && randomvase <= 100)
         {
             SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_POLEVAULTER);
+        }
+        DieNoLoot();
+    }
+    if (mBodyHealth < 1400 && mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD)
+    {
+        int randomvase = RandRangeInt(0, 100);
+        if (randomvase >= 0 && randomvase <= 5)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_TRAFFIC_CONE);
+        }
+        if (randomvase >= 6 && randomvase <= 30)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_PAIL);
+        }
+        if (randomvase >= 31 && randomvase <= 45)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_FOOTBALL);
+        }
+        if (randomvase >= 46 && randomvase <= 60)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_CONE_REPEATER_HEAD);
+        }
+        if (randomvase >= 61 && randomvase <= 70)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_TWIN_SUNFLOWER_HEAD);
+        }
+        if (randomvase >= 71 && randomvase <= 80)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_SUPER_NEWSPAPER);
+        }
+        if (randomvase >= 81 && randomvase <= 90)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_MELON_PULT_HEAD);
+        }
+        if (randomvase >= 91 && randomvase <= 100)
+        {
+            SpawnZombie(mPosX, mRow, ZombieType::ZOMBIE_ZAMBONI);
         }
         DieNoLoot();
     }
@@ -5275,7 +5328,7 @@ void Zombie::UpdateActions()
     {
         UpdateZombiePeaHead();
     }
-    if (mZombieType == ZombieType::ZOMBIE_VASE_HEAD)
+    if (mZombieType == ZombieType::ZOMBIE_VASE_HEAD || mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD)
     {
         UpdateZombieVaseHead();
     }
@@ -6599,6 +6652,12 @@ void Zombie::DrawReanim(Graphics* g, const ZombieDrawPosition& theDrawPos, int t
     else if (mZombieType == ZombieType::ZOMBIE_SUPER_POLE_VAULTER)
     {
         aColorOverride = Color(64, 245 , 88, aFadeAlpha);
+        aExtraAdditiveColor = aColorOverride;
+        aEnableExtraAdditiveDraw = true;
+    }
+    else if (mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD)
+    {
+        aColorOverride = Color(252, 236, 3, aFadeAlpha);
         aExtraAdditiveColor = aColorOverride;
         aEnableExtraAdditiveDraw = true;
     }
@@ -9656,6 +9715,7 @@ void Zombie::ApplyBurn()
         mZombiePhase == ZombiePhase::PHASE_DIGGER_RISING || 
         mZombiePhase == ZombiePhase::PHASE_DIGGER_RISE_WITHOUT_AXE || 
         mZombieType  == ZombieType::ZOMBIE_VASE_HEAD ||
+        mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD ||
         mZombiePhase == ZombiePhase::PHASE_ZOMBIE_MOWERED || 
         mInPool)
     {

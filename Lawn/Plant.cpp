@@ -30,7 +30,7 @@ PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES] = {
     { SeedType::SEED_SNOWPEA,           nullptr, ReanimationType::REANIM_SNOWPEA,       4,  275,    375,    PlantSubClass::SUBCLASS_SHOOTER,    68,    _S("SNOW_PEA") },
     { SeedType::SEED_CHOMPER,           nullptr, ReanimationType::REANIM_CHOMPER,       31, 250,    375,    PlantSubClass::SUBCLASS_NORMAL,     0,      _S("CHOMPER") },
     { SeedType::SEED_REPEATER,          nullptr, ReanimationType::REANIM_REPEATER,      5,  300,    375,    PlantSubClass::SUBCLASS_SHOOTER,    60,    _S("REPEATER") },
-    { SeedType::SEED_PUFFSHROOM,        nullptr, ReanimationType::REANIM_PUFFSHROOM,    6,  5,      375,    PlantSubClass::SUBCLASS_SHOOTER,    75,    _S("PUFF_SHROOM") },
+    { SeedType::SEED_PUFFSHROOM,        nullptr, ReanimationType::REANIM_PUFFSHROOM,    6,  10,      375,    PlantSubClass::SUBCLASS_SHOOTER,    75,    _S("PUFF_SHROOM") },
     { SeedType::SEED_SUNSHROOM,         nullptr, ReanimationType::REANIM_SUNSHROOM,     7,  35,     375,    PlantSubClass::SUBCLASS_NORMAL,     1250,   _S("SUN_SHROOM") },
     { SeedType::SEED_FUMESHROOM,        nullptr, ReanimationType::REANIM_FUMESHROOM,    9,  175,    375,    PlantSubClass::SUBCLASS_SHOOTER,    75,    _S("FUME_SHROOM") },
     { SeedType::SEED_GRAVEBUSTER,       nullptr, ReanimationType::REANIM_GRAVE_BUSTER,  40, 25,     375,    PlantSubClass::SUBCLASS_NORMAL,     0,      _S("GRAVE_BUSTER") },

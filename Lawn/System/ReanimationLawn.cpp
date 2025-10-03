@@ -294,6 +294,30 @@ MemoryImage* ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 			aReanim.AssignRenderGroupToTrack("anim_head2", RENDER_GROUP_HIDDEN);
 			aReanim.AssignRenderGroupToTrack("anim_hair", RENDER_GROUP_HIDDEN);
 		}
+		else if (theZombieType == ZombieType::ZOMBIE_MELON_PULT_HEAD)
+		{
+			Reanimation aReanimHead;
+			aReanimHead.ReanimationInitializeType(aPosX + 72, aPosY - 7, ReanimationType::REANIM_MELONPULT);
+			aReanimHead.SetFramesForLayer("anim_idle");
+			aReanimHead.OverrideScale(-1.0f, 1.0f);
+			aReanimHead.Draw(&aMemoryGraphics);
+			aReanim.AssignRenderGroupToTrack("Zombie_neck", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_head1", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_head2", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_hair", RENDER_GROUP_HIDDEN);
+		}
+		else if (theZombieType == ZombieType::ZOMBIE_BUTTER_PULT_HEAD)
+		{
+			Reanimation aReanimHead;
+			aReanimHead.ReanimationInitializeType(aPosX + 72, aPosY - 7, ReanimationType::REANIM_KERNELPULT);
+			aReanimHead.SetFramesForLayer("anim_idle");
+			aReanimHead.OverrideScale(-1.0f, 1.0f);
+			aReanimHead.Draw(&aMemoryGraphics);
+			aReanim.AssignRenderGroupToTrack("Zombie_neck", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_head1", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_head2", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_hair", RENDER_GROUP_HIDDEN);
+		}
 		else if (theZombieType == ZombieType::ZOMBIE_SNOW_PEA_HEAD)
 		{
 			Reanimation aReanimHead;
@@ -309,7 +333,7 @@ MemoryImage* ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 		else if (theZombieType == ZombieType::ZOMBIE_ICE_SHROOM_HEAD)
 		{
 			Reanimation aReanimHead;
-			aReanimHead.ReanimationInitializeType(aPosX + 72, aPosY - 2, ReanimationType::REANIM_ICESHROOM);
+			aReanimHead.ReanimationInitializeType(aPosX + 72, aPosY - 7, ReanimationType::REANIM_ICESHROOM);
 			aReanimHead.SetFramesForLayer("anim_idle");
 			aReanimHead.OverrideScale(-1.0f, 1.0f);
 			aReanimHead.Draw(&aMemoryGraphics);
@@ -366,6 +390,7 @@ MemoryImage* ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 			aReanim.AssignRenderGroupToTrack("anim_head1", RENDER_GROUP_HIDDEN);
 			aReanim.AssignRenderGroupToTrack("anim_head2", RENDER_GROUP_HIDDEN);
 			aReanim.AssignRenderGroupToTrack("anim_hair", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_bucket", RENDER_GROUP_NORMAL);
 		}
 		else if (theZombieType == ZombieType::ZOMBIE_SQUASH_HEAD)
 		{
