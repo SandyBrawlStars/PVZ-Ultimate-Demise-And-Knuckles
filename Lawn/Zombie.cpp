@@ -2847,22 +2847,22 @@ void Zombie::UpdateZombieGargantuarBoss()
             switch(RandRangeInt(1, 4))
             {
             case 1:
-                ThrowImp(150, 1.0f, 1.2f);
+                ThrowImp(150, 1.0f, 1.1f);
                 mPhaseCounter = 900;
                 break;
             case 2:
-                ThrowImp(150, 1.0f, 1.2f);
-                ThrowImp(150, 1.2f, 1.1f);
+                ThrowImp(150, 1.0f, 1.1f);
+                ThrowImp(150, 1.2f, 1.0f);
                 mPhaseCounter = 1100;
                 break;
             case 3:
-                ThrowImp(150, 1.0f, 1.2f);
-                ThrowImp(150, 1.2f, 1.1f);
-                ThrowImp(150, 1.4f, 1.0f);
+                ThrowImp(150, 1.0f, 1.1f);
+                ThrowImp(150, 1.2f, 1.0f);
+                ThrowImp(150, 1.4f, 0.8f);
                 mPhaseCounter = 1300;
                 break;
             case 4:
-                ThrowImp(150, 1.0f, 1.2f);
+                ThrowImp(150, 1.0f, 1.1f);
                 ThrowImp(150, 1.2f, 0.9f);
                 ThrowImp(150, 1.4f, 1.0f);
                 ThrowImp(150, 1.6f, 0.8f);

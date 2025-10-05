@@ -2677,7 +2677,7 @@ bool LawnApp::HasAllUpgrades()
 			availablePlants++;
 		}
 	}
-	return availablePlants == 9;
+	return availablePlants == 10;
 }
 
 Reanimation* LawnApp::AddReanimation(float theX, float theY, int theRenderOrder, ReanimationType theReanimationType)
