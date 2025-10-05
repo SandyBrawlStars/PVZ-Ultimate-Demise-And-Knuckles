@@ -268,6 +268,7 @@ public:
 	/*inline*/ bool					IsSlotMachineLevel();
 	/*inline*/ bool					IsLittleTroubleLevel();
 	/*inline*/ bool					IsLevel50();
+	/*inline*/ bool					IsGargBoss();
 	/*inline*/ bool					IsStormyNightLevel();
 	/*inline*/ bool					IsFinalBossLevel();
 	/*inline*/ bool					IsBungeeBlitzLevel();

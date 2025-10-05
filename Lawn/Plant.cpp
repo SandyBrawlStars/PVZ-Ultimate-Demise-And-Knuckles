@@ -785,10 +785,6 @@ bool Plant::FindTargetAndFire(int theRow, PlantWeapon thePlantWeapon)
         PlayBodyReanim("anim_shooting", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 20, 30.0f);
         mShootingCounter = 50;
     }
-    else if (mSeedType == SeedType::SEED_HYPNOSHROOM)
-    {
-        mShootingCounter = 45;
-    }
     else if (aBodyReanim && aBodyReanim->TrackExists("anim_shooting"))
     {
         PlayBodyReanim("anim_shooting", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 20, 35.0f);
@@ -2971,13 +2967,10 @@ void Plant::Update()
         {
             UpdateAbilities();
             Animate();
-
-
-            if (mPlantHealth < 0)
-                Die();
-
             UpdateReanim();
         }
+        if (mPlantHealth < 0)
+            Die();
     }
 }
 

@@ -32,11 +32,11 @@
 
 int gZombieWaves[NUM_LEVELS] = {  
 	11,  13,  15,  18, 20,  23, 30, 25, 35, 30,
-	15, 20, 25, 20, 10, 10, 20, 10, 20, 20,
+	15, 20, 25, 20, 30, 25, 20, 10, 20, 20,
 	10, 20, 20, 30, 20, 20, 30, 20, 30, 30,
 	10, 20, 10, 20, 20, 10, 20, 10, 20, 20,
 	10, 20, 20, 30, 20, 20, 30, 20, 30, 30,
-	10, 20, 20, 30, 20, 20, 30, 20, 30, 30,
+	10, 20, 20, 30, 30, 20, 30, 20, 30, 30,
 };
 
 ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {  
@@ -73,7 +73,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_POLEVAULTER,
 		{
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 0, 0, 1, 1, 0, 0, 0, 0, 0,
+			1, 0, 0, 1, 1, 1, 0, 0, 0, 0,
 			0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 1, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -83,7 +83,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_PAIL,
 		{
 			0, 0, 0, 0, 1, 0, 1, 1, 1, 1,
-			0, 1, 1, 0, 1, 0, 0, 0, 0, 0,
+			0, 1, 1, 1, 1, 1, 0, 0, 0, 0,
 			0, 1, 0, 1, 0, 0, 1, 0, 1, 1,
 			0, 0, 0, 0, 0, 0, 1, 0, 1, 1,
 			0, 1, 0, 0, 1, 0, 0, 0, 1, 1,
@@ -93,7 +93,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_NEWSPAPER,
 		{
 			0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 0, 1, 0, 0, 0, 0, 0,
+			1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
 			0, 1, 0, 1, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -103,7 +103,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_DOOR,
 		{
 			0, 0, 0, 1, 1, 1, 1, 1, 1, 1,
-			0, 1, 1, 1, 0, 0, 1, 0, 1, 1,
+			0, 1, 1, 1, 0, 1, 1, 0, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -113,8 +113,8 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_FOOTBALL,
 		{
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 1, 1, 0, 0, 1,
-			0, 1, 0, 0, 1, 0, 0, 0, 0, 0,
+			0, 0, 0, 1, 0, 1, 1, 0, 0, 1,
+			0, 1, 0, 0, 1, 1, 0, 0, 0, 0,
 			0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -123,7 +123,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_DANCER,
 		{
 			0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			0, 1, 1, 0, 0, 0, 0, 1, 1, 1,
+			0, 1, 1, 1, 0, 1, 0, 1, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -133,7 +133,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_BACKUP_DANCER,
 		{
 			0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
-			0, 1, 1, 0, 0, 0, 0, 1, 1, 1,
+			0, 1, 1, 1, 0, 1, 0, 1, 1, 1,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -290,7 +290,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 		} },
 	{ ZOMBIE_PEA_HEAD, {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-			1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+			1, 1, 1, 1, 0, 1, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -298,7 +298,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 		} },
 	{ ZOMBIE_WALLNUT_HEAD, {
 		0, 0, 0, 0, 1, 0, 0, 0, 1, 1,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 1, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -320,7 +320,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 		} },
 	{ ZOMBIE_SQUASH_HEAD, {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+			0, 1, 1, 1, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -395,7 +395,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_SUNFLOWER_HEAD,
 		{
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -425,7 +425,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	{ ZOMBIE_SNOW_PEA_HEAD,
 		{
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 1, 1, 0, 1, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -640,6 +640,10 @@ void Challenge::InitLevel()
 
 void Challenge::StartLevel()
 {
+	if (mApp->IsGargBoss())
+	{
+		mBoard->AddZombie(ZOMBIE_GARG_BOSS, Zombie::ZOMBIE_WAVE_WINNER);
+	}
 	if (mApp->IsWhackAZombieLevel())
 	{
 		mBoard->mCursorObject->mCursorType = CURSOR_TYPE_HAMMER;
@@ -1415,13 +1419,18 @@ void Challenge::MouseDownWhackAZombie(int theX, int theY)
 				mApp->PlayFoley(FOLEY_PLASTIC_HIT);
 			}
 
-			aTopZombie->TakeHelmDamage(900, 0U);
+			aTopZombie->TakeHelmDamage(800, 0U);
+			mApp->AddTodParticle(theX - 3, theY + 9, RENDER_LAYER_ABOVE_UI, PARTICLE_POW);
 		}
 		else
 		{
 			mApp->PlayFoley(FOLEY_BONK);
 			mApp->AddTodParticle(theX - 3, theY + 9, RENDER_LAYER_ABOVE_UI, PARTICLE_POW);
-			aTopZombie->DieWithLoot();
+			aTopZombie->TakeDamage(500, 0U);
+			if (aTopZombie->mBodyHealth < 300)
+			{
+				aTopZombie->DieWithLoot();
+			}
 			mBoard->ClearCursor();
 		}
 	}
@@ -2698,6 +2707,10 @@ PlantingReason Challenge::CanPlantAt(int theGridX, int theGridY, SeedType theSee
 	{
 		return PLANTING_NOT_HERE;
 	}
+	else if (mApp->IsGargBoss() && theGridX >= 6)
+	{
+		return PLANTING_NOT_HERE;
+	}
 
 	return PLANTING_OK;
 }
@@ -2998,7 +3011,7 @@ void Challenge::WhackAZombieSpawning()
 	mBoard->mZombieCountDown--;
 	if (mBoard->mZombieCountDown == 100 && mBoard->mCurrentWave > 0)
 	{
-		int aNumGraves = 5 - mBoard->GetGraveStonesCount();
+		int aNumGraves = 8 - mBoard->GetGraveStonesCount();
 		WhackAZombiePlaceGraves(max(1, aNumGraves));
 	}
 	if (mBoard->mZombieCountDown == 5)
@@ -3019,11 +3032,15 @@ void Challenge::WhackAZombieSpawning()
 
 	if (--mChallengeStateCounter == 0)
 	{
-		int aPhase = ClampInt((mBoard->mCurrentWave - 1) * 6 / 12, 0, 5);
+		int aPhase = ClampInt((mBoard->mCurrentWave - 1) * 3 / 12, 0, 5);
 		const int aDoubleChance[6] = { 0, 30, 10, 10, 15, 18 };
-		const int aTripleChance[6] = { 0, 0, 0, 0, 10, 13 };
-		const int aPailChance[6] = { 0, 0, 0, 10, 15, 15 };
-		const int aConeChance[6] = { 0, 0, 30, 30, 30, 30 };
+		const int aTripleChance[6] = { 0, 0, 5, 5, 10, 13 };
+		const int aQuadChance[6] = { 0, 0, 2, 2, 5, 10 };
+		const int aQuinChance[6] = { 0, 1, 1, 1, 2, 8 };
+		const int aPailChance[6] = { 0, 2, 5, 10, 15, 15 };
+		const int aConeChance[6] = { 10, 20, 30, 30, 30, 30 };
+		const int aFootballChance[6] = { 0, 2, 5, 10, 5, 10 };
+		const int aWallnutChance[6] = { 0, 2, 2, 3, 5, 6 };
 		int aZombieCount = 1;
 		ZombieType aZombieType = ZOMBIE_NORMAL;
 		int aNumHit = Rand(100);
@@ -3032,18 +3049,34 @@ void Challenge::WhackAZombieSpawning()
 
 		if (aIsFinalWave)
 		{
-			aZombieCount = 20;
+			aZombieCount = 30;
 		}
-		else if (aNumHit < aTripleChance[aPhase])
+		else if (aNumHit < aQuinChance[aPhase])
+		{
+			aZombieCount = 5;
+		}
+		else if (aNumHit < aQuadChance[aPhase] + aQuinChance[aPhase])
 		{
 			aZombieCount = 3;
 		}
-		else if (aNumHit < aTripleChance[aPhase] + aDoubleChance[aPhase])
+		else if (aNumHit < aTripleChance[aPhase] + aQuadChance[aPhase] + aQuinChance[aPhase])
+		{
+			aZombieCount = 3;
+		}
+		else if (aNumHit < aTripleChance[aPhase] + aDoubleChance[aPhase] + aQuadChance[aPhase] + aQuinChance[aPhase])
 		{
 			aZombieCount = 2;
 		}
 
-		if (aTypeHit < aPailChance[aPhase] && aZombieCount < 3)
+		if (aTypeHit < aWallnutChance[aPhase] && aZombieCount < 4)
+		{
+			aZombieType = ZOMBIE_WALLNUT_HEAD;
+		}
+		else if (aTypeHit < aFootballChance[aPhase] + aWallnutChance[aPhase] && aZombieCount < 5)
+		{
+			aZombieType = ZOMBIE_FOOTBALL;
+		}
+		else if (aTypeHit < aPailChance[aPhase] + aFootballChance[aPhase] && aZombieCount < 6)
 		{
 			aZombieType = ZOMBIE_PAIL;
 		}
@@ -3083,7 +3116,7 @@ void Challenge::WhackAZombieSpawning()
 
 			if (aIsFinalWave)
 			{
-				aZombieType = Rand(2) == 0 ? ZOMBIE_TRAFFIC_CONE : ZOMBIE_PAIL;
+				aZombieType = Rand(2) == 0 ? ZOMBIE_FOOTBALL : ZOMBIE_DANCER;
 				aMaxSpeed = 2;
 			}
 
@@ -3093,8 +3126,12 @@ void Challenge::WhackAZombieSpawning()
 
 			aZombie->RiseFromGrave(aGraveStone->mGridX, aGraveStone->mGridY);
 			aZombie->mPhaseCounter = 50;
-			aZombie->mVelX = RandRangeFloat(0.5f, aMaxSpeed);
+			aZombie->mVelX = RandRangeFloat(0.5f, aMaxSpeed/1.5);
 			aZombie->UpdateAnimSpeed();
+			if (aZombie->mZombieType == ZombieType::ZOMBIE_DANCER)
+			{
+				aZombie->SummonBackupDancers();
+			}
 		}
 
 		int aStateCounterMin = TodAnimateCurve(1, 12, mBoard->mCurrentWave, 100, 30, CURVE_LINEAR);
@@ -3116,6 +3153,7 @@ bool Challenge::UpdateZombieSpawning()
 	}
 	else return
 		mApp->IsFinalBossLevel() ||
+		mApp->IsGargBoss() ||
 		mApp->mGameMode == GAMEMODE_CHALLENGE_ICE ||
 		mApp->mGameMode == GAMEMODE_CHALLENGE_ZEN_GARDEN ||
 		mApp->mGameMode == GAMEMODE_TREE_OF_WISDOM ||

@@ -2291,6 +2291,7 @@ bool LawnApp::IsContinuousChallenge()
 		IsArtChallenge() || 
 		IsSlotMachineLevel() || 
 		IsFinalBossLevel() || 
+		IsGargBoss() ||
 		mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED || 
 		mGameMode == GameMode::GAMEMODE_UPSELL || 
 		mGameMode == GameMode::GAMEMODE_INTRO || 
@@ -2392,6 +2393,18 @@ bool LawnApp::IsLevel50()
 		return mQuickLevel == 50;
 
 	return IsAdventureMode() && mPlayerInfo->mLevel == 50;
+}
+
+
+bool LawnApp::IsGargBoss()
+{
+	if (mBoard == nullptr)
+		return false;
+
+	if (mPlayedQuickplay)
+		return mQuickLevel == 55;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 55;
 }
 
 bool LawnApp::IsScaryPotterLevel()

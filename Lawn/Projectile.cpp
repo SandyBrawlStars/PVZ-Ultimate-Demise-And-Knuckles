@@ -32,7 +32,7 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20 },
 	{ ProjectileType::PROJECTILE_GOO_PEA,    0,  10 },
-	{ ProjectileType::PROJECTILE_HYPNO_BLAST,    0,  400 },
+	{ ProjectileType::PROJECTILE_HYPNO_BLAST,    0,  250 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_MELON,    0,  150 },
 	{ ProjectileType::PROJECTILE_ZOMBIE_BUTTER,    0,  55 },
 };
@@ -157,6 +157,8 @@ Plant* Projectile::FindCollisionTargetPlant()
 		if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 		{
 			if (aPlant->mSeedType == SeedType::SEED_PUFFSHROOM ||
+				aPlant->mSeedType == SeedType::SEED_FLOWERPOT ||
+				aPlant->mSeedType == SeedType::SEED_SEASHROOM ||
 				aPlant->mSeedType == SeedType::SEED_SUNSHROOM ||
 				aPlant->mSeedType == SeedType::SEED_POTATOMINE ||
 				aPlant->mSeedType == SeedType::SEED_SPIKEWEED ||
@@ -635,8 +637,11 @@ void Projectile::DoSplashDamagePlant(Plant* thePlant)
 			}
 			else
 			{
-				aPlant->mPlantHealth -= aSplashDamage;
-				aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
+				if (aPlant->mSeedType != SeedType::SEED_FLOWERPOT && aPlant->mSeedType != SeedType::SEED_LILYPAD)
+				{
+					aPlant->mPlantHealth -= aSplashDamage;
+					aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
+				}
 				if (aPlant->mPlantHealth < 0)
 					aPlant->Die();
 			}

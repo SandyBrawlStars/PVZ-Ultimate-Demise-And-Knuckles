@@ -570,7 +570,7 @@ void Board::PickZombieWaves()
 	{
 		if (mApp->IsWhackAZombieLevel())
 		{
-			mNumWaves = 8;
+			mNumWaves = 13;
 		}
 		else
 		{
@@ -1344,6 +1344,10 @@ void Board::InitLevel()
 	else if (mApp->IsFirstTimeAdventureMode() && mLevel == 1)
 	{
 		mSunMoney = 225;
+	}
+	else if (mApp->IsGargBoss())
+	{
+		mSunMoney = 3000;
 	}
 	else
 	{
@@ -3906,6 +3910,14 @@ void Board::MouseDownWithTool(int x, int y, int theClickCount, CursorType theCur
 	{
 		mApp->PlayFoley(FoleyType::FOLEY_USE_SHOVEL);
 		mPlantsShoveled++;
+		const PlantDefinition& aPlantDef = GetPlantDefinition(aPlant->mSeedType);
+		int aPlantCost = aPlantDef.mSeedCost;
+		int aSunLeft = aPlantCost / 5;
+		while (aSunLeft > 5)
+		{
+			AddCoin(aPlant->mX, aPlant->mY, CoinType::COIN_SMALLSUN, CoinMotion::COIN_MOTION_FROM_PLANT);
+			aSunLeft -= 5;
+		}
 		aPlant->Die();
 
 		if (aPlant->mSeedType == SeedType::SEED_CATTAIL && GetTopPlantAt(aPlant->mPlantCol, aPlant->mRow, PlantPriority::TOPPLANT_ONLY_PUMPKIN))
@@ -5318,7 +5330,7 @@ void Board::UpdateIce()
 
 void Board::UpdateProgressMeter()
 {
-	if (mApp->IsFinalBossLevel())
+	if (mApp->IsFinalBossLevel() || mApp->IsGargBoss())
 	{
 		Zombie* aBoss = GetBossZombie();
 		if (aBoss && !aBoss->IsDeadOrDying())
@@ -6467,6 +6479,7 @@ void Board::DrawGameObjects(Graphics* g)
 			int baseTextOffsetY = 14;
 			int textOutlineOffset = 1;
 			bool isPumpkin = aPlant->mSeedType == SeedType::SEED_PUMPKINSHELL || aPlant->mImitaterType == SeedType::SEED_PUMPKINSHELL;
+			bool isPlatform = aPlant->mSeedType == SeedType::SEED_LILYPAD || aPlant->mImitaterType == SeedType::SEED_LILYPAD || aPlant->mSeedType == SeedType::SEED_FLOWERPOT || aPlant->mImitaterType == SeedType::SEED_FLOWERPOT;
 			Color baseColor;
 			if (Plant::IsUpgrade(aPlant->mSeedType))
 				baseColor = Color(170, 122, 210);
@@ -6502,7 +6515,7 @@ void Board::DrawGameObjects(Graphics* g)
 			if (aPlant->mPlantHealth > 0)
 			{
 				barOffsetY += baseBarOffsetY;
-				if (isPumpkin)
+				if (isPumpkin || isPlatform)
 					barOffsetY += barHeight + textOffsetY + baseTextOffsetY;
 				DrawHealthbar(g, rect, maxColor, aPlant->mPlantMaxHealth, baseColor, aPlant->mPlantHealth, barWidth, barHeight, (aPlant->mSeedType != SeedType::SEED_IMITATER && isPumpkin) || aPlant->mSeedType == SeedType::SEED_TALLNUT ? 10 : 0, barOffsetY, textColor, FONT_BRIANNETOD12, textOffsetY, Color::Black, textOutlineOffset, drawBarOutline);
 			}
@@ -6522,6 +6535,7 @@ bool Board::HasProgressMeter()
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED || 
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED_TWIST || 
 		mApp->IsFinalBossLevel() || 
+		mApp->IsGargBoss() ||
 		mApp->IsSlotMachineLevel() || 
 		mApp->IsSquirrelLevel() || 
 		mApp->IsIZombieLevel())
@@ -6542,10 +6556,11 @@ bool Board::HasProgressMeter()
 bool Board::ProgressMeterHasFlags()
 {
 	if (mApp->IsFirstTimeAdventureMode() && mLevel == 1)
-		return false;
+		return true;
 
-	if (mApp->IsWhackAZombieLevel() ||
+	if (
 		mApp->IsFinalBossLevel() ||
+		mApp->IsGargBoss() ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED_TWIST ||
 		mApp->IsSlotMachineLevel() ||
@@ -6628,7 +6643,8 @@ void Board::DrawProgressMeter(Graphics* g)
 		mApp->IsSquirrelLevel() || 
 		mApp->IsSlotMachineLevel() ||
 		mApp->IsIZombieLevel() || 
-		mApp->IsFinalBossLevel())
+		mApp->IsFinalBossLevel()||
+		mApp->IsGargBoss())
 		return;
 	int aHeadProgress = TodAnimateCurve(0, 150, mProgressMeterWidth, 0, 135, CURVE_LINEAR);
 	g->DrawImageCel(Sexy::IMAGE_FLAGMETERPARTS, aCelWidth - aHeadProgress + 580, 572, 0, 0);
@@ -8838,6 +8854,7 @@ bool Board::StageHasZombieWalkInFromRight()
 		mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM ||
 		mApp->IsFinalBossLevel() ||
+		mApp->IsGargBoss() ||
 		mApp->IsIZombieLevel() ||
 		mApp->IsSquirrelLevel() ||
 		mApp->IsScaryPotterLevel())
@@ -9501,7 +9518,7 @@ Zombie* Board::GetBossZombie()
 	Zombie* aZombie = nullptr;
 	while (IterateZombies(aZombie))
 	{
-		if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
+		if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS || aZombie->mZombieType == ZombieType::ZOMBIE_GARG_BOSS)
 		{
 			return aZombie;
 		}

@@ -164,7 +164,9 @@ public:
     int                             mFireballRow;                               
     bool                            mIsFireBall;                                
     ReanimationID                   mMoweredReanimID;                           
-    int                             mLastPortalX;                               
+    int                             mLastPortalX;      
+    int                             mPeaCounter;
+    int                             mPeaType;
 
 public:
     Zombie();
@@ -286,9 +288,10 @@ public:
     bool                            CanTargetPlant(Plant* thePlant, ZombieAttackType theAttackType);
     void                            UpdateZombieCatapult();
     Plant*                          FindCatapultTarget();
-    void                            ZombieCatapultFire(Plant* thePlant);
+    void                            ZombieCatapultFire(Plant* thePlant, int theAttack, int theYOffset);
     void                            UpdateClimbingLadder();
     void                            UpdateZombieGargantuar();
+    void                            UpdateZombieGargantuarBoss();
     int                             GetBodyDamageIndex();
     void                            ApplyBurn();
     void                            UpdateBurn();
@@ -309,6 +312,8 @@ public:
     void                            ApplyButter();
     float                           ZombieTargetLeadX(float theTime);
     void                            UpdateZombieImp();
+    void                            SwitchLane();
+    void                            ThrowImp(float theDistance, float theScale, float theSpeed);
     void                            SquishAllInSquare(int theX, int theY, ZombieAttackType theAttackType);
     void                            RemoveIceTrap();
     bool                            IsBouncingPogo();
