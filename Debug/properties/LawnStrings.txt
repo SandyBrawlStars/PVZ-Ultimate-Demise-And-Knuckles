@@ -3335,7 +3335,8 @@ Slows down zombies and poisons them
 {KEYWORD}Shadow Buff:{STAT} Shoots More Peas
 Sprites And Animations by Reat on the MA Discord
 
-
+[BOSS2_DESCRIPTION]
+Music by misfire
 
 
 

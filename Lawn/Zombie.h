@@ -288,6 +288,7 @@ public:
     bool                            CanTargetPlant(Plant* thePlant, ZombieAttackType theAttackType);
     void                            UpdateZombieCatapult();
     Plant*                          FindCatapultTarget();
+    Plant*                          FindCatapultTargetFront();
     void                            ZombieCatapultFire(Plant* thePlant, int theAttack, int theYOffset);
     void                            UpdateClimbingLadder();
     void                            UpdateZombieGargantuar();
