@@ -1823,7 +1823,7 @@ void Plant::UpdateChomper()
             bool doBite = false;
             if (aZombie)
             {
-                if (aZombie->mZombieType == ZombieType::ZOMBIE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR || 
+                if (aZombie->mZombieType == ZombieType::ZOMBIE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_GARG_BOSS || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_ALLSTAR || aZombie->mZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_HYPNO_FLAG || aZombie->mZombieType == ZombieType::ZOMBIE_VASE_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD ||
                     aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
                 {
                     doBite = true;
@@ -1871,7 +1871,7 @@ void Plant::UpdateChomper()
             }
 
             mState = PlantState::STATE_CHOMPER_DIGESTING;
-            mStateCountdown = 4000;
+            mStateCountdown = 3000;
         }
     }
     else if (mState == PlantState::STATE_CHOMPER_DIGESTING)

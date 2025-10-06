@@ -446,6 +446,26 @@ Twin Sunflower Zombie
 [VASE_HEAD_ZOMBIE]
 Vase Zombie
 
+[SNOWPEA_ZOMBIE]
+Snowpea Zombie
+
+[ICE_SHROOM_ZOMBIE]
+Ice-Shroom Zombie
+
+[SUPERJUMP_POLE_VAULTER_ZOMBIE]
+Superjump Pole Vaulter Zombie
+
+[MELON_PULT_ZOMBIE]
+Melon-Pult Zombie
+
+[BUTTER_PULT_ZOMBIE]
+Butter-Pult Zombie
+
+[MYSTERY_VASE_HEAD_ZOMBIE]
+Golden Present Zombie
+
+[BOSS2]
+Giga-Gargliath
 
 [IMP]
 Imp
@@ -3337,13 +3357,67 @@ Sprites And Animations by Reat on the MA Discord
 
 [BOSS2_DESCRIPTION]
 Music by misfire
+This zombie is the stronger gargantuar of them all.
+{KEYWORD}Toughness:{STAT} - Insanely High - 50000
+
+{KEYWORD}Attack:{STAT} Throws one to four imps of random size
+{KEYWORD}Attack Cooldown:{STAT} 9 seconds + 2 per imp
+
+{KEYWORD}Attack:{STAT} Lobs a melon at the plant in the back or the front
+{KEYWORD}Attack Cooldown:{STAT} 5 Seconds
+
+{KEYWORD}Attack Variant:{STAT} Also lobs 2 other melons and butter (33% Chance)
+{KEYWORD}Attack Variant Cooldown:{STAT} 7 Seconds
+
+{KEYWORD}Attack:{STAT} Spawns two vasehead zombies and a golden present zombie on low health
+{KEYWORD}Attack Cooldown:{STAT} 16 Seconds
+
+{KEYWORD}Attack:{STAT} Shoots 15 hypno-peas
+{KEYWORD}Attack Cooldown:{STAT} 10 Seconds
+
+{KEYWORD}Attack:{STAT} Spawns 3 Bungee Zombies
+{KEYWORD}Attack Cooldown:{STAT} 10 Seconds
+
+{KEYWORD}Attack:{STAT} Freezes every plant for 6 seconds (This attack appears less often than others)
+{KEYWORD}Attack Cooldown:{STAT} 5 Seconds
+
+{KEYWORD}Special:{STAT} Switches lanes while attacking
 
 
+[MYSTERY_VASE_HEAD_ZOMBIE_DESCRIPTION]
+Spawns a random zombie upon death:
+Conehead - 5%
+Buckethead - 25%
+Football - 15%
+Conehead Repeater - 15%
+Twin-Sunflower Head - 10%
+Ambush Newspaper - 10%
+Melon-Pult Head - 10%
+Zomboni - 10%
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} very high - 2600
 
+[SNOWPEA_ZOMBIE_DESCRIPTION]
+Attacks from afar while walking towards your house, slows down plants
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} medium - 720
 
+[ICE_SHROOM_ZOMBIE_DESCRIPTION]
+After enough time, freezes every plant on the lawn for 6 seconds and slows them down for 10
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} high - 1500
 
+[SUPERJUMP_POLE_VAULTER_ZOMBIE_DESCRIPTION]
+Has infinite jumps and can squash plants after the first jump
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} very high - 2000
 
+[MELON_PULT_ZOMBIE_DESCRIPTION]
+Throws melons into the back of your defense, deals splash damage
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} medium - 1350
 
-
-
-
+[BUTTER_PULT_ZOMBIE_DESCRIPTION]
+Throws butter into the back of your defense, stuns plants
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} medium - 1450

@@ -182,12 +182,15 @@ void Music::MusicInit()
 	mApp->mCompletedLoadingThreadTasks += 3500;
 	LoadSong(MusicFile::MUSIC_FILE_HIHATS, "sounds\\mainmusic_hihats.mo3");
 	mApp->mCompletedLoadingThreadTasks += 3500;
+	LoadSong(MusicFile::MUSIC_FILE_BLACK_KNIFE, "music\\blackknife.mp3");
+
 
 #ifdef _DEBUG
 	LoadSong(MusicFile::MUSIC_FILE_CREDITS_ZOMBIES_ON_YOUR_LAWN, "sounds\\ZombiesOnYourLawn.ogg");
 	mApp->mCompletedLoadingThreadTasks += 3500;
 	if (mApp->mCompletedLoadingThreadTasks != aNumLoadingTasks)
 		TodTrace("Didn't calculate loading task count correctly!!!!");
+
 
 #endif
 }
@@ -381,6 +384,13 @@ void Music::PlayMusic(MusicTune theMusicTune, int theOffset, int theDrumsOffset)
 
 	case MusicTune::MUSIC_TUNE_CREDITS_ZOMBIES_ON_YOUR_LAWN:
 		mCurMusicFileMain = MusicFile::MUSIC_FILE_CREDITS_ZOMBIES_ON_YOUR_LAWN;
+		if (theOffset == -1)
+			theOffset = 0;
+		PlayFromOffset(mCurMusicFileMain, theOffset, 1.0);
+		break;
+
+	case MusicTune::MUSIC_TUNE_BLACK_KNIFE:
+		mCurMusicFileMain = MusicFile::MUSIC_FILE_BLACK_KNIFE;
 		if (theOffset == -1)
 			theOffset = 0;
 		PlayFromOffset(mCurMusicFileMain, theOffset, 1.0);
@@ -678,7 +688,7 @@ void Music::StartGameMusic()
 	else if (mApp->IsFinalBossLevel())
 		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_FINAL_BOSS_BRAINIAC_MANIAC);
 	else if (mApp->IsGargBoss())
-		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_FINAL_BOSS_BRAINIAC_MANIAC);
+		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_BLACK_KNIFE);
 	else if (mApp->IsWallnutBowlingLevel() || mApp->IsWhackAZombieLevel() || mApp->IsLittleTroubleLevel() || mApp->IsBungeeBlitzLevel() ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_SPEED)
 		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_MINIGAME_LOONBOON);

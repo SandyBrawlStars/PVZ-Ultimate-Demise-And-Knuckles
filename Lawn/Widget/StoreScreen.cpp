@@ -262,7 +262,7 @@ bool StoreScreen::IsItemUnavailable(StoreItem theStoreItem)
     if (theStoreItem == STORE_ITEM_PLANT_WINTERMELON || theStoreItem == STORE_ITEM_PLANT_COBCANNON ||
         theStoreItem == STORE_ITEM_PLANT_IMITATER || theStoreItem == STORE_ITEM_FIRSTAID)
     {
-        return !mApp->HasFinishedAdventure();
+        return !mApp->HasFinishedAdventure() && mApp->mPlayerInfo->mLevel < 51;
     }
     return false;
 }

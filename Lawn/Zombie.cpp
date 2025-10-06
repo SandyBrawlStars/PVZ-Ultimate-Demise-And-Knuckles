@@ -2003,9 +2003,9 @@ Plant* Zombie::FindCatapultTargetFront()
     {
         if (aPlant->mRow == mRow && mX >= aPlant->mX + 100 && !aPlant->NotOnGround() && !aPlant->IsSpiky())
         {
-            if (aTarget == nullptr || aPlant->mPlantCol < aTarget->mPlantCol)
+            if (aTarget == nullptr || aPlant->mPlantCol > aTarget->mPlantCol)
             {
-                aTarget = mBoard->GetTopPlantAt(aPlant->mPlantCol, aPlant->mRow, PlantPriority::TOPPLANT_EATING_ORDER);
+                aTarget = mBoard->GetTopPlantAt(aPlant->mPlantCol, aPlant->mRow, PlantPriority::TOPPLANT_CATAPULT_ORDER);
             }
         }
     }
@@ -2860,7 +2860,7 @@ void Zombie::UpdateZombieGargantuarBoss()
     }
     else
     {
-        int Attack = RandRangeInt(2, 2);
+        int Attack = RandRangeInt(1, 6);
         mZombiePhase = ZombiePhase::PHASE_GARG_BOSS_IDLE;
         if (Attack == 1)
         {
@@ -2895,6 +2895,10 @@ void Zombie::UpdateZombieGargantuarBoss()
         if (Attack == 2)
         {
             Plant* aPlant = FindCatapultTarget();
+            if (RandRangeInt(1, 2) == 2)
+            {
+                aPlant = FindCatapultTargetFront();
+            }
             ZombieCatapultFire(aPlant, 2, 0);
             mPhaseCounter = 500;
             if (RandRangeInt(1, 3) == 3)
