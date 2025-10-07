@@ -240,12 +240,12 @@ void QuickPlayScreen::ChooseBackground()
         groupName = "DelayLoad_Background4";
         mBackground = BackgroundType::BACKGROUND_4_FOG;
     }
-    else if (mApp->mQuickLevel < FINAL_LEVEL)
+    else if (mApp->mQuickLevel <= 5 * LEVELS_PER_AREA)
     {
         groupName = "DelayLoad_Background5";
         mBackground = BackgroundType::BACKGROUND_5_ROOF;
     }
-    else if (mApp->mQuickLevel == FINAL_LEVEL)
+    else if (mApp->mQuickLevel <= FINAL_LEVEL)
     {
         groupName = "DelayLoad_Background6";
         mBackground = BackgroundType::BACKGROUND_6_BOSS;
@@ -267,7 +267,7 @@ void QuickPlayScreen::ChooseBackground()
 
 void QuickPlayScreen::ChooseZombieType()
 {
-    if (mApp->mQuickLevel == 45)
+    if (mApp->mQuickLevel == 36)
     {
         mZombieType = ZOMBIE_BUNGEE;
         return;

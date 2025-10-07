@@ -387,6 +387,8 @@ public:
     void                            BossHeadSpitEffect();
     void                            DrawBossFireBall(Graphics* g, const ZombieDrawPosition& theDrawPos);
     void                            UpdateZombiePeaHead();
+    void                            UpdateZombieMineHead();
+    void                            UpdateZombieScaredyHead();
     void                            UpdateZombieCactusHead();
     void                            UpdateZombieConeRepeaterHead();
     void                            UpdateZombieSuperNewspaper();

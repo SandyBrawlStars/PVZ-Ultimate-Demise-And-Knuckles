@@ -636,7 +636,7 @@ void Board::PickZombieWaves()
 		}
 		else if (mApp->IsAdventureMode() && mApp->HasFinishedAdventure() && mLevel != 5)
 		{
-			aZombiePoints = (aWave*1.1) * 2 / 5 + 1;
+			aZombiePoints = (aWave*1.2) * 2 / 5 + 1;
 		}
 		else
 		{
@@ -646,7 +646,7 @@ void Board::PickZombieWaves()
 		if (aIsFlagWave)
 		{
 			int aPlainZombiesNum = min(aZombiePoints, 8);
-			aZombiePoints *= 2.6f;
+			aZombiePoints *= 2.7f;
 
 			if (mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_WAR_AND_PEAS && mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_WAR_AND_PEAS_2)
 			{
@@ -1343,7 +1343,7 @@ void Board::InitLevel()
 	}
 	else if (mApp->IsFirstTimeAdventureMode() && mLevel == 1)
 	{
-		mSunMoney = 225;
+		mSunMoney = 325;
 	}
 	else if (mApp->IsGargBoss())
 	{
@@ -2418,7 +2418,7 @@ ZombieType Board::PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePi
 		const ZombieDefinition& aZombieDef = GetZombieDefinition((ZombieType)aZombieType);
 
 		GameMode aGameMode = mApp->mGameMode;
-		if (aZombieType == ZombieType::ZOMBIE_BUNGEE && mApp->IsSurvivalEndless(aGameMode))
+		if ((aZombieType == ZombieType::ZOMBIE_BUNGEE || aZombieType == ZombieType::ZOMBIE_CHERRY_BUNGEE) && mApp->IsSurvivalEndless(aGameMode))
 		{
 			if (!IsFlagWave(theWaveIndex))
 			{
@@ -4803,7 +4803,7 @@ int Board::TotalZombiesHealthInWave(int theWaveIndex)
 	while (IterateZombies(aZombie))
 	{
 		if (aZombie->mFromWave == theWaveIndex && !aZombie->mMindControlled && !aZombie->IsDeadOrDying() &&
-			aZombie->mZombieType != ZombieType::ZOMBIE_BUNGEE && aZombie->mRelatedZombieID == ZombieID::ZOMBIEID_NULL)
+			(aZombie->mZombieType != ZombieType::ZOMBIE_BUNGEE || aZombie->mZombieType != ZombieType::ZOMBIE_CHERRY_BUNGEE) && aZombie->mRelatedZombieID == ZombieID::ZOMBIEID_NULL)
 		{
 			aTotalHealth += aZombie->mBodyHealth + aZombie->mHelmHealth + aZombie->mShieldHealth * 0.2f + aZombie->mFlyingHealth;
 		}
@@ -4824,7 +4824,7 @@ void Board::SpawnZombieWave()
 			if (aZombieType == ZombieType::ZOMBIE_INVALID)
 				break;
 
-			if (aZombieType == ZombieType::ZOMBIE_BUNGEE || aZombieType == ZombieType::ZOMBIE_ZAMBONI)
+			if (aZombieType == ZombieType::ZOMBIE_BUNGEE || aZombieType == ZombieType::ZOMBIE_CHERRY_BUNGEE || aZombieType == ZombieType::ZOMBIE_ZAMBONI)
 			{
 				AddZombie(aZombieType, mCurrentWave);
 			}
@@ -6089,7 +6089,7 @@ void Board::DrawGameObjects(Graphics* g)
 					aRenderItemCount++;
 				}
 
-				if (aZombie->mZombieType == ZombieType::ZOMBIE_BUNGEE)
+				if (aZombie->mZombieType == ZombieType::ZOMBIE_BUNGEE || aZombie->mZombieType == ZombieType::ZOMBIE_CHERRY_BUNGEE)
 				{
 					RenderItem& aRenderItem = aRenderList[aRenderItemCount];
 					aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_ZOMBIE_BUNGEE_TARGET;
@@ -8195,6 +8195,16 @@ void Board::KeyChar(SexyChar theChar)
 			AddZombie(ZombieType::ZOMBIE_PEA_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
 			return;
 		}
+		if (theChar == _S('B'))
+		{
+			AddZombie(ZombieType::ZOMBIE_CHERRY_BUNGEE, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
+		if (theChar == _S('M'))
+		{
+			AddZombie(ZombieType::ZOMBIE_MINE_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			return;
+		}
 		if (theChar == _S('P'))
 		{
 			AddZombie(ZombieType::ZOMBIE_SNOW_PEA_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
@@ -8398,9 +8408,19 @@ void Board::KeyChar(SexyChar theChar)
 		AddZombie(ZombieType::ZOMBIE_BUNGEE, Zombie::ZOMBIE_WAVE_DEBUG);
 		return;
 	}
+	if (theChar == _S('B'))
+	{
+		AddZombie(ZombieType::ZOMBIE_CHERRY_BUNGEE, Zombie::ZOMBIE_WAVE_DEBUG);
+		return;
+	}
 	if (theChar == _S('o'))
 	{
 		AddZombie(ZombieType::ZOMBIE_FOOTBALL, Zombie::ZOMBIE_WAVE_DEBUG);
+		return;
+	}
+	if (theChar == _S('O'))
+	{
+		AddZombie(ZombieType::ZOMBIE_GIGA_FOOTBALL, Zombie::ZOMBIE_WAVE_DEBUG);
 		return;
 	}
 	if (theChar == _S('s'))
@@ -9645,7 +9665,7 @@ void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius
 
 			if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
 			{
-				if (theBurn)
+				if (theBurn && aZombie->mZombieType!=ZombieType::ZOMBIE_GIGA_FOOTBALL)
 				{
 					aZombie->ApplyBurn();
 				}

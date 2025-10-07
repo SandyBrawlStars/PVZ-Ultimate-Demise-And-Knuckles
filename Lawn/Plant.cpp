@@ -33,7 +33,7 @@ PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES] = {
     { SeedType::SEED_PUFFSHROOM,        nullptr, ReanimationType::REANIM_PUFFSHROOM,    6,  10,      375,    PlantSubClass::SUBCLASS_SHOOTER,    75,    _S("PUFF_SHROOM") },
     { SeedType::SEED_SUNSHROOM,         nullptr, ReanimationType::REANIM_SUNSHROOM,     7,  35,     375,    PlantSubClass::SUBCLASS_NORMAL,     1250,   _S("SUN_SHROOM") },
     { SeedType::SEED_FUMESHROOM,        nullptr, ReanimationType::REANIM_FUMESHROOM,    9,  175,    375,    PlantSubClass::SUBCLASS_SHOOTER,    75,    _S("FUME_SHROOM") },
-    { SeedType::SEED_GRAVEBUSTER,       nullptr, ReanimationType::REANIM_GRAVE_BUSTER,  40, 25,     375,    PlantSubClass::SUBCLASS_NORMAL,     0,      _S("GRAVE_BUSTER") },
+    { SeedType::SEED_GRAVEBUSTER,       nullptr, ReanimationType::REANIM_GRAVE_BUSTER,  40, 50,     575,    PlantSubClass::SUBCLASS_NORMAL,     0,      _S("GRAVE_BUSTER") },
     { SeedType::SEED_HYPNOSHROOM,       nullptr, ReanimationType::REANIM_HYPNOSHROOM,   10, 150,    2000,   PlantSubClass::SUBCLASS_SHOOTER,     3500,      _S("HYPNO_SHROOM") },
     { SeedType::SEED_SCAREDYSHROOM,     nullptr, ReanimationType::REANIM_SCRAREYSHROOM, 33, 100,    375,    PlantSubClass::SUBCLASS_SHOOTER,    150,    _S("SCAREDY_SHROOM") },
     { SeedType::SEED_ICESHROOM,         nullptr, ReanimationType::REANIM_ICESHROOM,     36, 100,    3500,   PlantSubClass::SUBCLASS_NORMAL,     0,      _S("ICE_SHROOM") },
@@ -4387,7 +4387,14 @@ void Plant::BurnRow(int theRow)
         if ((aZombie->mZombieType == ZombieType::ZOMBIE_BOSS || aZombie->mRow == theRow) && aZombie->EffectedByDamage(aDamageRangeFlags))
         {
             aZombie->RemoveColdEffects();
-            aZombie->ApplyBurn();
+            if (aZombie->mZombieType != ZombieType::ZOMBIE_GIGA_FOOTBALL)
+            {
+                aZombie->ApplyBurn();
+            }
+            else
+            {
+                aZombie->TakeDamage(1800, 18U);
+            }
         }
     }
 

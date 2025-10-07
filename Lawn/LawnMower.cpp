@@ -202,7 +202,7 @@ void LawnMower::Update()
             int aOverlap = GetRectOverlap(aAttackRect, aZombieRect);
             if (aOverlap > (aZombie->mZombieType == ZombieType::ZOMBIE_BALLOON ? 20 : 0))
             {
-                if (mMowerState != LawnMowerState::MOWER_READY || (aZombie->mZombieType != ZombieType::ZOMBIE_BUNGEE && aZombie->mHasHead))
+                if (mMowerState != LawnMowerState::MOWER_READY || ((aZombie->mZombieType != ZombieType::ZOMBIE_BUNGEE && aZombie->mZombieType != ZombieType::ZOMBIE_CHERRY_BUNGEE) && aZombie->mHasHead))
                 {
                     MowZombie(aZombie);
                 }

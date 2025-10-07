@@ -62,7 +62,7 @@ int gSlowMoCounter = 0;
 bool isFastMode = false;  //the ingame fast mode
 
 
-const char* CLIENT_ID = "1243252904878542908";
+const char* CLIENT_ID = "1425127790771961876";
 
 bool LawnGetCloseRequest()
 {
