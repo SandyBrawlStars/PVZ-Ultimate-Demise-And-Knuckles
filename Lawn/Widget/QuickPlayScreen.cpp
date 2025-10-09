@@ -105,6 +105,7 @@ void QuickPlayScreen::Draw(Graphics* g)
         break;
     case BackgroundType::BACKGROUND_5_ROOF:				g->DrawImage(Sexy::IMAGE_BACKGROUND5, -130, 0);						break;
     case BackgroundType::BACKGROUND_6_BOSS:				g->DrawImage(Sexy::IMAGE_BACKGROUND6BOSS, -130, 0);					break;
+    case BackgroundType::BACKGROUND_7_BACKYARD:				g->DrawImage(Sexy::IMAGE_BACKGROUND7, -130, 0);					break;
     default:											TOD_ASSERT();											break;
     }
     if (mDisplayZombie)
@@ -245,10 +246,15 @@ void QuickPlayScreen::ChooseBackground()
         groupName = "DelayLoad_Background5";
         mBackground = BackgroundType::BACKGROUND_5_ROOF;
     }
-    else if (mApp->mQuickLevel <= FINAL_LEVEL)
+    else if (mApp->mQuickLevel <= 6 * LEVELS_PER_AREA)
     {
         groupName = "DelayLoad_Background6";
         mBackground = BackgroundType::BACKGROUND_6_BOSS;
+    }
+    else if (mApp->mQuickLevel <= 7 * LEVELS_PER_AREA)
+    {
+        groupName = "DelayLoad_Background7";
+        mBackground = BackgroundType::BACKGROUND_7_BACKYARD;
     }
     else
     {

@@ -2473,9 +2473,9 @@ bool LawnApp::IsFinalBossLevel()
 		return true;
 
 	if (mPlayedQuickplay)
-		return mQuickLevel == 60;
+		return mQuickLevel == 70;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 60;
+	return IsAdventureMode() && mPlayerInfo->mLevel == 70;
 }
 
 bool LawnApp::IsChallengeWithoutSeedBank()

@@ -18,6 +18,7 @@ bool Sexy::ExtractResourcesByName(ResourceManager *theManager, const char *theNa
 	if (strcmp(theName,"DelayLoad_Background4")==0) return ExtractDelayLoad_Background4Resources(theManager);
 	if (strcmp(theName,"DelayLoad_Background5")==0) return ExtractDelayLoad_Background5Resources(theManager);
 	if (strcmp(theName,"DelayLoad_Background6")==0) return ExtractDelayLoad_Background6Resources(theManager);
+	if (strcmp(theName,"DelayLoad_Background7")==0) return ExtractDelayLoad_Background7Resources(theManager);
 	if (strcmp(theName,"DelayLoad_BackgroundUnsodded")==0) return ExtractDelayLoad_BackgroundUnsoddedResources(theManager);
 	if (strcmp(theName,"DelayLoad_ChallengeScreen")==0) return ExtractDelayLoad_ChallengeScreenResources(theManager);
 	if (strcmp(theName,"DelayLoad_Credits")==0) return ExtractDelayLoad_CreditsResources(theManager);
@@ -317,6 +318,29 @@ bool Sexy::ExtractDelayLoad_Background6Resources(ResourceManager *theManager)
 	{
 		IMAGE_BACKGROUND6BOSS = aMgr.GetImageThrow("IMAGE_BACKGROUND6BOSS");
 		IMAGE_BACKGROUND6_GAMEOVER_MASK = aMgr.GetImageThrow("IMAGE_BACKGROUND6_GAMEOVER_MASK");
+	}
+	catch(ResourceManagerException&)
+	{
+		return false;
+	}
+	return true;
+}
+
+// DelayLoad_Background7 Resources
+Image* Sexy::IMAGE_BACKGROUND7;
+Image* Sexy::IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY;
+Image* Sexy::IMAGE_BACKGROUND7_GAMEOVER_MASK;
+
+bool Sexy::ExtractDelayLoad_Background7Resources(ResourceManager *theManager)
+{
+	gNeedRecalcVariableToIdMap = true;
+
+	ResourceManager &aMgr = *theManager;
+	try
+	{
+		IMAGE_BACKGROUND7 = aMgr.GetImageThrow("IMAGE_BACKGROUND7");
+		IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY = aMgr.GetImageThrow("IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY");
+		IMAGE_BACKGROUND7_GAMEOVER_MASK = aMgr.GetImageThrow("IMAGE_BACKGROUND7_GAMEOVER_MASK");
 	}
 	catch(ResourceManagerException&)
 	{
@@ -2496,6 +2520,9 @@ static void* gResources[] =
 	&IMAGE_BACKGROUND1,
 	&IMAGE_BACKGROUND1_GAMEOVER_INTERIOR_OVERLAY,
 	&IMAGE_BACKGROUND1_GAMEOVER_MASK,
+	&IMAGE_BACKGROUND7,
+	&IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY,
+	&IMAGE_BACKGROUND7_GAMEOVER_MASK,
 	&IMAGE_BACKGROUND1UNSODDED,
 	&IMAGE_SOD1ROW,
 	&IMAGE_SOD3ROW,
@@ -3254,6 +3281,9 @@ const char* Sexy::GetStringIdById(int theId)
 		case IMAGE_BACKGROUND1_ID: return "IMAGE_BACKGROUND1";
 		case IMAGE_BACKGROUND1_GAMEOVER_INTERIOR_OVERLAY_ID: return "IMAGE_BACKGROUND1_GAMEOVER_INTERIOR_OVERLAY";
 		case IMAGE_BACKGROUND1_GAMEOVER_MASK_ID: return "IMAGE_BACKGROUND1_GAMEOVER_MASK";
+		case IMAGE_BACKGROUND7_ID: return "IMAGE_BACKGROUND7";
+		case IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY_ID: return "IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY";
+		case IMAGE_BACKGROUND7_GAMEOVER_MASK_ID: return "IMAGE_BACKGROUND7_GAMEOVER_MASK";
 		case IMAGE_BACKGROUND1UNSODDED_ID: return "IMAGE_BACKGROUND1UNSODDED";
 		case IMAGE_SOD1ROW_ID: return "IMAGE_SOD1ROW";
 		case IMAGE_SOD3ROW_ID: return "IMAGE_SOD3ROW";

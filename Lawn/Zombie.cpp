@@ -62,15 +62,16 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_VASE_HEAD,               REANIM_ZOMBIE,          3,      38,     10,      200,   _S("VASE_HEAD_ZOMBIE")},
     { ZOMBIE_SNOW_PEA_HEAD,          REANIM_ZOMBIE,           5,      13,     10,      2500,   _S("SNOWPEA_ZOMBIE")},
     { ZOMBIE_ICE_SHROOM_HEAD,     REANIM_ZOMBIE,              4,      18,     10,     1500,   _S("ICE_SHROOM_ZOMBIE")},
-    { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,      13,      48,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
+    { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,       13,      48,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
     { ZOMBIE_MELON_PULT_HEAD,          REANIM_ZOMBIE,          5,      54,     10,      1500,   _S("MELON_PULT_ZOMBIE")},
-    { ZOMBIE_BUTTER_PULT_HEAD,          REANIM_ZOMBIE,          3,      53,     10,      4500,   _S("BUTTER_PULT_ZOMBIE")},
+    { ZOMBIE_BUTTER_PULT_HEAD,          REANIM_ZOMBIE,         3,      53,     10,      4500,   _S("BUTTER_PULT_ZOMBIE")},
     { ZOMBIE_SUPER_VASE_HEAD,               REANIM_ZOMBIE,     15,      56,     10,      1000,   _S("MYSTERY_VASE_HEAD_ZOMBIE")},
-    { ZOMBIE_GARG_BOSS,              REANIM_GARGANTUAR,         10,     55,     1,      0,      _S("BOSS2")},
+    { ZOMBIE_GARG_BOSS,              REANIM_GARGANTUAR,        10,     55,     1,      0,      _S("BOSS2")},
     { ZOMBIE_GIGA_FOOTBALL,          REANIM_GIGA_FOOTBALL,     14,      44,     10,      1000,   _S("GIGA_FOOTBALL_ZOMBIE")},
     { ZOMBIE_CHERRY_BUNGEE,          REANIM_BUNGEE,            5,      52,     10,      750,   _S("CHERRY_BUNGEE_ZOMBIE")},
     { ZOMBIE_MINE_HEAD,          REANIM_ZOMBIE,                4,      8,     10,      1200,   _S("MINE_HEAD_ZOMBIE")},
-    { ZOMBIE_SCAREDY_HEAD,          REANIM_ZOMBIE,              3,      19,     5,      4000,   _S("SCAREDY_SHROOM_ZOMBIE")},
+    { ZOMBIE_SCAREDY_HEAD,          REANIM_ZOMBIE,             3,      19,     5,      2000,   _S("SCAREDY_SHROOM_ZOMBIE")},
+    { ZOMBIE_LETTER_HEAD,          REANIM_ZOMBIE,              4,      61,     7,     2000,   _S("LETTER_ZOMBIE")},
 };
 
 static ZombieType gBossZombieList[] = {  
@@ -215,8 +216,25 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("anim_head1");
         aTrackInstance->mImageOverride = IMAGE_SCARY_POT;
         mBodyHealth = 1300;
+        mVariant = false;
         break;
     }
+
+    case ZombieType::ZOMBIE_LETTER_HEAD:
+    {
+        LoadPlainZombieReanim();
+        ReanimShowPrefix("anim_hair", RENDER_GROUP_HIDDEN);
+        ReanimShowPrefix("anim_head2", RENDER_GROUP_HIDDEN);
+        Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
+        ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("anim_head1");
+        aTrackInstance->mImageOverride = IMAGE_ZOMBIE_NOTE_SMALL;
+        mBodyHealth = 1200;
+        mVariant = false;
+        mZombieAttackRect = Rect(0, 0, 0, 0);
+        mVelX = 0.9f;
+        break;
+    }
+
 
     case ZombieType::ZOMBIE_SUPER_VASE_HEAD:
     {
@@ -227,6 +245,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("anim_head1");
         aTrackInstance->mImageOverride = IMAGE_PRESENT;
         mBodyHealth = 2600;
+        mVariant = false;
         break;
     }
 
@@ -928,7 +947,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         mSpecialHeadReanimID = mApp->ReanimationGetID(aHeadReanim);
         AttachEffect* aAttachEffect = AttachReanim(aTrackInstance->mAttachmentID, aHeadReanim, 0.0f, 0.0f);
         aBodyReanim->mFrameBasePose = 0;
-        TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 65.0f, -35.0f, 0.2f, -1.0f, 1.0f);
+        TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 65.0f, -32.0f, 0.2f, -1.0f, 1.0f);
 
         mPhaseCounter = 150;
         mBodyHealth = 1200;
@@ -8779,7 +8798,7 @@ bool Zombie::TrySpawnLevelAward()
         {
             aCoinType = CoinType::COIN_NOTE;
         }
-        else if (mBoard->mLevel == 60)
+        else if (mBoard->mLevel == 70)
         {
             aCoinType = mApp->HasFinishedAdventure() ? CoinType::COIN_AWARD_MONEY_BAG : CoinType::COIN_AWARD_SILVER_SUNFLOWER;
         }

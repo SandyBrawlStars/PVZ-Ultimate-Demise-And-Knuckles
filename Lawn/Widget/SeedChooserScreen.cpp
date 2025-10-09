@@ -684,7 +684,7 @@ void SeedChooserScreen::OnStartButton()
 			return;
 		}
 	}
-	if (mBoard->StageHasPool() && !PickedPlantType(SEED_LILYPAD) && !PickedPlantType(SEED_SEASHROOM) && !PickedPlantType(SEED_TANGLEKELP) && !mBoard->mCutScene->IsSurvivalRepick())
+	if ((mBoard->StageHasPool() || mBoard->mBackground == BackgroundType::BACKGROUND_7_BACKYARD) && !PickedPlantType(SEED_LILYPAD) && !PickedPlantType(SEED_SEASHROOM) && !PickedPlantType(SEED_TANGLEKELP) && !mBoard->mCutScene->IsSurvivalRepick())
 	{
 		if (mApp->IsFirstTimeAdventureMode() && mBoard->mLevel == 21)
 		{

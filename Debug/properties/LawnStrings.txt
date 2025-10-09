@@ -43,7 +43,7 @@ Fires two peas at a time, and much faster
 Potato Mine
 
 [POTATO_MINE_TOOLTIP]
-Explodes on contact and takes less time to arm, but deals less damage
+Explodes on contact and takes less time to arm
 
 [SNOW_PEA]
 Snow Pea

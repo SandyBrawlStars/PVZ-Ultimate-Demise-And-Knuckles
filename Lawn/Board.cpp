@@ -803,6 +803,10 @@ void Board::LoadBackgroundImages()
 		TodLoadResources("DelayLoad_Background6");
 		break;
 
+	case BackgroundType::BACKGROUND_7_BACKYARD:
+		TodLoadResources("DelayLoad_Background7");
+		break;
+
 	case BackgroundType::BACKGROUND_GREENHOUSE:
 		TodLoadResources("DelayLoad_GreenHouseGarden");
 		TodLoadResources("DelayLoad_GreenHouseOverlay");
@@ -856,9 +860,13 @@ void Board::PickBackground()
 		{
 			mBackground = BackgroundType::BACKGROUND_5_ROOF;
 		}
-		else if (mLevel <= 6 * LEVELS_PER_AREA)
+		else if (mLevel <= 6 * LEVELS_PER_AREA || mApp->IsFinalBossLevel())
 		{
 			mBackground = BackgroundType::BACKGROUND_6_BOSS;
+		}
+		else if (mLevel <= 7 * LEVELS_PER_AREA)
+		{
+			mBackground = BackgroundType::BACKGROUND_7_BACKYARD;
 		}
 		else
 		{
@@ -1008,6 +1016,15 @@ void Board::PickBackground()
 		mPlantRow[2] = PlantRowType::PLANTROW_NORMAL;
 		mPlantRow[3] = PlantRowType::PLANTROW_NORMAL;
 		mPlantRow[4] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[5] = PlantRowType::PLANTROW_DIRT;
+	}
+	else if (mBackground == BackgroundType::BACKGROUND_7_BACKYARD)
+	{
+		mPlantRow[0] = PlantRowType::PLANTROW_POOL;
+		mPlantRow[1] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[2] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[3] = PlantRowType::PLANTROW_POOL;
+		mPlantRow[4] = PlantRowType::PLANTROW_POOL;
 		mPlantRow[5] = PlantRowType::PLANTROW_DIRT;
 	}
 	else if (mBackground == BackgroundType::BACKGROUND_3_POOL || mBackground == BackgroundType::BACKGROUND_ZOMBIQUARIUM || mBackground == BackgroundType::BACKGROUND_4_FOG)
@@ -1365,6 +1382,10 @@ void Board::InitLevel()
 			{
 				mSunMoney = 125;
 			}
+		}
+		else
+		{
+			mSunMoney = 125;
 		}
 	}
 	memset(mRowPickingArray, 0, sizeof(mRowPickingArray));
@@ -5806,6 +5827,7 @@ void Board::DrawBackdrop(Graphics* g)
 	case BackgroundType::BACKGROUND_4_FOG:				aBgImage = Sexy::IMAGE_BACKGROUND4;						break;
 	case BackgroundType::BACKGROUND_5_ROOF:				aBgImage = Sexy::IMAGE_BACKGROUND5;						break;
 	case BackgroundType::BACKGROUND_6_BOSS:				aBgImage = Sexy::IMAGE_BACKGROUND6BOSS;					break;
+	case BackgroundType::BACKGROUND_7_BACKYARD:			aBgImage = Sexy::IMAGE_BACKGROUND7;		    			break;
 	case BackgroundType::BACKGROUND_MUSHROOM_GARDEN:	aBgImage = Sexy::IMAGE_BACKGROUND_MUSHROOMGARDEN;		break;
 	case BackgroundType::BACKGROUND_GREENHOUSE:			aBgImage = Sexy::IMAGE_BACKGROUND_GREENHOUSE;			break;
 	case BackgroundType::BACKGROUND_ZOMBIQUARIUM:		aBgImage = Sexy::IMAGE_AQUARIUM1;						break;
@@ -9355,7 +9377,7 @@ unsigned int Board::SeedNotRecommendedForLevel(SeedType theSeedType)
 	{
 		SetBit(aNotRec, NotRecommend::NOT_RECOMMENDED_ON_ROOF, true);
 	}
-	if (!StageHasPool() && Plant::IsAquatic(theSeedType))
+	if ((!StageHasPool() && mBackground != BACKGROUND_7_BACKYARD) && Plant::IsAquatic(theSeedType))
 	{
 		SetBit(aNotRec, NotRecommend::NOT_RECOMMENDED_NEEDS_POOL, true);
 	}

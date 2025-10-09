@@ -94,6 +94,12 @@ namespace Sexy
 	extern Image* IMAGE_BACKGROUND6BOSS;
 	extern Image* IMAGE_BACKGROUND6_GAMEOVER_MASK;
 
+	// DelayLoad_Background7 Resources
+	bool ExtractDelayLoad_Background7Resources(ResourceManager *theMgr);
+	extern Image* IMAGE_BACKGROUND7;
+	extern Image* IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY;
+	extern Image* IMAGE_BACKGROUND7_GAMEOVER_MASK;
+
 	// DelayLoad_BackgroundUnsodded Resources
 	bool ExtractDelayLoad_BackgroundUnsoddedResources(ResourceManager *theMgr);
 	extern Image* IMAGE_BACKGROUND1UNSODDED;
@@ -1337,6 +1343,9 @@ namespace Sexy
 		IMAGE_BACKGROUND1_ID,
 		IMAGE_BACKGROUND1_GAMEOVER_INTERIOR_OVERLAY_ID,
 		IMAGE_BACKGROUND1_GAMEOVER_MASK_ID,
+		IMAGE_BACKGROUND7_ID,
+		IMAGE_BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY_ID,
+		IMAGE_BACKGROUND7_GAMEOVER_MASK_ID,
 		IMAGE_BACKGROUND1UNSODDED_ID,
 		IMAGE_SOD1ROW_ID,
 		IMAGE_SOD3ROW_ID,
