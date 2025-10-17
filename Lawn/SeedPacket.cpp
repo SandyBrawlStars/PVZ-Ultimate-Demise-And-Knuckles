@@ -758,6 +758,10 @@ void SeedPacket::MouseDown(int x, int y, int theClickCount)
 			{
 				mBoard->DisplayAdvice(_S("[ADVICE_PLANT_NEEDS_REPEATER]"), MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_PLANT_NEEDS_REPEATER);
 			}
+			else if (aUseSeedType == SeedType::SEED_SOLARPEA)
+			{
+				mBoard->DisplayAdvice(_S("[ADVICE_PLANT_NEEDS_PEASHOOTER]"), MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_PLANT_NEEDS_REPEATER);
+			}
 			else if (aUseSeedType == SeedType::SEED_WINTERMELON)
 			{
 				mBoard->DisplayAdvice(_S("[ADVICE_PLANT_NEEDS_MELONPULT]"), MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_PLANT_NEEDS_MELONPULT);
@@ -1116,12 +1120,20 @@ void SeedPacket::SetPacketType(SeedType theSeedType, SeedType theImitaterType)
 		mRefreshTime = 3500;
 		mRefreshing = true;
 		mActive = false;
+		if (theSeedType >= SEED_SOLARPEA)
+		{
+			mRefreshTime *= 0.2;
+		}
 	}
 	else if (Plant::IsUpgrade(aUseSeedType) && gLawnApp->IsSurvivalMode())
 	{
-		mRefreshTime = 8000;
+		mRefreshTime = 7000;
 		mRefreshing = true;
 		mActive = false;
+		if (theSeedType >= SEED_SOLARPEA)
+		{
+			mRefreshTime *= 0.1;
+		}
 	}
 	else if (Plant::GetRefreshTime(mPacketType, mImitaterType) == 3000)
 	{

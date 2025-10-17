@@ -505,7 +505,7 @@ void CutScene::PlaceStreetZombies()
 
 			aZombieValueTotal += GetZombieDefinition(aZombieType).mZombieValue;
 
-			if (aZombieType == ZombieType::ZOMBIE_FLAG)
+			if (aZombieType == ZombieType::ZOMBIE_FLAG || aZombieType == ZombieType::ZOMBIE_RALLY)
 			{
 				continue;
 			}

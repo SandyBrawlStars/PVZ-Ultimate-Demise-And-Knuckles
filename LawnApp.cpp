@@ -1208,6 +1208,7 @@ bool LawnApp::KillNewOptionsDialog()
 		mAutoCollectCoins = aNewOptionsDialog->mAutoCollectCoinsBox->IsChecked();
 		mZombieHealthbars = aNewOptionsDialog->mZombieHealthbarsBox->IsChecked();
 		mPlantHealthbars = aNewOptionsDialog->mPlantHealthbarsBox->IsChecked();
+		mHarderMode = aNewOptionsDialog->mHarderModeCheckbox->IsChecked();
 		ToggleDebugMode();
 		bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
 		SwitchScreenMode(wantWindowed, want3D, false);
@@ -1548,7 +1549,7 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 			if (aUnlockedNewChallenge && HasFinishedAdventure())
 			{
 				int aNumTrophies = GetNumTrophies(ChallengePage::CHALLENGE_PAGE_SURVIVAL);
-				if (aNumTrophies != 8 && aNumTrophies != 9)
+				if (aNumTrophies != 10)
 				{
 					mPlayerInfo->mHasNewSurvival = true;
 				}
@@ -2232,7 +2233,83 @@ SexyString LawnApp::GetStageString(int theLevel)
 {
 	int aArea = ClampInt((theLevel - 1) / LEVELS_PER_AREA + 1, 1, ADVENTURE_AREAS + 1);
 	int aSub = theLevel - (aArea - 1) * LEVELS_PER_AREA;
-	return StrFormat(" %d-%d", aArea, aSub);
+	SexyString aTheString[ADVENTURE_AREAS * LEVELS_PER_AREA] =
+	{
+		_S("[ADVENTURE_TEXT_1]"),
+		_S("[ADVENTURE_TEXT_2]"),
+		_S("[ADVENTURE_TEXT_3]"),
+		_S("[ADVENTURE_TEXT_4]"),
+		_S("[ADVENTURE_TEXT_5]"),
+		_S("[ADVENTURE_TEXT_6]"),
+		_S("[ADVENTURE_TEXT_7]"),
+		_S("[ADVENTURE_TEXT_8]"),
+		_S("[ADVENTURE_TEXT_9]"),
+		_S("[ADVENTURE_TEXT_10]"),
+		_S("[ADVENTURE_TEXT_11]"),
+		_S("[ADVENTURE_TEXT_12]"),
+		_S("[ADVENTURE_TEXT_13]"),
+		_S("[ADVENTURE_TEXT_14]"),
+		_S("[ADVENTURE_TEXT_15]"),
+		_S("[ADVENTURE_TEXT_16]"),
+		_S("[ADVENTURE_TEXT_17]"),
+		_S("[ADVENTURE_TEXT_18]"),
+		_S("[ADVENTURE_TEXT_19]"),
+		_S("[ADVENTURE_TEXT_20]"),
+		_S("[ADVENTURE_TEXT_21]"),
+		_S("[ADVENTURE_TEXT_22]"),
+		_S("[ADVENTURE_TEXT_23]"),
+		_S("[ADVENTURE_TEXT_24]"),
+		_S("[ADVENTURE_TEXT_25]"),
+		_S("[ADVENTURE_TEXT_26]"),
+		_S("[ADVENTURE_TEXT_27]"),
+		_S("[ADVENTURE_TEXT_28]"),
+		_S("[ADVENTURE_TEXT_29]"),
+		_S("[ADVENTURE_TEXT_30]"),
+		_S("[ADVENTURE_TEXT_31]"),
+		_S("[ADVENTURE_TEXT_32]"),
+		_S("[ADVENTURE_TEXT_33]"),
+		_S("[ADVENTURE_TEXT_34]"),
+		_S("[ADVENTURE_TEXT_35]"),
+		_S("[ADVENTURE_TEXT_36]"),
+		_S("[ADVENTURE_TEXT_37]"),
+		_S("[ADVENTURE_TEXT_38]"),
+		_S("[ADVENTURE_TEXT_39]"),
+		_S("[ADVENTURE_TEXT_40]"),
+		_S("[ADVENTURE_TEXT_41]"),
+		_S("[ADVENTURE_TEXT_42]"),
+		_S("[ADVENTURE_TEXT_43]"),
+		_S("[ADVENTURE_TEXT_44]"),
+		_S("[ADVENTURE_TEXT_45]"),
+		_S("[ADVENTURE_TEXT_46]"),
+		_S("[ADVENTURE_TEXT_47]"),
+		_S("[ADVENTURE_TEXT_48]"),
+		_S("[ADVENTURE_TEXT_49]"),
+		_S("[ADVENTURE_TEXT_50]"),
+		_S("[ADVENTURE_TEXT_51]"),
+		_S("[ADVENTURE_TEXT_52]"),
+		_S("[ADVENTURE_TEXT_53]"),
+		_S("[ADVENTURE_TEXT_54]"),
+		_S("[ADVENTURE_TEXT_55]"),
+		_S("[ADVENTURE_TEXT_56]"),
+		_S("[ADVENTURE_TEXT_57]"),
+		_S("[ADVENTURE_TEXT_58]"),
+		_S("[ADVENTURE_TEXT_59]"),
+		_S("[ADVENTURE_TEXT_60]"),
+		_S("[ADVENTURE_TEXT_61]"),
+		_S("[ADVENTURE_TEXT_62]"),
+		_S("[ADVENTURE_TEXT_63]"),
+		_S("[ADVENTURE_TEXT_64]"),
+		_S("[ADVENTURE_TEXT_65]"),
+		_S("[ADVENTURE_TEXT_66]"),
+		_S("[ADVENTURE_TEXT_67]"),
+		_S("[ADVENTURE_TEXT_68]"),
+		_S("[ADVENTURE_TEXT_69]"),
+		_S("[ADVENTURE_TEXT_70]"),
+	};
+
+	SexyString aExtraString;
+	aExtraString = TodStringTranslate(aTheString[theLevel - 1]);
+	return StrFormat(" %d-%d" , aArea, aSub) + aExtraString;
 } 
 
 bool LawnApp::IsAdventureMode()
@@ -2260,19 +2337,19 @@ bool LawnApp::IsChallengeMode()
 bool LawnApp::IsSurvivalNormal(GameMode theGameMode)
 {
 	int aLevel = theGameMode - GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_1;
-	return aLevel >= 0 && aLevel <= 4;
+	return aLevel >= 0 && aLevel <= 6;
 }
 
 bool LawnApp::IsSurvivalHard(GameMode theGameMode)
 {
 	int aLevel = theGameMode - GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_1;
-	return aLevel >= 0 && aLevel <= 4;
+	return aLevel >= 0 && aLevel <= 6;
 }
 
 bool LawnApp::IsSurvivalEndless(GameMode theGameMode)
 {
 	int aLevel = theGameMode - GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_1;
-	return aLevel >= 0 && aLevel <= 4;
+	return aLevel >= 0 && aLevel <= 6;
 }
 
 bool LawnApp::IsEndlessScaryPotter(GameMode theGameMode)
@@ -2393,6 +2470,17 @@ bool LawnApp::IsLevel50()
 		return mQuickLevel == 50;
 
 	return IsAdventureMode() && mPlayerInfo->mLevel == 50;
+}
+
+bool LawnApp::IsAfterRallyIntro()
+{
+	if (mBoard == nullptr)
+		return false;
+
+	if (mPlayedQuickplay)
+		return mQuickLevel >= 25;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel >= 25;
 }
 
 
@@ -2573,9 +2661,9 @@ SeedType LawnApp::GetAwardSeedForLevel(int theLevel)
 	{
 		aSeedsHasGot -= 1;  
 	}
-	if (aSeedsHasGot > 44)
+	if (aSeedsHasGot > 45)
 	{
-		aSeedsHasGot = 44;
+		aSeedsHasGot = 45;
 	}
 	
 	return (SeedType)aSeedsHasGot;
@@ -2584,13 +2672,13 @@ SeedType LawnApp::GetAwardSeedForLevel(int theLevel)
 int LawnApp::GetSeedsAvailable()
 {
 	int aLevel = mPlayerInfo->mLevel;
-	if (HasFinishedAdventure() || aLevel > 60)
+	if (HasFinishedAdventure() || aLevel > 70)
 	{
-		return 54;
+		return 55;
 	}
 
 	SeedType aSeedTypeMax = GetAwardSeedForLevel(aLevel);
-	return min(54, aSeedTypeMax);
+	return min(55, aSeedTypeMax);
 }
 
 bool LawnApp::HasSeedType(SeedType theSeedType)
@@ -2606,6 +2694,18 @@ bool LawnApp::HasSeedType(SeedType theSeedType)
 	if (theSeedType == SeedType::SEED_TWINSUNFLOWER)
 	{
 		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_TWINSUNFLOWER] > 0;
+	}
+	if (theSeedType == SeedType::SEED_SOLARPEA)
+	{
+		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_SOLARPEA] > 0;
+	}
+	if (theSeedType == SeedType::SEED_TATERPULT)
+	{
+		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_TATERPULT] > 0;
+	}
+	if (theSeedType == SeedType::SEED_FROSTBOLT)
+	{
+		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_FROSTBOLT] > 0;
 	}
 	if (theSeedType == SeedType::SEED_GLOOMSHROOM)
 	{
@@ -2768,7 +2868,7 @@ bool LawnApp::CanShowAlmanac()
 	if (mPlayerInfo == nullptr)
 		return false;
 
-	return HasFinishedAdventure() || mPlayerInfo->mLevel >= 15;
+	return HasFinishedAdventure() || mPlayerInfo->mLevel >= 1;
 }
 
 bool LawnApp::CanShowStore()
@@ -2779,7 +2879,7 @@ bool LawnApp::CanShowStore()
 	if (mPlayerInfo == nullptr)
 		return false;
 
-	return HasFinishedAdventure() || mPlayerInfo->mHasSeenUpsell || mPlayerInfo->mLevel >= 25;
+	return HasFinishedAdventure() || mPlayerInfo->mHasSeenUpsell || mPlayerInfo->mLevel >= 15;
 }
 
 bool LawnApp::CanShowZenGarden()
@@ -3553,7 +3653,7 @@ int LawnApp::GetNumTrophies(ChallengePage thePage)
 
 int LawnApp::GetTotalTrophies(ChallengePage thePage)
 {
-	return thePage == CHALLENGE_PAGE_SURVIVAL ? 10 : thePage == CHALLENGE_PAGE_CHALLENGE ? 20 : thePage == CHALLENGE_PAGE_PUZZLE ? 18 : thePage == CHALLENGE_PAGE_LIMBO ? 0 : 0;
+	return thePage == CHALLENGE_PAGE_SURVIVAL ? 14 : thePage == CHALLENGE_PAGE_CHALLENGE ? 20 : thePage == CHALLENGE_PAGE_PUZZLE ? 18 : thePage == CHALLENGE_PAGE_LIMBO ? 0 : 0;
 }
 
 int LawnApp::TrophiesNeedForGoldSunflower()

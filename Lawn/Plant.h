@@ -192,6 +192,8 @@ public:
     int                     mChilledCounter;
     int                     mShadowPowered;
     int                     mHealCounter;
+    int                     mShootCounter;
+    int                     mSolarPeaCounter;
 
 public:
     Plant();
@@ -279,6 +281,7 @@ public:
     /*inline*/ bool         IsOnBoard();
     void                    RemoveEffects();
     void                    UpdateCoffeeBean();
+    void                    UpdatePlantern();
     void                    UpdateUmbrella();
     void                    EndBlink();
     void                    AnimateGarlic();

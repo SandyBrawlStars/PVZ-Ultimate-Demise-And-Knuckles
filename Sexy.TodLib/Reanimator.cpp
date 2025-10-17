@@ -164,6 +164,11 @@ ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS] = {
 	{ ReanimationType::REANIM_SHADOW_SHROOM,                         "reanim\\ShadowShroom.reanim",                           0 },
 	{ ReanimationType::REANIM_GOO_PEA,                             "reanim\\GooPea.reanim", 0 },
 	{ ReanimationType::REANIM_GIGA_FOOTBALL, "reanim\\Zombie_blackfootball.reanim", 0 },
+	{ ReanimationType::REANIM_RALLY,                                 "reanim\\Zombie_rallyflagpole.reanim",                   0 },
+	{ ReanimationType::REANIM_SOLARPEA,                                 "reanim\\SolarPea.reanim",                   0 },
+	{ ReanimationType::REANIM_TATERPULT,                                 "reanim\\TaterPult.reanim",                   0 },
+	{ ReanimationType::REANIM_FROSTBOLT,                                 "reanim\\FrostPea.reanim",                   0 },
+	{ ReanimationType::REANIM_INFINUT,                                 "reanim\\InfiNut.reanim",                   0 },
 };
 
 ReanimatorTransform::ReanimatorTransform() :

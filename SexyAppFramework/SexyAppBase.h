@@ -304,6 +304,7 @@ public:
 	DWORD					mVSyncBrokenTestUpdates;
 	bool					mWaitForVSync;
 	bool					mDiscordPresence;
+	bool					mHarderMode;
 	bool					mBankKeybinds;
 	bool					mZeroNineBankFormat;
 	bool					mAutoCollectSuns;

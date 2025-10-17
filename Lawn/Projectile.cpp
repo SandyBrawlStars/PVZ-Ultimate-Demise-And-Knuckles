@@ -13,29 +13,32 @@
 
 
 ProjectileDefinition gProjectileDefinition[] = {  
-	{ ProjectileType::PROJECTILE_PEA,           0,  15  },
-	{ ProjectileType::PROJECTILE_SNOWPEA,       0,  25  },
-	{ ProjectileType::PROJECTILE_CABBAGE,       0,  30  },
-	{ ProjectileType::PROJECTILE_MELON,         0,  100  },
-	{ ProjectileType::PROJECTILE_PUFF,          0,  15  },
-	{ ProjectileType::PROJECTILE_WINTERMELON,   0,  120  },
-	{ ProjectileType::PROJECTILE_FIREBALL,      0,  60  },
-	{ ProjectileType::PROJECTILE_STAR,          0,  10  },
-	{ ProjectileType::PROJECTILE_SPIKE,         0,  40  },
-	{ ProjectileType::PROJECTILE_BASKETBALL,    0,  125  },
-	{ ProjectileType::PROJECTILE_KERNEL,        0,  15  },
-	{ ProjectileType::PROJECTILE_COBBIG,        0,  300 },
-	{ ProjectileType::PROJECTILE_BUTTER,        0,  55  },
-	{ ProjectileType::PROJECTILE_ZOMBIE_PEA,    0,  15  },
-	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  45 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20 },
-	{ ProjectileType::PROJECTILE_GOO_PEA,    0,  10 },
-	{ ProjectileType::PROJECTILE_HYPNO_BLAST,    0,  250 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_MELON,    0,  150 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_BUTTER,    0,  55 },
-	{ ProjectileType::PROJECTILE_ZOMBIE_PUFF,          0,  15  },
+	{ ProjectileType::PROJECTILE_PEA,           0,  15,  _S("PEA")},
+	{ ProjectileType::PROJECTILE_SNOWPEA,       0,  25,  _S("SNOW_PEA")  },
+	{ ProjectileType::PROJECTILE_CABBAGE,       0,  30,  _S("CABBAGE")  },
+	{ ProjectileType::PROJECTILE_MELON,         0,  100,  _S("MELON")  },
+	{ ProjectileType::PROJECTILE_PUFF,          0,  15,  _S("SPORE")  },
+	{ ProjectileType::PROJECTILE_WINTERMELON,   0,  120 ,  _S("WINTER_MELON") },
+	{ ProjectileType::PROJECTILE_FIREBALL,      0,  60,  _S("FIREBALL")  },
+	{ ProjectileType::PROJECTILE_STAR,          0,  10,  _S("STAR")  },
+	{ ProjectileType::PROJECTILE_SPIKE,         0,  40,  _S("SPIKE")  },
+	{ ProjectileType::PROJECTILE_BASKETBALL,    0,  125,  _S("BASKETBALL")  },
+	{ ProjectileType::PROJECTILE_KERNEL,        0,  15,  _S("KERNEL")  },
+	{ ProjectileType::PROJECTILE_COBBIG,        0,  300,  _S("COBBIG") },
+	{ ProjectileType::PROJECTILE_BUTTER,        0,  55,  _S("BUTTER")  },
+	{ ProjectileType::PROJECTILE_ZOMBIE_PEA,    0,  15,  _S("ZOMBIE_PEA")  },
+	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  45,  _S("ICE_CABBAGE") },
+	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40,  _S("ZOMBIE_SPIKE") },
+	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25,  _S("ZOMBIE_HYPNO_PEA") },
+	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20,  _S("ZOMBIE_SNOW_PEA") },
+	{ ProjectileType::PROJECTILE_GOO_PEA,    0,  10,  _S("GOO_PEA") },
+	{ ProjectileType::PROJECTILE_HYPNO_BLAST,    0,  250,  _S("HYPNO_BLAST") },
+	{ ProjectileType::PROJECTILE_ZOMBIE_MELON,    0,  150,  _S("ZOMBIE_MELON") },
+	{ ProjectileType::PROJECTILE_ZOMBIE_BUTTER,    0,  55,  _S("ZOMBIE_BUTTER") },
+	{ ProjectileType::PROJECTILE_ZOMBIE_PUFF,          0,  15,  _S("ZOMBIE_SPORE")  },
+	{ ProjectileType::PROJECTILE_SMALLSUN,           0,  30,  _S("SUN") },
+	{ ProjectileType::PROJECTILE_TATER,           0,  75,  _S("BOMB_TATER") },
+	{ ProjectileType::PROJECTILE_FROSTBOLT,       0,  50 ,  _S("FROST_BOLT") },
 };
 
 Projectile::Projectile()
@@ -90,7 +93,7 @@ void Projectile::ProjectileInitialize(int theX, int theY, int theRenderOrder, in
 	mClickBackoffCounter = 0;
 	mAnimTicksPerFrame = 0;
 
-	if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE || mProjectileType == ProjectileType::PROJECTILE_BUTTER || mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE)
+	if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE || mProjectileType == ProjectileType::PROJECTILE_TATER || mProjectileType == ProjectileType::PROJECTILE_BUTTER || mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE)
 	{
 		mRotation = -7 * PI / 25;  // DEG_TO_RAD(-50.4f);
 		mRotationSpeed = RandRangeFloat(-0.08f, -0.02f);
@@ -105,7 +108,7 @@ void Projectile::ProjectileInitialize(int theX, int theY, int theRenderOrder, in
 		mRotation = 0.0f;
 		mRotationSpeed = RandRangeFloat(-0.2f, -0.08f);
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA)
+	else if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT)
 	{
 		TodParticleSystem* aParticle = mApp->AddTodParticle(mPosX + 8.0f, mPosY + 13.0f, 400000, ParticleEffect::PARTICLE_SNOWPEA_TRAIL);
 		AttachParticle(mAttachmentID, aParticle, 8.0f, 13.0f);
@@ -158,7 +161,10 @@ Plant* Projectile::FindCollisionTargetPlant()
 		if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PUFF || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SPIKE || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 		{
 			if (aPlant->mSeedType == SeedType::SEED_PUFFSHROOM ||
+				aPlant->mSeedType == SeedType::SEED_STARFRUIT ||
+				(aPlant->mSeedType == SeedType::SEED_SCAREDYSHROOM && aPlant->mState == PlantState::STATE_SCAREDYSHROOM_SCARED) ||
 				aPlant->mSeedType == SeedType::SEED_FLOWERPOT ||
+				aPlant->mSeedType == SeedType::SEED_TANGLEKELP ||
 				aPlant->mSeedType == SeedType::SEED_SEASHROOM ||
 				aPlant->mSeedType == SeedType::SEED_SUNSHROOM ||
 				aPlant->mSeedType == SeedType::SEED_POTATOMINE ||
@@ -190,7 +196,7 @@ bool Projectile::PeaAboutToHitTorchwood()
 	if (mMotionType != ProjectileMotion::MOTION_STRAIGHT)
 		return false;
 
-	if (mProjectileType != ProjectileType::PROJECTILE_PEA && mProjectileType != ProjectileType::PROJECTILE_SNOWPEA)
+	if (mProjectileType != ProjectileType::PROJECTILE_PEA && mProjectileType != ProjectileType::PROJECTILE_SNOWPEA && mProjectileType != ProjectileType::PROJECTILE_FROSTBOLT)
 		return false;
 
 	Plant* aPlant = nullptr;
@@ -314,7 +320,7 @@ void Projectile::CheckForCollision()
 		return;
 	}
 
-	if ((mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_STAR || mProjectileType == ProjectileType::PROJECTILE_GOO_PEA) && mShadowY - mPosY > 90.0f)
+	if ((mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_SMALLSUN || mProjectileType == ProjectileType::PROJECTILE_STAR || mProjectileType == ProjectileType::PROJECTILE_GOO_PEA) && mShadowY - mPosY > 90.0f)
 	{
 		return;
 	}
@@ -414,7 +420,9 @@ bool Projectile::CantHitHighGround()
 
 	return (
 		mProjectileType == ProjectileType::PROJECTILE_PEA ||
+		mProjectileType == ProjectileType::PROJECTILE_SMALLSUN ||
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA ||
+		mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT ||
 		mProjectileType == ProjectileType::PROJECTILE_GOO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_STAR ||
 		mProjectileType == ProjectileType::PROJECTILE_PUFF ||
@@ -428,6 +436,8 @@ void Projectile::CheckForHighGround()
 
 	if (mProjectileType == ProjectileType::PROJECTILE_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA ||
+		mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT ||
+		mProjectileType == ProjectileType::PROJECTILE_SMALLSUN ||
 		mProjectileType == ProjectileType::PROJECTILE_FIREBALL ||
 		mProjectileType == ProjectileType::PROJECTILE_GOO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_SPIKE ||
@@ -470,6 +480,7 @@ bool Projectile::IsSplashDamage(Zombie* theZombie)
 
 	return 
 		mProjectileType == ProjectileType::PROJECTILE_MELON || 
+		mProjectileType == ProjectileType::PROJECTILE_TATER ||
 		mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || 
 		mProjectileType == ProjectileType::PROJECTILE_FIREBALL;
 }
@@ -491,7 +502,7 @@ unsigned int Projectile::GetDamageFlags(Zombie* theZombie)
 		SetBit(aDamageFlags, (int)DamageFlags::DAMAGE_BYPASSES_SHIELD, true);
 	}
 
-	if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON)
+	if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON)
 	{
 		SetBit(aDamageFlags, (int)DamageFlags::DAMAGE_FREEZE, true);
 	}
@@ -697,7 +708,7 @@ void Projectile::UpdateLobMotion()
 		{
 			aMinCollisionZ = -35.0f;
 		}
-		else if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE || mProjectileType == ProjectileType::PROJECTILE_KERNEL || mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE)
+		else if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE || mProjectileType == ProjectileType::PROJECTILE_TATER || mProjectileType == ProjectileType::PROJECTILE_KERNEL || mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE)
 		{
 			aMinCollisionZ = -30.0f;
 		}
@@ -749,11 +760,27 @@ void Projectile::UpdateLobMotion()
 				int aRenderPosition = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1);
 				mApp->AddTodParticle(mPosX + 20.0f, mPosY + 20.0f, aRenderPosition, ParticleEffect::PARTICLE_UMBRELLA_REFLECT);
 				Die();
+				if (mProjectileType != ProjectileType::PROJECTILE_BASKETBALL)
+				{
+					aUmbrellaPlant->mPlantHealth -= 20;
+					if (aPlant->mPlantHealth <= 0)
+					{
+						aPlant->Die();
+					}
+				}
 			}
 			else if (aUmbrellaPlant->mState != PlantState::STATE_UMBRELLA_TRIGGERED)
 			{
 				mApp->PlayFoley(FoleyType::FOLEY_UMBRELLA);
 				aUmbrellaPlant->DoSpecial();
+				if (mProjectileType != ProjectileType::PROJECTILE_BASKETBALL)
+				{
+					aUmbrellaPlant->mPlantHealth -= 20;
+					if (aPlant->mPlantHealth <= 0)
+					{
+						aPlant->Die();
+					}
+				}
 			}
 		}
 		else
@@ -1003,6 +1030,10 @@ void Projectile::DoImpact(Zombie* theZombie)
 		}
 		unsigned int aDamageFlags = GetDamageFlags(theZombie);
 		theZombie->TakeDamage(GetProjectileDef().mDamage, aDamageFlags);
+		if (mProjectileType == ProjectileType::PROJECTILE_SMALLSUN)
+		{
+			mBoard->AddCoin(mX, mY, CoinType::COIN_SUN, CoinMotion::COIN_MOTION_LAWNMOWER_COIN);
+		}
 		if (mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
 		{
 			theZombie->ApplyPoison(300, true);
@@ -1024,6 +1055,11 @@ void Projectile::DoImpact(Zombie* theZombie)
 	{
 		mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_WINTERMELON);
 	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_TATER)
+	{
+		mApp->PlaySample(SOUND_POTATO_MINE);
+		mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 60.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_POTATO_MINE);
+	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_COBBIG)
 	{
 		int aRenderOrder = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_GROUND, mCobTargetRow, 2);
@@ -1032,7 +1068,7 @@ void Projectile::DoImpact(Zombie* theZombie)
 		mApp->PlaySample(SOUND_DOOMSHROOM);
 		mBoard->ShakeBoard(3, -4);
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
+	else if (mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_SMALLSUN || mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
 	{
 		aSplatPosX -= 15.0f;
 		aEffect = ParticleEffect::PARTICLE_PEA_SPLAT;
@@ -1089,6 +1125,15 @@ void Projectile::DoImpact(Zombie* theZombie)
 			theZombie->ApplyButter();
 		}
 	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT)
+	{
+		aSplatPosX -= 15.0f;
+		aEffect = ParticleEffect::PARTICLE_SNOWPEA_SPLAT;
+		if (theZombie)
+		{
+			theZombie->HitFrostBolt();
+		}
+	}
 
 	if (aEffect != ParticleEffect::PARTICLE_NONE)
 	{
@@ -1117,10 +1162,6 @@ void Projectile::DoImpact(Zombie* theZombie)
 			mApp->AddTodParticle(aSplatPosX, aSplatPosY, mRenderOrder + 1, aEffect);
 		}
 	}
-	if (mProjectileType == ProjectileType::PROJECTILE_SPIKE)
-	{
-		mMaxHits = 2;
-	}
 	if (mCountHits == mMaxHits)
 	{
 		Die();
@@ -1142,14 +1183,17 @@ void Projectile::Update()
 	if (mProjectileType == ProjectileType::PROJECTILE_PEA || 
 		mProjectileType == ProjectileType::PROJECTILE_GOO_PEA ||
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || 
+		mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT ||
 		mProjectileType == ProjectileType::PROJECTILE_CABBAGE || 
 		mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE ||
-		mProjectileType == ProjectileType::PROJECTILE_MELON || 
+		mProjectileType == ProjectileType::PROJECTILE_MELON ||
+		mProjectileType == ProjectileType::PROJECTILE_TATER ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON ||
 		mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || 
 		mProjectileType == ProjectileType::PROJECTILE_KERNEL || 
 		mProjectileType == ProjectileType::PROJECTILE_BUTTER || 
 		mProjectileType == ProjectileType::PROJECTILE_COBBIG || 
+		mProjectileType == ProjectileType::PROJECTILE_SMALLSUN ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || 
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PUFF ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA ||
@@ -1186,6 +1230,11 @@ void Projectile::Draw(Graphics* g)
 		aImage = IMAGE_REANIM_COBCANNON_COB;
 		aScale = 0.9f;
 	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT)
+	{
+		aImage = IMAGE_REANIM_FROSTBOLT_ARROW;
+		aScale = 1.0f;
+	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
 	{
 		aImage = IMAGE_PROJECTILEPEA;
@@ -1193,6 +1242,10 @@ void Projectile::Draw(Graphics* g)
 	else if (mProjectileType == ProjectileType::PROJECTILE_GOO_PEA)
 	{
 		aImage = IMAGE_PROJECTILEGOOPEA;
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_SMALLSUN)
+	{
+		aImage = nullptr;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA)
 	{
@@ -1232,6 +1285,11 @@ void Projectile::Draw(Graphics* g)
 	else if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE)
 	{
 		aImage = IMAGE_REANIM_CABBAGEPULT_CABBAGE;
+		aScale = 1.0f;
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_TATER)
+	{
+		aImage = IMAGE_REANIM_TATERPULT_CABBAGE;
 		aScale = 1.0f;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE)
@@ -1339,7 +1397,13 @@ void Projectile::DrawShadow(Graphics* g)
 		aOffsetX += 3.0f;
 		break;
 
+	case ProjectileType::PROJECTILE_SMALLSUN:
+		aScale = 1.4f;
+		aOffsetX -= 10.0f;
+		break;
+
 	case ProjectileType::PROJECTILE_SNOWPEA:
+	case ProjectileType::PROJECTILE_FROSTBOLT:
 	case ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA:
 		aOffsetX += -1.0f;
 		aScale = 1.3f;
@@ -1354,6 +1418,7 @@ void Projectile::DrawShadow(Graphics* g)
 	case ProjectileType::PROJECTILE_ICECABBAGE:
 	case ProjectileType::PROJECTILE_BUTTER:
 	case ProjectileType::PROJECTILE_MELON:
+	case ProjectileType::PROJECTILE_TATER:
 	case ProjectileType::PROJECTILE_WINTERMELON:
 		aOffsetX += 3.0f;
 		aOffsetY += 10.0f;
@@ -1394,7 +1459,7 @@ void Projectile::Die()
 {
 	mDead = true;
 
-	if (mProjectileType == ProjectileType::PROJECTILE_PUFF || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PUFF || mProjectileType == ProjectileType::PROJECTILE_SNOWPEA)
+	if (mProjectileType == ProjectileType::PROJECTILE_PUFF || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PUFF || mProjectileType == ProjectileType::PROJECTILE_SNOWPEA || mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT)
 	{
 		AttachmentCrossFade(mAttachmentID, "FadeOut");
 		AttachmentDetach(mAttachmentID);
@@ -1409,7 +1474,9 @@ Rect Projectile::GetProjectileRect()
 {
 	if (mProjectileType == ProjectileType::PROJECTILE_PEA || 
 		mProjectileType == ProjectileType::PROJECTILE_SNOWPEA ||
+		mProjectileType == ProjectileType::PROJECTILE_FROSTBOLT ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PEA ||
+		mProjectileType == ProjectileType::PROJECTILE_SMALLSUN ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_PUFF || 
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA)
@@ -1457,6 +1524,23 @@ void Projectile::ConvertToFireball(int theGridX)
 	if (mMotionType == ProjectileMotion::MOTION_BACKWARDS)
 	{
 		aFirePeaReanim->OverrideScale(-1.0f, 1.0f);
+		aOffsetX += 80.0f;
+	}
+
+	aFirePeaReanim->SetPosition(mPosX + aOffsetX, mPosY + aOffsetY);
+	aFirePeaReanim->mLoopType = ReanimLoopType::REANIM_LOOP;
+	aFirePeaReanim->mAnimRate = RandRangeFloat(50.0f, 80.0f);
+	AttachReanim(mAttachmentID, aFirePeaReanim, aOffsetX, aOffsetY);
+}
+void Projectile::SpawnSmallSun()
+{
+	float aOffsetX = -0.0f;
+	float aOffsetY = 5.0f;
+	Reanimation* aFirePeaReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_SUN);
+	aFirePeaReanim->OverrideScale(0.6f, 0.6f);
+	if (mMotionType == ProjectileMotion::MOTION_BACKWARDS)
+	{
+		aFirePeaReanim->OverrideScale(-0.6f, 0.6f);
 		aOffsetX += 80.0f;
 	}
 

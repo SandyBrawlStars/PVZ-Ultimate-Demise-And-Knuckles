@@ -310,6 +310,8 @@
 <Image id="ZOMBIE_SCREENDOOR3" path="Zombie_screendoor3" />
 <Image id="ZOMBIE_FLAG1" path="Zombie_flag1" />
 <Image id="ZOMBIE_FLAG3" path="Zombie_flag3" />
+<Image id="ZOMBIE_RALLYFLAG1" path="Zombie_rallyflag1" />
+<Image id="ZOMBIE_RALLYFLAG2" path="Zombie_rallyflag2" />
 <Image id="ZOMBIE_OUTERARM_UPPER2" path="Zombie_outerarm_upper2" />
 <Image id="ZOMBIE_FOOTBALL_HELMET" path="Zombie_football_helmet" />
 <Image id="ZOMBIE_FOOTBALL_HELMET2" path="Zombie_football_helmet2" />
@@ -391,7 +393,9 @@
 <Image id="ZOMBIE_BOSS_EYEGLOW_BLUE" path="Zombie_boss_eyeglow_blue" />
 <Image id="ZOMBIE_BOSS_MOUTHGLOW_BLUE" path="Zombie_boss_mouthglow_blue" />
 <Image id="CABBAGEPULT_CABBAGE" path="Cabbagepult_cabbage" />
+<Image id="TATERPULT_CABBAGE" path="Taterpult_cabbage" />
 <Image id="ICEBERG_PROJECTILE" path="Cabbagepult_cabbage" />
+<Image id="FROSTBOLT_ARROW" path="FrostPea_arrow" />
 <Image id="CORNPULT_KERNAL" path="Cornpult_kernal" />
 <Image id="CORNPULT_BUTTER" path="Cornpult_butter" />
 <Image id="CORNPULT_BUTTER_SPLAT" path="Cornpult_butter_splat" />
@@ -703,7 +707,7 @@
 <Image id="CHALLENGE_WINDOW_HIGHLIGHT" path="Challenge_Window_Highlight" />
 <Image id="CHALLENGE_BLANK" path="Challenge_Blank" />
 <Image id="CHALLENGE_THUMBNAILS" path="Challenge_Thumbnails" cols="22" />
-<Image id="SURVIVAL_THUMBNAILS" path="Survival_Thumbnails" cols="11" />
+<Image id="SURVIVAL_THUMBNAILS" path="Survival_Thumbnails" cols="13" />
 <Image id="LOCK" path="lock" />
 <Image id="LOCK_OPEN" path="lock_open" />
 </Resources>  

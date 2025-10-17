@@ -45,7 +45,8 @@ public:
 	LawnApp*				mApp;								
 	Sexy::Slider*			mMusicVolumeSlider;					
 	Sexy::Slider*			mSfxVolumeSlider;					
-	Sexy::Checkbox*			mFullscreenCheckbox;				
+	Sexy::Checkbox*			mFullscreenCheckbox;	
+	Sexy::Checkbox*         mHarderModeCheckbox;
 	Sexy::Checkbox*			mHardwareAccelerationCheckbox;		
 	Sexy::Checkbox*			mRealHardwareAccelerationCheckbox;		
 	Sexy::Checkbox*			mDebugModeBox;

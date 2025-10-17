@@ -61,7 +61,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		}
 	},
 	{ ZOMBIE_TRAFFIC_CONE,
@@ -580,7 +580,25 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 	} },
 	{ ZOMBIE_LETTER_HEAD, {
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	} },
+	{ ZOMBIE_RALLY, {
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	} },
+	{ ZOMBIE_BLOVER_HEAD, {
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -731,6 +749,16 @@ void Challenge::InitLevel()
 		mBoard->mSeedBank->AddSeed(SEED_REPEATER);
 		mBoard->mSeedBank->AddSeed(SEED_CHOMPER);
 		mBoard->mSeedBank->AddSeed(SEED_WALLNUT);
+		mConveyorBeltCounter = 1000;
+	}
+	if (mBoard->mLevel == 50)
+	{
+		mBoard->mSeedBank->AddSeed(SEED_ICEBERG);
+		mBoard->mSeedBank->AddSeed(SEED_CABBAGEPULT);
+		mBoard->mSeedBank->AddSeed(SEED_INSTANT_COFFEE);
+		mBoard->mSeedBank->AddSeed(SEED_CABBAGEPULT);
+		mBoard->mSeedBank->AddSeed(SEED_ICESHROOM);
+		mBoard->mSeedBank->AddSeed(SEED_MELONPULT);
 		mConveyorBeltCounter = 1000;
 	}
 	if (mApp->mGameMode == GAMEMODE_CHALLENGE_BEGHOULED_TWIST)
@@ -2096,7 +2124,7 @@ void Challenge::UpdateConveyorBelt()
 		aSeedPickArray[2].mItem = SEED_ICEBERG;
 		aSeedPickArray[2].mWeight = 20;
 		aSeedPickArray[3].mItem = SEED_MELONPULT;
-		aSeedPickArray[3].mWeight = 5;
+		aSeedPickArray[3].mWeight = 8;
 		aSeedPickArray[9].mItem = SEED_WINTERMELON;
 		aSeedPickArray[9].mWeight = 5;
 		aSeedPickArray[4].mItem = SEED_UMBRELLA;
@@ -2104,7 +2132,7 @@ void Challenge::UpdateConveyorBelt()
 		aSeedPickArray[5].mItem = SEED_ICESHROOM;
 		aSeedPickArray[5].mWeight = 10;
 		aSeedPickArray[6].mItem = SEED_DOOMSHROOM;
-		aSeedPickArray[6].mWeight = 8;
+		aSeedPickArray[6].mWeight = 5;
 		aSeedPickArray[7].mItem = SEED_INSTANT_COFFEE;
 		aSeedPickArray[7].mWeight = 18;
 		aSeedPickArray[8].mItem = SEED_PUMPKINSHELL;
@@ -2990,6 +3018,22 @@ void Challenge::InitZombieWaves()
 		aList[ZOMBIE_DOLPHIN_RIDER] = true;
 		aList[ZOMBIE_LADDER] = true;
 	}
+	else if (aGameMode == GAMEMODE_LONE_GATLING)
+	{
+		aList[ZOMBIE_NORMAL] = true;
+		aList[ZOMBIE_TRAFFIC_CONE] = true;
+		aList[ZOMBIE_PAIL] = true;
+		aList[ZOMBIE_DIGGER] = true;
+		aList[ZOMBIE_JACK_IN_THE_BOX] = true;
+		aList[ZOMBIE_BUNGEE] = true;
+		aList[ZOMBIE_CHERRY_BUNGEE] = true;
+		aList[ZOMBIE_BUTTER_PULT_HEAD] = true;
+		aList[ZOMBIE_LETTER_HEAD] = true;
+		aList[ZOMBIE_MELON_PULT_HEAD] = true;
+		aList[ZOMBIE_SQUASH_HEAD] = true;
+		aList[ZOMBIE_MINE_HEAD] = true;
+		aList[ZOMBIE_BLOVER_HEAD] = true;
+	}
 	else if (aGameMode == GAMEMODE_CHALLENGE_COLUMN)
 	{
 		aList[ZOMBIE_NORMAL] = true;
@@ -3327,7 +3371,7 @@ void Challenge::SpawnZombieWave()
 			{
 				break;
 			}
-			if (aWaveZombie == ZOMBIE_FLAG)
+			if (aWaveZombie == ZOMBIE_FLAG || aWaveZombie == ZOMBIE_RALLY)
 			{
 				mBoard->mZombiesInWave[mBoard->mCurrentWave][i] = ZOMBIE_NORMAL;
 			}

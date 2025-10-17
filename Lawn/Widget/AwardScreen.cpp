@@ -146,9 +146,9 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
         mMenuButton->mBtnNoDraw = true;
         mMenuButton->mDisabled = true;
     }
-    else if (aLevel == 15)
+    else if (aLevel == 0)
         mStartButton->SetLabel("[VIEW_ALMANAC_BUTTON]");
-    else if (aLevel == 25 || aLevel == 35 || aLevel == 45)
+    else if (aLevel == 15 || aLevel == 35 || aLevel == 45)
         mStartButton->SetLabel("[CONTINUE_BUTTON]");
     else
         mStartButton->SetLabel("[NEXT_LEVEL_BUTTON]");
@@ -294,8 +294,8 @@ void AwardScreen::Draw(Graphics* g)
                 {
                     int aNumTrophies = mApp->GetNumTrophies(CHALLENGE_PAGE_SURVIVAL);
                     aMsgChar =
-                        aNumTrophies <= 7 ? _S("[YOU_UNLOCKED_A_SURVIVAL]") :
-                        aNumTrophies == 10 ? _S("[YOU_UNLOCKED_ENDLESS_SURVIVAL]") : _S("[EARN_MORE_TROPHIES_FOR_ENDLESS_SURVIVAL]");
+                        aNumTrophies <= 8 ? _S("[YOU_UNLOCKED_A_SURVIVAL]") :
+                        aNumTrophies == 11 ? _S("[YOU_UNLOCKED_ENDLESS_SURVIVAL]") : _S("[EARN_MORE_TROPHIES_FOR_ENDLESS_SURVIVAL]");
 
                 }
                 else if (mApp->IsScaryPotterLevel())
@@ -322,7 +322,7 @@ void AwardScreen::Draw(Graphics* g)
             TodDrawString(g, _S("[FOUND_NOTE]"), BOARD_WIDTH / 2, 70, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
             mState = "Zombie Note (" + mApp->GetStageString(aLevel).erase(0, 1) + ")";
         }
-        else if (aLevel == 15)
+        else if (aLevel == 0)
         {
             DrawBottom(g, _S("[FOUND_SUBURBAN_ALMANAC]"), _S("[SUBURBAN_ALMANAC]"), _S("[SUBURBAN_ALMANAC_DESCRIPTION]"));
             g->DrawImage(Sexy::IMAGE_ALMANAC, BOARD_WIDTH / 2 - Sexy::IMAGE_ALMANAC->mWidth / 2, 160);
@@ -335,7 +335,7 @@ void AwardScreen::Draw(Graphics* g)
             TodDrawString(g, _S("[FOUND_NOTE]"), BOARD_WIDTH / 2, 70, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
             mState = "Zombie Note (" + mApp->GetStageString(aLevel).erase(0, 1) + ")";
         }
-        else if (aLevel == 25)
+        else if (aLevel == 15)
         {
             DrawBottom(g, _S("[FOUND_KEYS]"), _S("[KEYS]"), _S("[KEYS_DESCRIPTION]"));
             g->DrawImage(Sexy::IMAGE_CARKEYS, BOARD_WIDTH / 2 - Sexy::IMAGE_CARKEYS->mWidth / 2, 160);
@@ -433,9 +433,9 @@ void AwardScreen::Draw(Graphics* g)
         {
             mStartButton->SetLabel("[CONTINUE_BUTTON]");
         }
-        else if (aLevel == 15)
+        else if (aLevel == 0)
             mStartButton->SetLabel("[VIEW_ALMANAC_BUTTON]");
-        else if (aLevel == 25 || aLevel == 35 || aLevel == 45)
+        else if (aLevel == 15 || aLevel == 35 || aLevel == 45)
             mStartButton->SetLabel("[CONTINUE_BUTTON]");
         else
             mStartButton->SetLabel("[NEXT_LEVEL_BUTTON]");
@@ -544,11 +544,11 @@ void AwardScreen::ExitScreen()
         }
         else
         {
-            if (aLevel == 15)
+            if (aLevel == 0)
             {
                 mApp->DoAlmanacDialog()->WaitForResult();
             }
-            else if (aLevel == 25)
+            else if (aLevel == 15)
             {
                 StoreScreen* aStore = mApp->ShowStoreScreen();
                 aStore->SetupForIntro(301);

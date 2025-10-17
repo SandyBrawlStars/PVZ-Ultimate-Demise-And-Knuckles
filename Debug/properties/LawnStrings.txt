@@ -518,7 +518,7 @@ Potato Mines pack a powerful punch, but they need a while to arm themselves. You
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Range:{STAT} all zombies in a small area
 {KEYWORD}Usage:{STAT} single use, delayed activation
-{KEYWORD}Modded Change: {STAT}+50 Sun Cost, x0.4 damage, x4 Arming Speed, x1.6 Health
+{KEYWORD}Modded Change: {STAT}+50 Sun Cost, x0.4 damage, x2 Arming Speed, x1.6 Health
 {FLAVOR}Some folks say Potato Mine is lazy, that he leaves everything to the last 
 minute. Potato Mine says nothing. He's too busy thinking about his investment strategy.
 
@@ -1426,6 +1426,16 @@ I choose... these three!
 [CRAZY_DAVE_2036]
 {NO_SOUND}{NO_CLICK}Mega Gatling Pea shoots random projectiles in 3 lanes!
 
+[CRAZY_DAVE_2037]
+{NO_SOUND}{NO_CLICK}Solar Pea produces sun slowly but shoots sun projectiles every 8th attack!
+
+[CRAZY_DAVE_2038]
+{NO_SOUND}{NO_CLICK}Tater-Pult is slower but stronger and deals splash damage!
+
+[CRAZY_DAVE_2039]
+{NO_SOUND}{NO_CLICK}Frostbolt Deals Extra Damage And Freezes Zombies!
+
+
 [CRAZY_DAVE_2100]
 Hey, check it out, you found a watering can!
 [CRAZY_DAVE_2101]
@@ -1640,6 +1650,9 @@ Place the bungee zombie on the left side of the line
 [ADVICE_ONLY_ON_REPEATERS]
 Can only be planted on repeaters
 
+[ADVICE_ONLY_ON_PEASHOOTERS]
+Can only be planted on peashooters
+
 [ADVICE_ONLY_ON_MELONPULT]
 Can only be planted on melon-pults
 
@@ -1834,6 +1847,9 @@ You need more sun to do that!
 [ADVICE_PLANT_NEEDS_REPEATER]
 Plant a repeater first!
 
+[ADVICE_PLANT_NEEDS_PEASHOOTER]
+Plant a peashooter first!
+
 [ADVICE_PLANT_NEEDS_MELONPULT]
 Plant a winter melon first!
 
@@ -1860,6 +1876,9 @@ Plant a lily pad first!
 
 [PLAYERS_BACKYARD]
 {PLAYER}'s Backyard
+
+[DAVES_BACKYARD]
+Dave's Backyard
 
 [PLAYERS_ROOF]
 {PLAYER}'s Roof!
@@ -2039,6 +2058,15 @@ not enough sun
 
 [REQUIRES_REPEATER]
 requires repeater
+
+[REQUIRES_CABBAGEPULT]
+requires Cabbage-pult
+
+[REQUIRES_SNOWPEA]
+requires snow pea
+
+[REQUIRES_PEASHOOTER]
+requires peashooter
 
 [REQUIRES_MELONPULT]
 requires melon-pult
@@ -2269,6 +2297,24 @@ Survival: Fog
 
 [SURVIVAL_ROOF_NORMAL]
 Survival: Roof
+
+[SURVIVAL_NIGHT_ROOF_NORMAL]
+Survival: Night Roof
+
+[SURVIVAL_NIGHT_ROOF_HARD]
+Survival: Night Roof (Hard)
+
+[SURVIVAL_NIGHT_ROOF_ENDLESS]
+Survival: Night Roof (Endless)
+
+[SURVIVAL_DAVE_BACKYARD_NORMAL]
+Survival: Dave's Backyard
+
+[SURVIVAL_DAVE_BACKYARD_HARD]
+Survival: Dave's Backyard (Hard)
+
+[SURVIVAL_DAVE_BACKYARD_ENDLESS]
+Survival: Dave's Backyard (Endless)
 
 [SURVIVAL_DAY_HARD]
 Survival: Day (Hard)
@@ -3421,3 +3467,215 @@ Throws melons into the back of your defense, deals splash damage
 Throws butter into the back of your defense, stuns plants
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium - 1450
+
+
+[ADVENTURE_TEXT_1]
+: Jump Start
+
+[ADVENTURE_TEXT_2]
+: Do Not Disturb
+
+[ADVENTURE_TEXT_3]
+: Explosive Disco
+
+[ADVENTURE_TEXT_4]
+: Proper Defense
+
+[ADVENTURE_TEXT_5]
+: Wall-Nuts Vs Wall-Nuts
+
+[ADVENTURE_TEXT_6]
+: Collapsing Taters
+
+[ADVENTURE_TEXT_7]
+: Slowing Down
+
+[ADVENTURE_TEXT_8]
+: Armed-Up Rush
+
+[ADVENTURE_TEXT_9]
+: Repeating The Adventure
+
+[ADVENTURE_TEXT_10]
+: Ultimate Battle - Day
+
+[ADVENTURE_TEXT_11]
+: Puff-Shroom Spam
+
+[ADVENTURE_TEXT_12]
+: Quick Time Event
+
+[ADVENTURE_TEXT_13]
+: Dangerous Winter
+
+[ADVENTURE_TEXT_14]
+: Cleaning Up
+
+[ADVENTURE_TEXT_15]
+: Whack A Zombie
+
+[ADVENTURE_TEXT_16]
+: Drained Sun
+
+[ADVENTURE_TEXT_17]
+: Double Peas
+
+[ADVENTURE_TEXT_18]
+: Frostbite
+
+[ADVENTURE_TEXT_19]
+: Bloom Vs Doom
+
+[ADVENTURE_TEXT_20]
+: Ultimate Battle - Night
+
+[ADVENTURE_TEXT_21]
+: Backyard Party
+
+[ADVENTURE_TEXT_22]
+: Deep Underwater
+
+[ADVENTURE_TEXT_23]
+: Three-Headed
+
+[ADVENTURE_TEXT_24]
+: Defrosting The Lawn
+
+[ADVENTURE_TEXT_25]
+: Zombie Nimble Zombie Quick
+
+[ADVENTURE_TEXT_26]
+: Zombie Animals
+
+[ADVENTURE_TEXT_27]
+: Popped Tires
+
+[ADVENTURE_TEXT_28]
+: Double Helmet
+
+[ADVENTURE_TEXT_29]
+: Gigantic Trouble
+
+[ADVENTURE_TEXT_30]
+: Ultimate Battle - Pool
+
+[ADVENTURE_TEXT_31]
+: Patience Isn't Key
+
+[ADVENTURE_TEXT_32]
+: Lights On
+
+[ADVENTURE_TEXT_33]
+: Flying Over
+
+[ADVENTURE_TEXT_34]
+: Strong Winds
+
+[ADVENTURE_TEXT_35]
+: Vasebreaker
+
+[ADVENTURE_TEXT_36]
+: Forwards And Backwards
+
+[ADVENTURE_TEXT_37]
+: Starry Skies
+
+[ADVENTURE_TEXT_38]
+: Suprise!
+
+[ADVENTURE_TEXT_39]
+: Whats Different?
+
+[ADVENTURE_TEXT_40]
+: Ultimate Battle - Fog
+
+[RALLY_ZOMBIE_DESCRIPTION]
+Made by bandit on the M.A Discord
+
+[ADVENTURE_TEXT_41]
+: Slopes And Pults
+
+[ADVENTURE_TEXT_42]
+: Backfire
+
+[ADVENTURE_TEXT_43]
+: Buttered Popcorn
+
+[ADVENTURE_TEXT_44]
+: Waking Up
+
+[ADVENTURE_TEXT_45]
+: Bungee Blitz
+
+[ADVENTURE_TEXT_46]
+: Redirection
+
+[ADVENTURE_TEXT_47]
+: Going Into Debt
+
+[ADVENTURE_TEXT_48]
+: Solar Power
+
+[ADVENTURE_TEXT_49]
+: Even More Gigantic Trouble
+
+[ADVENTURE_TEXT_50]
+: Everyone Is Here
+
+[ADVENTURE_TEXT_51]
+: Poisoned
+
+[ADVENTURE_TEXT_52]
+: Lunar Power
+
+[ADVENTURE_TEXT_53]
+: Armor Piercing
+
+[ADVENTURE_TEXT_54]
+: Splash Damage
+
+[ADVENTURE_TEXT_55]
+: The Goliath
+
+[ADVENTURE_TEXT_56]
+: Another Suprise!
+
+[ADVENTURE_TEXT_57]
+: Hypnotized Plants
+
+[ADVENTURE_TEXT_58]
+: Quicker Time Event
+
+[ADVENTURE_TEXT_59]
+: The All-Star
+
+[ADVENTURE_TEXT_60]
+
+[ADVENTURE_TEXT_61]
+: Brutal Mode
+
+[ADVENTURE_TEXT_62]
+
+[ADVENTURE_TEXT_63]
+
+[ADVENTURE_TEXT_64]
+
+[ADVENTURE_TEXT_65]
+
+[ADVENTURE_TEXT_66]
+
+[ADVENTURE_TEXT_67]
+
+[ADVENTURE_TEXT_68]
+
+[ADVENTURE_TEXT_69]
+
+[ADVENTURE_TEXT_70]
+: The Ruler Of All
+
+[FROSTBOLT_DESCRIPTION]
+Made by Bandit
+
+[INFINUT_DESCRIPTION]
+Made by Reat
+

@@ -120,6 +120,7 @@ public:
     int                             mPoisonedCounter;
     bool                            mPoisonedType;
     int                             mPoisonedMult;
+    int                             mSunCounter;
     int                             mButteredCounter;                           
     int                             mIceTrapCounter;                            
     bool                            mMindControlled;                            
@@ -254,6 +255,7 @@ public:
     void                            DrawIceTrap(Graphics* g, const ZombieDrawPosition& theDrawPos, bool theFront);
     void                            HitIceTrap();
     void                            HitIceCabbage();
+    void                            HitFrostBolt();
     int                             GetHelmDamageIndex();
     int                             GetShieldDamageIndex();
     void                            DrawReanim(Graphics* g, const ZombieDrawPosition& theDrawPos, int theBaseRenderGroup);
@@ -301,7 +303,7 @@ public:
     /*inline*/ void                 PlayZombieReanim(const char* theTrackName, ReanimLoopType theLoopType, int theBlendTime, float theAnimRate);
     void                            UpdateZombieBackupDancer();
     ZombiePhase                     GetDancerPhase();
-    bool                            IsMovingAtChilledSpeed();
+    bool                           IsMovingAtChilledSpeed();
     void                            StartWalkAnim(int theBlendTime);
     Reanimation*                    AddAttachedReanim(int thePosX, int thePosY, ReanimationType theReanimType);
     void                            DragUnder();
@@ -387,6 +389,7 @@ public:
     void                            BossHeadSpitEffect();
     void                            DrawBossFireBall(Graphics* g, const ZombieDrawPosition& theDrawPos);
     void                            UpdateZombiePeaHead();
+    void                            UpdateZombieBloverHead();
     void                            UpdateZombieMineHead();
     void                            UpdateZombieScaredyHead();
     void                            UpdateZombieCactusHead();

@@ -288,6 +288,7 @@ SexyAppBase::SexyAppBase()
 	mAspectCorrect = true;
 	mAspectNoStretch = false;
 	mDiscordPresence = true;
+	mHarderMode = false;
 	mSpeedModifier = 2;
 	mQuickLevel = 1;
 	mBankKeybinds = false;

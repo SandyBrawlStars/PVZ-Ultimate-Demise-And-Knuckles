@@ -61,6 +61,9 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mDebugModeBox = MakeNewCheckbox(-1, this, mApp->mTodCheatKeys);
     mDebugModeBox->SetVisible(false);
 
+    mHarderModeCheckbox = MakeNewCheckbox(-1, this, mApp->mHarderMode);
+    mHarderModeCheckbox->SetVisible(false);
+
     mDiscordBox = MakeNewCheckbox(-1, this, mApp->mDiscordPresence);
     mDiscordBox->SetVisible(false);
 
@@ -168,6 +171,7 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mMusicVolumeSlider;
     delete mSfxVolumeSlider;
     delete mFullscreenCheckbox;
+    delete mHarderModeCheckbox;
     delete mHardwareAccelerationCheckbox;
     delete mDebugModeBox;
     delete mDiscordBox;
@@ -208,6 +212,7 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mBankKeybindsBox);
     AddWidget(m09FormatBox);
     AddWidget(mFullscreenCheckbox);
+    AddWidget(mHarderModeCheckbox);
     AddWidget(mBackToGameButton);
     AddWidget(mLeftPageButton);
     AddWidget(mRightPageButton);
@@ -227,6 +232,7 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mMusicVolumeSlider);
     RemoveWidget(mSfxVolumeSlider);
     RemoveWidget(mFullscreenCheckbox);
+    RemoveWidget(mHarderModeCheckbox);
     RemoveWidget(mHardwareAccelerationCheckbox);
     RemoveWidget(mDebugModeBox);
     RemoveWidget(mDiscordBox);
@@ -255,6 +261,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mHardwareAccelerationCheckbox->Resize(284, 175, 46, 45);
     mDebugModeBox->Resize(284, 148, 46, 45);
     mFullscreenCheckbox->Resize(284, 206, 46, 45);
+    mHarderModeCheckbox->Resize(mBankKeybindsBox->mX, mBankKeybindsBox->mY + 80, 46, 45);
     mDiscordBox->Resize(mDebugModeBox->mX, mDebugModeBox->mY + 40, 46, 45);
     mBankKeybindsBox->Resize(mDiscordBox->mX, mDiscordBox->mY + 40, 46, 45);
     m09FormatBox->Resize(mBankKeybindsBox->mX, mBankKeybindsBox->mY + 40, 46, 45);
@@ -336,10 +343,10 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
         {
             TodDrawString(g, mApp->mReconVersion, mWidth / 2, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
             TodDrawString(g, _S("Debug Mode"), mDebugModeBox->mX - 6, mDebugModeBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Harder Mode"), mHarderModeCheckbox->mX - 6, mHarderModeCheckbox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Discord Presence"), mDiscordBox->mX - 6, mDiscordBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Seed Bank Keybinds"), mBankKeybindsBox->mX - 6, mBankKeybindsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, StrFormat(_S("Keybind: '%s'"), m09FormatBox->mChecked ? "1-0" : "0-9"), m09FormatBox->mX - 6, m09FormatBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-            TodDrawString(g, _S("Shovel Keybind: 'S'"), mWidth / 2, m09FormatBox->mY + 55, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
         }
         else if (mAdvancedPage == 2)
         {
@@ -353,6 +360,7 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
         else if (mAdvancedPage == 3)
         {
             TodDrawString(g, _S("Actual 3D Acceleration"), mRealHardwareAccelerationCheckbox->mX - 6, mRealHardwareAccelerationCheckbox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Shovel Keybind: 'S'"), mWidth / 2, m09FormatBox->mY + 55, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
         }
         TodDrawString(g, StrFormat(_S("Page %d"), mAdvancedPage), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18GREENINSET, Color::White, DrawStringJustification::DS_ALIGN_CENTER);
     }
@@ -480,6 +488,7 @@ void NewOptionsDialog::UpdateAdvancedPage()
     mAutoCollectCoinsBox->SetVisible(false);
     mZombieHealthbarsBox->SetVisible(false);
     mPlantHealthbarsBox->SetVisible(false);
+    mHarderModeCheckbox->SetVisible(false);
     mRealHardwareAccelerationCheckbox->SetVisible(false);
 
     switch (mAdvancedPage)
@@ -489,6 +498,7 @@ void NewOptionsDialog::UpdateAdvancedPage()
             mDiscordBox->SetVisible(true);
             mBankKeybindsBox->SetVisible(true);
             m09FormatBox->SetVisible(true);
+            mHarderModeCheckbox->SetVisible(true);
             break;
         case 2:
             mSpeedEditWidget->SetVisible(true);

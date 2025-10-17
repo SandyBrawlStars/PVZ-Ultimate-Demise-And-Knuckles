@@ -227,6 +227,10 @@ public:
 	bool							mCoinFaded;
 	int								mAchievementCoinCount;
 	int								mGargantuarsKilled;
+	int                             mDebugObjectSelection;
+	int                             mDebugObjectType;
+	int                             mDebugObjectLimit;
+
 
 public:
 	Board(LawnApp* theApp);
@@ -385,6 +389,7 @@ public:
 	void							UpdateFwoosh();
 	Plant*							SpecialPlantHitTest(int x, int y);
 	void							UpdateMousePosition();
+	void                            LoadBackgroundDebug(BackgroundType theBackground);
 	/*inline*/ Plant*				ToolHitTestHelper(HitResult* theHitResult);
 	/*inline*/ Plant*				ToolHitTest(int theX, int theY);
 	bool							CanAddGraveStoneAt(int theGridX, int theGridY);
@@ -493,5 +498,13 @@ extern bool gShownMoreSunTutorial;
 int									GetRectOverlap(const Rect& rect1, const Rect& rect2);
 bool								GetCircleRectOverlap(int theCircleX, int theCircleY, int theRadius, const Rect& theRect);
 /*inline*/ void						BoardInitForPlayer();
+
+class BackgroundDefinition
+{
+public:
+	BackgroundType                      mBackgroundType; // zombie identifier ex: ZOMBIE_NORMAL
+	const SexyChar* mBackgroundName;
+};
+extern BackgroundDefinition gBackgroundDefs[BACKGROUND_7_BACKYARD + 1];
 
 #endif // __BOARD_H__

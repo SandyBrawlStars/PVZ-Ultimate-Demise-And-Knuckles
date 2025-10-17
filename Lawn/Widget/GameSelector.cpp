@@ -653,7 +653,7 @@ void GameSelector::DrawOverlay(Graphics* g)
 		float aTransSubX = aTransAreaX;
 		float aTransSubY = aTransAreaY;
 
-		int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, 6);  // ´ó¹Ø
+		int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, 7);  // ´ó¹Ø
 		int aSub = mLevel - (aStage - 1) * 10;  // Ð¡¹Ø
 		if (mApp->IsTrialStageLocked() && (mLevel >= 25 || mApp->HasFinishedAdventure()))
 		{

@@ -321,7 +321,7 @@ unsigned int SeedChooserScreen::SeedNotRecommendedToPick(SeedType theSeedType)
 
 bool SeedChooserScreen::SeedNotAllowedToPick(SeedType theSeedType)
 {
-	return mApp->mGameMode == GAMEMODE_CHALLENGE_LAST_STAND && (theSeedType == SEED_SUNFLOWER || theSeedType == SEED_SUNSHROOM ||
+	return mApp->mGameMode == GAMEMODE_CHALLENGE_LAST_STAND && (theSeedType == SEED_SUNFLOWER || theSeedType == SEED_SOLARPEA || theSeedType == SEED_PLANTERN || theSeedType == SEED_SUNSHROOM ||
 		theSeedType == SEED_TWINSUNFLOWER || theSeedType == SEED_SEASHROOM || theSeedType == SEED_PUFFSHROOM || theSeedType == SEED_MARIGOLD || theSeedType == SEED_MOON_LAMP);
 }
 
@@ -670,7 +670,7 @@ void SeedChooserScreen::OnStartButton()
 		}
 	}
 	if (!PickedPlantType(SEED_SUNFLOWER) && !PickedPlantType(SEED_TWINSUNFLOWER) && !PickedPlantType(SEED_SUNSHROOM) &&
-		!PickedPlantType(SEED_MARIGOLD) && !PickedPlantType(SEED_MOON_LAMP) && !mBoard->mCutScene->IsSurvivalRepick() && mApp->mGameMode != GAMEMODE_CHALLENGE_LAST_STAND)
+		!PickedPlantType(SEED_MARIGOLD) && !PickedPlantType(SEED_MOON_LAMP) && !PickedPlantType(SEED_PLANTERN) && !PickedPlantType(SEED_SOLARPEA) && !mBoard->mCutScene->IsSurvivalRepick() && mApp->mGameMode != GAMEMODE_CHALLENGE_LAST_STAND)
 	{
 		if (mApp->IsFirstTimeAdventureMode() && mBoard->mLevel == 11)
 		{

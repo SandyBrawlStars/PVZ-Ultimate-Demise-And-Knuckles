@@ -18,6 +18,7 @@ public:
     ProjectileType          mProjectileType; //the type of the projectile
     int                     mImageRow; // (UNUSED) image row of the projectile used in betas
     int                     mDamage; // how much damage it deals
+    const SexyChar*         mProjectileName;
 };
 extern ProjectileDefinition gProjectileDefinition[NUM_PROJECTILES];  
 
@@ -80,6 +81,7 @@ public:
     void                    UpdateNormalMotion();
     Plant*                  FindCollisionTargetPlant();
     void                    ConvertToFireball(int theGridX);
+    void                    SpawnSmallSun();
     void                    ConvertToPea(int theGridX);
     bool                    IsSplashDamage(Zombie* theZombie/* = nullptr*/);
     void                    PlayImpactSound(Zombie* theZombie);
