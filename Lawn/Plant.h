@@ -3,7 +3,7 @@
 #include <string>
 #include "GameObject.h"
 
-#define MAX_MAGNET_ITEMS 5
+#define MAX_MAGNET_ITEMS 6
 
 enum PlantSubClass
 {
@@ -121,6 +121,7 @@ enum MagnetItemType
     MAGNET_ITEM_SILVER_COIN,
     MAGNET_ITEM_GOLD_COIN,
     MAGNET_ITEM_DIAMOND,
+    MAGNET_ITEM_SUN,
     MAGNET_ITEM_PICK_AXE
 };
 

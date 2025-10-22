@@ -733,19 +733,13 @@ int AlmanacDialog::ZombieIsShown(ZombieType theZombieType)
 	if (theZombieType == ZombieType::ZOMBIE_YETI)
 		return mApp->CanSpawnYetis() || ZombieHasSilhouette(ZombieType::ZOMBIE_YETI);
 
-	if (theZombieType <= ZombieType::ZOMBIE_BOSS)
-	{
+
 		if (mApp->HasFinishedAdventure())
 			return true;
 
 		int aLevel = mApp->mPlayerInfo->mLevel;
 		int aStart = GetZombieDefinition(theZombieType).mStartingLevel;
 		return aStart <= aLevel && (aStart != aLevel || !Board::IsZombieTypeSpawnedOnly(theZombieType) || gZombieDefeated[theZombieType]);
-	}
-	else if (theZombieType > ZombieType::ZOMBIE_BOSS)
-	{
-		return true;
-	}
 	return true;
 }
 

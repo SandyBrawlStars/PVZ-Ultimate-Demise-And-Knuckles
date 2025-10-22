@@ -38,6 +38,7 @@ GridItem::GridItem()
     mTransparentCounter = 0;
     mSunCount = 0;
     mMotionTrailCount = 0;
+    mHoneyCounter = 0;
 }
 
 void GridItem::GridItemDie()
@@ -82,6 +83,23 @@ void GridItem::DrawGridItem(Graphics* g)
     case GridItemType::GRIDITEM_ZEN_TOOL:                                                           break;
     case GridItemType::GRIDITEM_RAKE:                                                               break;
     case GridItemType::GRIDITEM_BRAIN:              g->DrawImageF(IMAGE_BRAIN, mPosX, mPosY);       break;
+    case GridItemType::GRIDITEM_HONEYDEW_PUDDLE:
+    {
+        float aPosX = mBoard->GridToPixelX(mGridX, mGridY) - 8.0f;
+        float aPosY = mBoard->GridToPixelY(mGridX, mGridY) + 0.0f;
+        g->SetColorizeImages(true);
+        if (mGridItemCounter >= 600)
+        {
+            g->SetColor(Color(255, 255, 255, abs(((mGridItemCounter - 600) * 2.5) - 255)));
+        }
+        else
+        {
+            g->SetColor(Color(255, 255, 255, (mGridItemCounter + 100) / 3));
+        }
+        g->DrawImageF(IMAGE_HONEYDEW_PUDDLE, aPosX, aPosY);
+        g->SetColorizeImages(false);
+        break;
+    }
     case GridItemType::GRIDITEM_SCARY_POT:          DrawScaryPot(g);                                break;
     case GridItemType::GRIDITEM_SQUIRREL:           DrawSquirrel(g);                                break;
     case GridItemType::GRIDITEM_STINKY:             DrawStinky(g);                                  break;
@@ -556,6 +574,30 @@ void GridItem::UpdateBrain()
     }
 }
 
+void GridItem::UpdatePuddle()
+{
+    mGridItemCounter--;
+    if (mGridItemCounter <= 0)
+    {
+        GridItemDie();
+    }
+    Zombie* aZombie = nullptr;
+    while (mBoard->IterateZombies(aZombie))
+    {
+        int aGridX = mBoard->PixelToGridXKeepOnBoard(aZombie->mPosX, aZombie->mPosY);
+        int aGridY = mBoard->PixelToGridYKeepOnBoard(aZombie->mPosX, aZombie->mPosY) + 1;
+        if (mGridX == aGridX && mGridY == aGridY)
+        {
+            aZombie->mHoneyPuddle = 100;
+            aZombie->UpdateAnimSpeed();
+        }
+        else
+        {
+            aZombie->mHoneyPuddle--;
+        }
+    }
+}
+
 void GridItem::Update()
 {
     Reanimation* aGridItemReanim = mApp->ReanimationTryToGet(mGridItemReanimID);
@@ -585,6 +627,10 @@ void GridItem::Update()
     if (mGridItemType == GridItemType::GRIDITEM_IZOMBIE_BRAIN)
     {
         UpdateBrain();
+    }
+    if (mGridItemType == GridItemType::GRIDITEM_HONEYDEW_PUDDLE)
+    {
+        UpdatePuddle();
     }
 }
 

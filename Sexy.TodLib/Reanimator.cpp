@@ -169,6 +169,9 @@ ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS] = {
 	{ ReanimationType::REANIM_TATERPULT,                                 "reanim\\TaterPult.reanim",                   0 },
 	{ ReanimationType::REANIM_FROSTBOLT,                                 "reanim\\FrostPea.reanim",                   0 },
 	{ ReanimationType::REANIM_INFINUT,                                 "reanim\\InfiNut.reanim",                   0 },
+	{ ReanimationType::REANIM_PEPPERPULT,                                 "reanim\\Pepperpult.reanim",                   0 },
+	{ ReanimationType::REANIM_HONEYDEWPULT,                                 "reanim\\honeypult.reanim",                   0 },
+	{ ReanimationType::REANIM_SNAPDRAGON,                                 "reanim\\SnapDragon.reanim",                   0 },
 };
 
 ReanimatorTransform::ReanimatorTransform() :

@@ -300,6 +300,24 @@ void Coin::CoinInitialize(int theX, int theY, CoinType theCoinType, CoinMotion t
             SeedType aSeedList[] = {
                 SeedType::SEED_SHADOW_SHROOM,
                 SeedType::SEED_ICEBERG,
+                SeedType::SEED_MOON_LAMP,
+                SeedType::SEED_GOO_PEA,
+                SeedType::SEED_INFINUT,
+                SeedType::SEED_PEPPERPULT,
+                SeedType::SEED_HONEYDEWPULT,
+                SeedType::SEED_SNAPDRAGON,
+            };
+
+            SeedType aSeedType = (SeedType)TodPickFromArray((int*)aSeedList, LENGTH(aSeedList));
+            mPottedPlantSpec.InitializePottedPlant(aSeedType);
+        }
+
+        else if (mBoard->mBackground == BackgroundType::BACKGROUND_7_BACKYARD)
+        {
+            SeedType aSeedList[] = {
+                SeedType::SEED_SOLARPEA,
+                SeedType::SEED_TATERPULT,
+                SeedType::SEED_FROSTBOLT,
             };
 
             SeedType aSeedType = (SeedType)TodPickFromArray((int*)aSeedList, LENGTH(aSeedList));
@@ -826,7 +844,7 @@ Color Coin::GetColor()
 
 SeedType Coin::GetFinalSeedPacketType()
 {
-    if (mApp->IsFirstTimeAdventureMode() && mBoard && mBoard->mLevel <= 55)
+    if (mApp->IsFirstTimeAdventureMode() && mBoard && mBoard->mLevel <= 58)
     {
         return mApp->GetAwardSeedForLevel(mBoard->mLevel);
     }
@@ -1336,6 +1354,7 @@ int Coin::GetCoinValue(CoinType theCoinType)
 {
     return theCoinType == CoinType::COIN_SILVER ? 1 : theCoinType == CoinType::COIN_GOLD ? 5 : theCoinType == CoinType::COIN_DIAMOND ? 100 : 0;
 }
+
 
 void Coin::PlayLaunchSound()
 {

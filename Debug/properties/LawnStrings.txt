@@ -1594,6 +1594,9 @@ Hey neighbor! Got some new items for sale!
 [CRAZY_DAVE_3400]
 {NO_CLICK}To use Wall-nut First Aid, simply plant a fresh new Wall-nut over the damaged one!
 
+[CRAZY_DAVE_4001]
+This song is made by "spookyherself" !
+
 [MENU_BUTTON]
 Pause
 
@@ -3671,6 +3674,26 @@ Made by bandit on the M.A Discord
 [ADVENTURE_TEXT_69]
 
 [ADVENTURE_TEXT_70]
+
+[ADVENTURE_TEXT_71]
+
+[ADVENTURE_TEXT_72]
+
+[ADVENTURE_TEXT_73]
+
+[ADVENTURE_TEXT_74]
+
+[ADVENTURE_TEXT_75]
+
+[ADVENTURE_TEXT_76]
+
+[ADVENTURE_TEXT_77]
+
+[ADVENTURE_TEXT_78]
+
+[ADVENTURE_TEXT_79]
+
+[ADVENTURE_TEXT_80]
 : The Ruler Of All
 
 [FROSTBOLT_DESCRIPTION]
@@ -3679,3 +3702,11 @@ Made by Bandit
 [INFINUT_DESCRIPTION]
 Made by Reat
 
+[PEPPER_PULT_DESCRIPTION]
+Made by justalittlegray and -BartDoesArt
+
+[HONEYDEW_PULT_DESCRIPTION]
+Made by grassguy12
+
+[SNAPDRAGON_DESCRIPTION]
+Made by grassguy12

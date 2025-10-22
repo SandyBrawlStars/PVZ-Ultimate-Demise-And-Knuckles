@@ -168,6 +168,7 @@ public:
     int                             mLastPortalX;      
     int                             mPeaCounter;
     int                             mPeaType;
+    int                             mHoneyPuddle;
 
 public:
     Zombie();

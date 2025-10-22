@@ -46,7 +46,8 @@ public:
 	int						mTransparentCounter;							
 	int						mSunCount;										
 	MotionTrailFrame		mMotionTrailFrames[NUM_MOTION_TRAIL_FRAMES];	
-	int						mMotionTrailCount;								
+	int						mMotionTrailCount;	
+	int                     mHoneyCounter;
 
 public:
 	GridItem();
@@ -69,6 +70,7 @@ public:
 	Zombie*					RakeFindZombie();
 	void					DrawIZombieBrain(Sexy::Graphics* g);
 	void					UpdateBrain();
+	void					UpdatePuddle();
 	void					DrawStinky(Sexy::Graphics* g);
 	/*inline*/ bool			IsOpenPortal();
 };

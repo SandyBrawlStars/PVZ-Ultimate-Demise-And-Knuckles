@@ -39,6 +39,8 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_SMALLSUN,           0,  30,  _S("SUN") },
 	{ ProjectileType::PROJECTILE_TATER,           0,  75,  _S("BOMB_TATER") },
 	{ ProjectileType::PROJECTILE_FROSTBOLT,       0,  50 ,  _S("FROST_BOLT") },
+	{ ProjectileType::PROJECTILE_PEPPER,         0,  50,  _S("PEPPER")  },
+	{ ProjectileType::PROJECTILE_HONEYDEW,         0,  35,  _S("HONEYDEW")  },
 };
 
 Projectile::Projectile()
@@ -61,12 +63,6 @@ void Projectile::ProjectileInitialize(int theX, int theY, int theRenderOrder, in
 	mVelY = 0.0f;
 	mVelZ = 0.0f;
 	mAccZ = 0.0f;
-	mMaxHits = 0;
-	mCountHits = 0;
-	for (int i = 0; i < mCountHits; i++)
-	{
-		mHitZombies[i] = nullptr;
-	}
 	mShadowY = mBoard->GridToPixelY(aGridX, theRow) + 67.0f;
 	mHitTorchwoodGridX = -1;
 	mMotionType = ProjectileMotion::MOTION_STRAIGHT;
@@ -92,13 +88,15 @@ void Projectile::ProjectileInitialize(int theX, int theY, int theRenderOrder, in
 	mProjectileAge = 0;
 	mClickBackoffCounter = 0;
 	mAnimTicksPerFrame = 0;
+	memset(mPiercedZombies, 0, sizeof(mPiercedZombies));
+	mNumPierced = 0;
 
 	if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE || mProjectileType == ProjectileType::PROJECTILE_TATER || mProjectileType == ProjectileType::PROJECTILE_BUTTER || mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE)
 	{
 		mRotation = -7 * PI / 25;  // DEG_TO_RAD(-50.4f);
 		mRotationSpeed = RandRangeFloat(-0.08f, -0.02f);
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON)
+	else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || mProjectileType == ProjectileType::PROJECTILE_HONEYDEW || mProjectileType == ProjectileType::PROJECTILE_PEPPER)
 	{
 		mRotation = -2 * PI / 5;  // DEG_TO_RAD(-72.0f);
 		mRotationSpeed = RandRangeFloat(-0.08f, -0.02f);
@@ -241,14 +239,6 @@ Zombie* Projectile::FindCollisionTarget()
 			{
 				continue;
 			}
-			for (int i = 0; i < mCountHits; i++)
-			{
-				if (mHitZombies[i] == aZombie)
-				{
-					aZombieHit = true;
-					break;
-				}
-			}
 			Rect aZombieRect = aZombie->GetZombieRect();
 			if (GetRectOverlap(aProjectileRect, aZombieRect) > 0)
 			{
@@ -258,6 +248,22 @@ Zombie* Projectile::FindCollisionTarget()
 					aMinX = aZombie->mX;
 				}
 			}
+		}
+		if (mProjectileType == ProjectileType::PROJECTILE_SPIKE && mMotionType == ProjectileMotion::MOTION_STRAIGHT && mNumPierced > 0)
+		{
+			unsigned int theZombieID = mBoard->mZombies.DataArrayGetID(aZombie);
+			bool isAlreadyPierced = false;
+
+			for (int i = 0; i < mNumPierced; ++i)
+			{
+				if (mPiercedZombies[i] = theZombieID)
+				{
+					isAlreadyPierced = true;
+					break;
+				}
+			}
+
+			if (isAlreadyPierced) continue;
 		}
 	}
 
@@ -339,6 +345,15 @@ void Projectile::CheckForCollision()
 		{
 			const ProjectileDefinition& aProjectileDef = GetProjectileDef();
 			aPlant->mPlantHealth -= aProjectileDef.mDamage;
+			if (mApp->IsIZombieLevel() && aPlant->mSeedType == SeedType::SEED_SUNFLOWER)
+			{
+				int aStageBeforeChew = aPlant->mPlantHealth / 40;
+				int aStageAfterChew = (aPlant->mPlantHealth - DAMAGE_PER_EAT) / 40;
+				if (aStageAfterChew < aStageBeforeChew || aPlant->mPlantHealth - DAMAGE_PER_EAT <= 0)
+				{
+					mBoard->AddCoin(aPlant->mX, aPlant->mY, CoinType::COIN_SUN, CoinMotion::COIN_MOTION_FROM_PLANT);
+				}
+			}
 			
 			if (mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA && aPlant->mPlantHealth < 1)
 			{
@@ -479,7 +494,9 @@ bool Projectile::IsSplashDamage(Zombie* theZombie)
 		return false;
 
 	return 
-		mProjectileType == ProjectileType::PROJECTILE_MELON || 
+		mProjectileType == ProjectileType::PROJECTILE_MELON ||
+		mProjectileType == ProjectileType::PROJECTILE_HONEYDEW ||
+		mProjectileType == ProjectileType::PROJECTILE_PEPPER ||
 		mProjectileType == ProjectileType::PROJECTILE_TATER ||
 		mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || 
 		mProjectileType == ProjectileType::PROJECTILE_FIREBALL;
@@ -517,10 +534,14 @@ bool Projectile::IsZombieHitBySplash(Zombie* theZombie)
 	{
 		aProjectileRect.mWidth = 100;
 	}
+	if (mProjectileType == ProjectileType::PROJECTILE_PEPPER)
+	{
+		aProjectileRect.mWidth = 100;
+	}
 
 	int aRowDeviation = theZombie->mRow - mRow;
 	Rect aZombieRect = theZombie->GetZombieRect();
-	if (theZombie->IsFireResistant() && mProjectileType == ProjectileType::PROJECTILE_FIREBALL)
+	if (theZombie->IsFireResistant() && mProjectileType == ProjectileType::PROJECTILE_FIREBALL && mProjectileType == ProjectileType::PROJECTILE_PEPPER)
 	{
 		return false;
 	}
@@ -654,6 +675,15 @@ void Projectile::DoSplashDamagePlant(Plant* thePlant)
 					aPlant->mPlantHealth -= aSplashDamage;
 					aPlant->mEatenFlashCountdown = max(aPlant->mEatenFlashCountdown, 25);
 				}
+				if (mApp->IsIZombieLevel() && aPlant->mSeedType == SeedType::SEED_SUNFLOWER)
+				{
+					int aStageBeforeChew = aPlant->mPlantHealth / 40;
+					int aStageAfterChew = (aPlant->mPlantHealth - DAMAGE_PER_EAT) / 40;
+					if (aStageAfterChew < aStageBeforeChew || aPlant->mPlantHealth - DAMAGE_PER_EAT <= 0)
+					{
+						mBoard->AddCoin(aPlant->mX, aPlant->mY, CoinType::COIN_SUN, CoinMotion::COIN_MOTION_FROM_PLANT);
+					}
+				}
 				if (aPlant->mPlantHealth < 0)
 					aPlant->Die();
 			}
@@ -704,11 +734,11 @@ void Projectile::UpdateLobMotion()
 		{
 			aMinCollisionZ = 60.0f;
 		}
-		else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON)
+		else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || mProjectileType == ProjectileType::PROJECTILE_HONEYDEW)
 		{
 			aMinCollisionZ = -35.0f;
 		}
-		else if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE || mProjectileType == ProjectileType::PROJECTILE_TATER || mProjectileType == ProjectileType::PROJECTILE_KERNEL || mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE)
+		else if (mProjectileType == ProjectileType::PROJECTILE_CABBAGE || mProjectileType == ProjectileType::PROJECTILE_TATER || mProjectileType == ProjectileType::PROJECTILE_KERNEL || mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE || mProjectileType == ProjectileType::PROJECTILE_PEPPER)
 		{
 			aMinCollisionZ = -30.0f;
 		}
@@ -786,6 +816,15 @@ void Projectile::UpdateLobMotion()
 		else
 		{
 			aPlant->mPlantHealth -= GetProjectileDef().mDamage;
+			if (mApp->IsIZombieLevel() && aPlant->mSeedType == SeedType::SEED_SUNFLOWER)
+			{
+				int aStageBeforeChew = aPlant->mPlantHealth / 40;
+				int aStageAfterChew = (aPlant->mPlantHealth - DAMAGE_PER_EAT) / 40;
+				if (aStageAfterChew < aStageBeforeChew || aPlant->mPlantHealth - DAMAGE_PER_EAT <= 0)
+				{
+					mBoard->AddCoin(aPlant->mX, aPlant->mY, CoinType::COIN_SUN, CoinMotion::COIN_MOTION_FROM_PLANT);
+				}
+			}
 			if (aPlant->mPlantHealth <= 0)
 			{
 				aPlant->Die();
@@ -980,7 +1019,13 @@ void Projectile::PlayImpactSound(Zombie* theZombie)
 		aPlayHelmSound = false;
 		aPlaySplatSound = false;
 	}
-	else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON)
+	else if (mProjectileType == ProjectileType::PROJECTILE_PEPPER && IsSplashDamage(theZombie))
+	{
+		mApp->PlayFoley(FoleyType::FOLEY_IGNITE);
+		aPlayHelmSound = false;
+		aPlaySplatSound = false;
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_MELON || mProjectileType == ProjectileType::PROJECTILE_HONEYDEW || mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON)
 	{
 		mApp->PlayFoley(FoleyType::FOLEY_MELONIMPACT);
 		aPlaySplatSound = false;
@@ -1007,11 +1052,39 @@ void Projectile::PlayImpactSound(Zombie* theZombie)
 
 void Projectile::DoImpact(Zombie* theZombie)
 {
+
+	if (theZombie && mProjectileType == ProjectileType::PROJECTILE_SPIKE && mMotionType == ProjectileMotion::MOTION_STRAIGHT)
+	{
+		unsigned int theZombieID = mBoard->mZombies.DataArrayGetID(theZombie);
+		bool isAlreadyPierced = false;
+		
+		if (mNumPierced > 0)
+		{
+			for (int i = 0; i < mNumPierced; ++i)
+			{
+				if (mPiercedZombies[i] = theZombieID)
+				{
+					isAlreadyPierced = true;
+					break;
+				}
+			}
+		}
+
+		if (isAlreadyPierced)
+		{
+			return;
+		}
+		else
+		{
+			mPiercedZombies[mNumPierced++] = theZombieID;
+		}
+	}
+
 	PlayImpactSound(theZombie);
 
 	if (IsSplashDamage(theZombie))
 	{
-		if (mProjectileType == ProjectileType::PROJECTILE_FIREBALL && theZombie)
+		if ((mProjectileType == ProjectileType::PROJECTILE_FIREBALL || mProjectileType == ProjectileType::PROJECTILE_PEPPER) && theZombie)
 		{
 			theZombie->RemoveColdEffects();
 		}
@@ -1055,6 +1128,12 @@ void Projectile::DoImpact(Zombie* theZombie)
 	{
 		mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_WINTERMELON);
 	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_HONEYDEW)
+	{
+		mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_HONEYDEWSPLASH);
+		int aGridX = mBoard->PixelToGridX(mPosX, mPosY);
+		mBoard->AddAHoneyPuddle(aGridX, mRow);
+	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_TATER)
 	{
 		mApp->PlaySample(SOUND_POTATO_MINE);
@@ -1079,6 +1158,16 @@ void Projectile::DoImpact(Zombie* theZombie)
 		aEffect = ParticleEffect::PARTICLE_SNOWPEA_SPLAT;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_FIREBALL)
+	{
+		if (IsSplashDamage(theZombie))
+		{
+			Reanimation* aFireReanim = mApp->AddReanimation(mPosX + 38.0f, mPosY - 20.0f, mRenderOrder + 1, ReanimationType::REANIM_JALAPENO_FIRE);
+			aFireReanim->mAnimTime = 0.25f;
+			aFireReanim->mAnimRate = 24.0f;
+			aFireReanim->OverrideScale(0.7f, 0.4f);
+		}
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_PEPPER)
 	{
 		if (IsSplashDamage(theZombie))
 		{
@@ -1162,15 +1251,8 @@ void Projectile::DoImpact(Zombie* theZombie)
 			mApp->AddTodParticle(aSplatPosX, aSplatPosY, mRenderOrder + 1, aEffect);
 		}
 	}
-	if (mCountHits == mMaxHits)
-	{
-		Die();
-	}
-	else
-	{
-		mHitZombies[mCountHits] = theZombie;
-		mCountHits++;
-	}
+
+	Die();
 }
 
 void Projectile::Update()
@@ -1187,6 +1269,8 @@ void Projectile::Update()
 		mProjectileType == ProjectileType::PROJECTILE_CABBAGE || 
 		mProjectileType == ProjectileType::PROJECTILE_ICECABBAGE ||
 		mProjectileType == ProjectileType::PROJECTILE_MELON ||
+		mProjectileType == ProjectileType::PROJECTILE_HONEYDEW ||
+		mProjectileType == ProjectileType::PROJECTILE_PEPPER ||
 		mProjectileType == ProjectileType::PROJECTILE_TATER ||
 		mProjectileType == ProjectileType::PROJECTILE_ZOMBIE_MELON ||
 		mProjectileType == ProjectileType::PROJECTILE_WINTERMELON || 
@@ -1287,6 +1371,10 @@ void Projectile::Draw(Graphics* g)
 		aImage = IMAGE_REANIM_CABBAGEPULT_CABBAGE;
 		aScale = 1.0f;
 	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_PEPPER)
+	{
+		aImage = nullptr;
+	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_TATER)
 	{
 		aImage = IMAGE_REANIM_TATERPULT_CABBAGE;
@@ -1312,6 +1400,11 @@ void Projectile::Draw(Graphics* g)
 	else if (mProjectileType == ProjectileType::PROJECTILE_MELON)
 	{
 		aImage = IMAGE_REANIM_MELONPULT_MELON;
+		aScale = 1.0f;
+	}
+	else if (mProjectileType == ProjectileType::PROJECTILE_HONEYDEW)
+	{
+		aImage = IMAGE_REANIM_HONEYDEWPULT_PROJECTILE;
 		aScale = 1.0f;
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_WINTERMELON)
@@ -1414,6 +1507,7 @@ void Projectile::DrawShadow(Graphics* g)
 		break;
 
 	case ProjectileType::PROJECTILE_CABBAGE:
+	case ProjectileType::PROJECTILE_PEPPER:
 	case ProjectileType::PROJECTILE_KERNEL:
 	case ProjectileType::PROJECTILE_ICECABBAGE:
 	case ProjectileType::PROJECTILE_BUTTER:
@@ -1532,6 +1626,24 @@ void Projectile::ConvertToFireball(int theGridX)
 	aFirePeaReanim->mAnimRate = RandRangeFloat(50.0f, 80.0f);
 	AttachReanim(mAttachmentID, aFirePeaReanim, aOffsetX, aOffsetY);
 }
+
+void Projectile::StartAnimPepper()
+{
+	mApp->PlayFoley(FoleyType::FOLEY_FIREPEA);
+
+	float aOffsetX = -37.0f; 
+	float aOffsetY = -35.0f;
+	Reanimation* aFirePeaReanim = mApp->AddReanimation(0.0f, 0.0f, mRenderOrder + 10, ReanimationType::REANIM_FIRE_PEA);
+
+
+	aFirePeaReanim->SetPosition(mPosX + aOffsetX, mPosY + aOffsetY);
+	aFirePeaReanim->OverrideScale(1.0f, 1.0f);
+	aFirePeaReanim->mLoopType = ReanimLoopType::REANIM_LOOP;
+	aFirePeaReanim->mAnimRate = RandRangeFloat(50.0f, 80.0f);
+	aFirePeaReanim->SetImageOverride("FirePea", IMAGE_REANIM_PEPPERPULT_PEPPER);
+	AttachReanim(mAttachmentID, aFirePeaReanim, aOffsetX, aOffsetY);
+}
+
 void Projectile::SpawnSmallSun()
 {
 	float aOffsetX = -0.0f;

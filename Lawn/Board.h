@@ -18,7 +18,7 @@ using namespace Sexy;
 #define MAX_GRID_SIZE_X 9
 #define MAX_GRID_SIZE_Y 6
 #define MAX_ZOMBIES_IN_WAVE 50
-#define MAX_ZOMBIE_WAVES 100
+#define MAX_ZOMBIE_WAVES 200
 #define MAX_GRAVE_STONES MAX_GRID_SIZE_X * MAX_GRID_SIZE_Y
 #define MAX_POOL_GRID_SIZE 10
 #define MAX_RENDER_ITEMS 2048
@@ -292,6 +292,7 @@ public:
 	/*inline*/ bool					StageHasPool();
 	/*inline*/ bool					StageHas6Rows();
 	/*inline*/ bool					StageHasFog();
+	/*inline*/ bool					StageIsAncient();
 	bool							StageHasGraveStones();
 	int								PixelToGridX(int theX, int theY);
 	int								PixelToGridY(int theX, int theY);
@@ -395,6 +396,7 @@ public:
 	bool							CanAddGraveStoneAt(int theGridX, int theGridY);
 	void							UpdateGridItems();
 	/*inline*/ GridItem*			AddAGraveStone(int theGridX, int theGridY);
+	/*inline*/ GridItem*			AddAHoneyPuddle(int theGridX, int theGridY);
 	int								GetSurvivalFlagsCompleted();
 	bool							HasProgressMeter();
 	void							UpdateCursor();

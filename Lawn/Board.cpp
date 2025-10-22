@@ -495,6 +495,18 @@ GridItem* Board::AddAGraveStone(int theGridX, int theGridY)
 	return aGraveStone;
 }
 
+GridItem* Board::AddAHoneyPuddle(int theGridX, int theGridY)
+{
+	GridItem* aGraveStone = mGridItems.DataArrayAlloc();
+	aGraveStone->mGridItemType = GridItemType::GRIDITEM_HONEYDEW_PUDDLE;
+	aGraveStone->mGridItemCounter = -Rand(50);
+	aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_GRAVE_STONE, theGridY, 3);
+	aGraveStone->mGridX = theGridX;
+	aGraveStone->mGridY = theGridY;
+	aGraveStone->mGridItemCounter = 700;
+	return aGraveStone;
+}
+
 void Board::AddGraveStones(int theGridX, int theCount, MTRand& theLevelRNG)
 {
 	TOD_ASSERT(theCount <= MAX_GRID_SIZE_Y);
@@ -663,7 +675,7 @@ void Board::PickZombieWaves()
 		}
 		else
 		{
-			aZombiePoints = (aWave*1.1) / 3 + 1;
+			aZombiePoints = (aWave*1.15) / 3 + 1;
 			if (mApp->mHarderMode)
 			{
 				aZombiePoints *= (((mLevel + 10) / LEVELS_PER_AREA) / 2) + 1;
@@ -753,7 +765,7 @@ void Board::PickZombieWaves()
 			}
 		}
 
-		if (mLevel == 70 && aIsFinalWave)
+		if (mLevel == NUM_LEVELS && aIsFinalWave)
 		{
 			PutZombieInWave(ZombieType::ZOMBIE_GARGANTUAR, aWave, &aZombiePicker);
 		}
@@ -831,6 +843,10 @@ void Board::LoadBackgroundImages()
 
 	case BackgroundType::BACKGROUND_2_NIGHT:
 		TodLoadResources("DelayLoad_Background2");
+		break;
+
+	case BackgroundType::BACKGROUND_8_ANCIENT:
+		TodLoadResources("DelayLoad_Background8");
 		break;
 
 	case BackgroundType::BACKGROUND_3_POOL:
@@ -913,6 +929,10 @@ void Board::PickBackground()
 		else if (mLevel <= 7 * LEVELS_PER_AREA)
 		{
 			mBackground = BackgroundType::BACKGROUND_7_BACKYARD;
+		}
+		else if (mLevel <= 8 * LEVELS_PER_AREA)
+		{
+			mBackground = BackgroundType::BACKGROUND_8_ANCIENT;
 		}
 		else
 		{
@@ -1067,6 +1087,15 @@ void Board::PickBackground()
 		}
 	}
 	else if (mBackground == BackgroundType::BACKGROUND_2_NIGHT)
+	{
+		mPlantRow[0] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[1] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[2] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[3] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[4] = PlantRowType::PLANTROW_NORMAL;
+		mPlantRow[5] = PlantRowType::PLANTROW_DIRT;
+	}
+	else if (mBackground == BackgroundType::BACKGROUND_8_ANCIENT)
 	{
 		mPlantRow[0] = PlantRowType::PLANTROW_NORMAL;
 		mPlantRow[1] = PlantRowType::PLANTROW_NORMAL;
@@ -3575,6 +3604,42 @@ void Board::UpdateToolTip()
 	{
 		mToolTip->SetLabel(_S("[IMP]"));
 	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_BLOVER_HEAD)
+	{
+		mToolTip->SetLabel(_S("Blover Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_MINE_HEAD)
+	{
+		mToolTip->SetLabel(_S("Mine Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_PEA_HEAD)
+	{
+		mToolTip->SetLabel(_S("Peashooter Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_WALLNUT_HEAD)
+	{
+		mToolTip->SetLabel(_S("Wallnut Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_ICE_SHROOM_HEAD)
+	{
+		mToolTip->SetLabel(_S("Ice Shroom Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_SUPER_VASE_HEAD)
+	{
+		mToolTip->SetLabel(_S("Golden Present Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_VASE_HEAD)
+	{
+		mToolTip->SetLabel(_S("Vase Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_CONE_REPEATER_HEAD)
+	{
+		mToolTip->SetLabel(_S("Conehead Repeater Zombie"));
+	}
+	else if (aUseSeedType == SeedType::SEED_ZOMBIE_MELON_PULT_HEAD)
+	{
+		mToolTip->SetLabel(_S("Melon-Pult Zombie"));
+	}
 	else
 	{
 		mToolTip->SetLabel(Plant::GetNameString(aSeedPacket->mPacketType, aSeedPacket->mImitaterType));
@@ -6041,6 +6106,7 @@ void Board::DrawBackdrop(Graphics* g)
 	case BackgroundType::BACKGROUND_5_ROOF:				aBgImage = Sexy::IMAGE_BACKGROUND5;						break;
 	case BackgroundType::BACKGROUND_6_BOSS:				aBgImage = Sexy::IMAGE_BACKGROUND6BOSS;					break;
 	case BackgroundType::BACKGROUND_7_BACKYARD:			aBgImage = Sexy::IMAGE_BACKGROUND7;		    			break;
+	case BackgroundType::BACKGROUND_8_ANCIENT:			aBgImage = Sexy::IMAGE_BACKGROUND8;		    			break;
 	case BackgroundType::BACKGROUND_MUSHROOM_GARDEN:	aBgImage = Sexy::IMAGE_BACKGROUND_MUSHROOMGARDEN;		break;
 	case BackgroundType::BACKGROUND_GREENHOUSE:			aBgImage = Sexy::IMAGE_BACKGROUND_GREENHOUSE;			break;
 	case BackgroundType::BACKGROUND_ZOMBIQUARIUM:		aBgImage = Sexy::IMAGE_AQUARIUM1;						break;
@@ -8485,6 +8551,10 @@ void Board::KeyChar(SexyChar theChar)
 	{
 		mDebugObjectLimit = BACKGROUND_7_BACKYARD;
 	}
+	if (mDebugObjectType == 5)
+	{
+		mDebugObjectLimit = NUM_ZOMBIE_TYPES - 1;
+	}
 
 	int aMouseX = mApp->mWidgetManager->mLastMouseX - mX;
 	int aMouseY = mApp->mWidgetManager->mLastMouseY - mY;
@@ -8499,37 +8569,6 @@ void Board::KeyChar(SexyChar theChar)
 		{
 			mDebugObjectSelection = 0;
 		}
-		if (mDebugObjectType == 0)
-		{
-			string aName = gZombieDefs[mDebugObjectSelection].mZombieName;
-			DisplayAdvice("Selected Zombie Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
-		}
-		else if (mDebugObjectType == 1)
-		{
-			string aName = gPlantDefs[mDebugObjectSelection].mPlantName;
-			DisplayAdvice("Selected Plant Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
-		}
-		else if (mDebugObjectType == 2)
-		{
-			string aName = gCoinDefs[mDebugObjectSelection].mCoinName;
-			DisplayAdvice("Selected Coin Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
-		}
-		else if (mDebugObjectType == 3)
-		{
-			string aName = gProjectileDefinition[mDebugObjectSelection].mProjectileName;
-			DisplayAdvice("Selected Projectile Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
-		}
-		else if (mDebugObjectType == 4)
-		{
-			string aName = gBackgroundDefs[mDebugObjectSelection].mBackgroundName;
-			DisplayAdvice("Selected Background Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
-		}
-		return;
-	}
-
-	if (theChar == _S('a'))
-	{
-		mDebugObjectSelection--;
 		if (mDebugObjectSelection < 0)
 		{
 			mDebugObjectSelection = mDebugObjectLimit;
@@ -8559,17 +8598,66 @@ void Board::KeyChar(SexyChar theChar)
 			string aName = gBackgroundDefs[mDebugObjectSelection].mBackgroundName;
 			DisplayAdvice("Selected Background Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
 		}
+		else if (mDebugObjectType == 5)
+		{
+			string aName = gZombieDefs[mDebugObjectSelection].mZombieName;
+			DisplayAdvice("Selected Hypno Zombie Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
+		return;
+	}
+
+	if (theChar == _S('a'))
+	{
+		mDebugObjectSelection--;
+		if (mDebugObjectSelection < 0)
+		{
+			mDebugObjectSelection = mDebugObjectLimit;
+		}
+		if (mDebugObjectSelection > mDebugObjectLimit)
+		{
+			mDebugObjectSelection = 0;
+		}
+		if (mDebugObjectType == 0)
+		{
+			string aName = gZombieDefs[mDebugObjectSelection].mZombieName;
+			DisplayAdvice("Selected Zombie Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
+		else if (mDebugObjectType == 1)
+		{
+			string aName = gPlantDefs[mDebugObjectSelection].mPlantName;
+			DisplayAdvice("Selected Plant Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
+		else if (mDebugObjectType == 2)
+		{
+			string aName = gCoinDefs[mDebugObjectSelection].mCoinName;
+			DisplayAdvice("Selected Coin Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
+		else if (mDebugObjectType == 3)
+		{
+			string aName = gProjectileDefinition[mDebugObjectSelection].mProjectileName;
+			DisplayAdvice("Selected Projectile Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
+		else if (mDebugObjectType == 4)
+		{
+			string aName = gBackgroundDefs[mDebugObjectSelection].mBackgroundName;
+			DisplayAdvice("Selected Background Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
+		else if (mDebugObjectType == 5)
+		{
+			string aName = gZombieDefs[mDebugObjectSelection].mZombieName;
+			DisplayAdvice("Selected Hypno Zombie Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
 		return;
 	}
 
 	if (theChar == _S('s'))
 	{
 		mDebugObjectType++;
-		if (mDebugObjectType > 4)
+		if (mDebugObjectType > 5)
 		{
 			mDebugObjectType = 0;
 		}
-		string aName = mDebugObjectType == 0 ? "Zombie" : mDebugObjectType == 1 ? "Plant" : mDebugObjectType == 2 ? "Coin" : mDebugObjectType == 3 ? "Projectile": mDebugObjectType == 4 ? "Background" : "Nothing";
+		string aName = mDebugObjectType == 0 ? "Zombie" : mDebugObjectType == 1 ? "Plant" : mDebugObjectType == 2 ? "Coin" : mDebugObjectType == 3 ? "Projectile": mDebugObjectType == 4 ? "Background" : mDebugObjectType == 5 ? "Hypno Zombie" : "Nothing";
 		DisplayAdvice("Selected Object Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
 		return;
 	}
@@ -8578,11 +8666,11 @@ void Board::KeyChar(SexyChar theChar)
 	{
 		if (mDebugObjectType == 0)
 		{
-			if (gZombieDefs[mDebugObjectSelection].mPickWeight > 0) {
+			
 				ZombieType aDebugZombieType = static_cast<ZombieType>(mDebugObjectSelection);
 				AddZombieInRow(aDebugZombieType, aGridY , Zombie::ZOMBIE_WAVE_DEBUG);
 				return;
-			}
+			
 		}
 		if (mDebugObjectType == 1)
 		{
@@ -8616,6 +8704,17 @@ void Board::KeyChar(SexyChar theChar)
 		{
 			BackgroundType aDebugBackgroundType = static_cast<BackgroundType>(mDebugObjectSelection);
 			LoadBackgroundDebug(aDebugBackgroundType);
+			return;
+		}
+		if (mDebugObjectType == 5)
+		{
+			
+				ZombieType aDebugZombieType = static_cast<ZombieType>(mDebugObjectSelection);
+				Zombie* aZombie = AddZombieInRow(aDebugZombieType, aGridY, Zombie::ZOMBIE_WAVE_DEBUG);
+				aZombie->mPosX = aMouseX;
+				aZombie->StartMindControlled();
+				return;
+			
 		}
 		return;
 	}
@@ -9283,6 +9382,7 @@ bool Board::StageIsNight()
 {
 	return 
 		mBackground == BackgroundType::BACKGROUND_2_NIGHT || 
+		mBackground == BackgroundType::BACKGROUND_8_ANCIENT ||
 		mBackground == BackgroundType::BACKGROUND_4_FOG || 
 		mBackground == BackgroundType::BACKGROUND_6_BOSS ||
 		mBackground == BackgroundType::BACKGROUND_MUSHROOM_GARDEN || 
@@ -9341,6 +9441,12 @@ bool Board::StageHasFog()
 	return !mApp->IsStormyNightLevel() && mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_INVISIGHOUL && mBackground == BackgroundType::BACKGROUND_4_FOG;
 }
 
+
+bool Board::StageIsAncient()
+{
+	return mBackground == BackgroundType::BACKGROUND_8_ANCIENT;
+}
+
 int Board::LeftFogColumn()
 {
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_AIR_RAID)		return 6;
@@ -9348,6 +9454,7 @@ int Board::LeftFogColumn()
 	if (mLevel == 31)													return 6;
 	if (mLevel >= 32 && mLevel <= 36)									return 5;
 	if (mLevel >= 37 && mLevel <= 40)									return 4;
+	else return 8;
 	TOD_ASSERT();
 }
 

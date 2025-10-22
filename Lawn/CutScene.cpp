@@ -345,7 +345,7 @@ void CutScene::PreloadResources()
 		}
 	}
 
-	if (mApp->IsFirstTimeAdventureMode() && mBoard->mLevel <= 50)
+	if (mApp->IsFirstTimeAdventureMode() && mBoard->mLevel <= NUM_LEVELS)
 	{
 		Plant::PreloadPlantResources(mApp->GetAwardSeedForLevel(mBoard->mLevel));
 	}
@@ -735,6 +735,10 @@ void CutScene::StartLevelIntro()
 	{
 		mCrazyDaveDialogStart = 201;
 	}
+	else if (mApp->IsFirstTimeAdventureMode() && aLevel == 71)
+	{
+		mCrazyDaveDialogStart = 4001;
+	}
 	else if (mApp->IsFirstTimeAdventureMode() && aLevel == 12)
 	{
 		mCrazyDaveDialogStart = 1401;
@@ -889,6 +893,10 @@ void CutScene::StartLevelIntro()
 			else if (mBoard->mBackground == BackgroundType::BACKGROUND_7_BACKYARD)
 			{
 				aHouseMessage = TodStringTranslate(_S("[DAVES_BACKYARD]"));
+			}
+			else if (mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT)
+			{
+				aHouseMessage = _S("???");
 			}
 			else
 			{

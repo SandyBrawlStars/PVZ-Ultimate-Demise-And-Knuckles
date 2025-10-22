@@ -183,6 +183,7 @@ void Music::MusicInit()
 	LoadSong(MusicFile::MUSIC_FILE_HIHATS, "sounds\\mainmusic_hihats.mo3");
 	mApp->mCompletedLoadingThreadTasks += 3500;
 	LoadSong(MusicFile::MUSIC_FILE_BLACK_KNIFE, "music\\blackknife.mp3");
+	LoadSong(MusicFile::MUSIC_FILE_ANCIENT, "music\\ancientnight.mp3");
 
 
 #ifdef _DEBUG
@@ -391,6 +392,13 @@ void Music::PlayMusic(MusicTune theMusicTune, int theOffset, int theDrumsOffset)
 
 	case MusicTune::MUSIC_TUNE_BLACK_KNIFE:
 		mCurMusicFileMain = MusicFile::MUSIC_FILE_BLACK_KNIFE;
+		if (theOffset == -1)
+			theOffset = 0;
+		PlayFromOffset(mCurMusicFileMain, theOffset, 1.0);
+		break;
+
+	case MusicTune::MUSIC_TUNE_ANCIENT:
+		mCurMusicFileMain = MusicFile::MUSIC_FILE_ANCIENT;
 		if (theOffset == -1)
 			theOffset = 0;
 		PlayFromOffset(mCurMusicFileMain, theOffset, 1.0);
@@ -700,6 +708,8 @@ void Music::StartGameMusic()
 		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_PUZZLE_CEREBRAWL);
 	else if (mApp->mBoard->StageHasFog())
 		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_FOG_RIGORMORMIST);
+	else if (mApp->mBoard->StageIsAncient())
+		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_ANCIENT);
 	else if (mApp->mBoard->StageIsNight())
 		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_NIGHT_MOONGRAINS);
 	else if (mApp->mBoard->StageHas6Rows())

@@ -145,6 +145,7 @@
 
 <!-- Misc small items -->
 <Image id="SHOVEL" path="shovel" />
+<Image id="HONEYDEW_PUDDLE" path="Honeydew_Puddle" />
 <Image id="SHOVEL_HI_RES" path="shovel_hi_res" />
 <Image id="TOMBSTONES" path="Tombstones" cols="5" rows="4"/>
 <Image id="TOMBSTONE_MOUNDS" path="Tombstone_mounds" cols="5" rows="4"/>
@@ -197,6 +198,7 @@
 <Image id="WHITEWATER" path="whitewater" cols="3"  />
 <Image id="WHITEWATER_SHADOW" path="whitewater_shadow"  />
 <Image id="MELONPULT_PARTICLES" path="Melonpult_particles" cols="9" />
+<Image id="HONEYDEWPULT_PARTICLES" path="honeypult_particles" cols="9" />
 <Image id="WINTERMELON_PARTICLES" path="WinterMelon_particles" cols="9" />
 <Image id="PROJECTILE_STAR" path="Projectile_star" />
 
@@ -292,6 +294,8 @@
 <Image id="WALLNUT_BODY" path="Wallnut_body" />
 <Image id="WALLNUT_CRACKED1" path="Wallnut_cracked1" />
 <Image id="WALLNUT_CRACKED2" path="Wallnut_cracked2" />
+<Image id="INFINUT_CRACKED1" path="inficracked1" />
+<Image id="INFINUT_CRACKED2" path="inficracked2" />
 <Image id="TALLNUT_CRACKED1" path="Tallnut_cracked1" />
 <Image id="TALLNUT_CRACKED2" path="Tallnut_cracked2" />
 <Image id="PUMPKIN_DAMAGE1" path="Pumpkin_damage1" />
@@ -393,6 +397,8 @@
 <Image id="ZOMBIE_BOSS_EYEGLOW_BLUE" path="Zombie_boss_eyeglow_blue" />
 <Image id="ZOMBIE_BOSS_MOUTHGLOW_BLUE" path="Zombie_boss_mouthglow_blue" />
 <Image id="CABBAGEPULT_CABBAGE" path="Cabbagepult_cabbage" />
+<Image id="PEPPERPULT_PEPPER" path="ProjectilePepper" />
+<Image id="HONEYDEWPULT_PROJECTILE" path="honeypult_projectile" />
 <Image id="TATERPULT_CABBAGE" path="Taterpult_cabbage" />
 <Image id="ICEBERG_PROJECTILE" path="Cabbagepult_cabbage" />
 <Image id="FROSTBOLT_ARROW" path="FrostPea_arrow" />
@@ -625,6 +631,14 @@
 <Image id="BACKGROUND7_GAMEOVER_INTERIOR_OVERLAY" path="background1_gameover_interior_overlay" />
 <Image id="BACKGROUND7_GAMEOVER_MASK" path="background1_gameover_mask" />
 </Resources>
+
+<Resources id="DelayLoad_Background8">
+<SetDefaults path="images" idprefix="IMAGE_" />
+<Image id="BACKGROUND8" path="background8" ddsurface="" a8r8g8b8="" />
+<Image id="BACKGROUND8_GAMEOVER_INTERIOR_OVERLAY" path="background1_gameover_interior_overlay" />
+<Image id="BACKGROUND8_GAMEOVER_MASK" path="background1_gameover_mask" />
+</Resources>
+
 
 <Resources id="DelayLoad_BackgroundUnsodded">
 <SetDefaults path="images" idprefix="IMAGE_" />

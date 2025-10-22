@@ -2305,6 +2305,16 @@ SexyString LawnApp::GetStageString(int theLevel)
 		_S("[ADVENTURE_TEXT_68]"),
 		_S("[ADVENTURE_TEXT_69]"),
 		_S("[ADVENTURE_TEXT_70]"),
+		_S("[ADVENTURE_TEXT_71]"),
+		_S("[ADVENTURE_TEXT_72]"),
+		_S("[ADVENTURE_TEXT_73]"),
+		_S("[ADVENTURE_TEXT_74]"),
+		_S("[ADVENTURE_TEXT_75]"),
+		_S("[ADVENTURE_TEXT_76]"),
+		_S("[ADVENTURE_TEXT_77]"),
+		_S("[ADVENTURE_TEXT_78]"),
+		_S("[ADVENTURE_TEXT_79]"),
+		_S("[ADVENTURE_TEXT_80]"),
 	};
 
 	SexyString aExtraString;
@@ -2563,7 +2573,7 @@ bool LawnApp::IsFinalBossLevel()
 	if (mPlayedQuickplay)
 		return mQuickLevel == 70;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 70;
+	return IsAdventureMode() && mPlayerInfo->mLevel == NUM_LEVELS;
 }
 
 bool LawnApp::IsChallengeWithoutSeedBank()
@@ -2661,9 +2671,9 @@ SeedType LawnApp::GetAwardSeedForLevel(int theLevel)
 	{
 		aSeedsHasGot -= 1;  
 	}
-	if (aSeedsHasGot > 45)
+	if (aSeedsHasGot > 48)
 	{
-		aSeedsHasGot = 45;
+		aSeedsHasGot = 48;
 	}
 	
 	return (SeedType)aSeedsHasGot;
@@ -2674,11 +2684,11 @@ int LawnApp::GetSeedsAvailable()
 	int aLevel = mPlayerInfo->mLevel;
 	if (HasFinishedAdventure() || aLevel > 70)
 	{
-		return 55;
+		return 58;
 	}
 
 	SeedType aSeedTypeMax = GetAwardSeedForLevel(aLevel);
-	return min(55, aSeedTypeMax);
+	return min(58, aSeedTypeMax);
 }
 
 bool LawnApp::HasSeedType(SeedType theSeedType)

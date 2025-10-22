@@ -52,9 +52,8 @@ public:
     int                     mCobTargetRow;          
     ZombieID                mTargetZombieID;        
     int                     mLastPortalX;      
-    int                     mMaxHits;
-    int                     mCountHits;
-    Zombie* mHitZombies[3];
+    unsigned int            mPiercedZombies[3];
+    int                     mNumPierced;
 
 public:
     Projectile();
@@ -82,6 +81,7 @@ public:
     Plant*                  FindCollisionTargetPlant();
     void                    ConvertToFireball(int theGridX);
     void                    SpawnSmallSun();
+    void                    StartAnimPepper();
     void                    ConvertToPea(int theGridX);
     bool                    IsSplashDamage(Zombie* theZombie/* = nullptr*/);
     void                    PlayImpactSound(Zombie* theZombie);
