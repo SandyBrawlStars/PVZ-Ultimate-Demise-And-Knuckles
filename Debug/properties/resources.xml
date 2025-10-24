@@ -291,6 +291,32 @@
 
 <SetDefaults path="reanim" idprefix="IMAGE_REANIM_" />
   
+<Image id="MUMMY_HEAD" path="Zombie_mummy_head" />
+<Image id="MUMMY_BODY" path="Zombie_mummy_body" />
+<Image id="MUMMY_TIE" path="Zombie_mummy_tie" />
+<Image id="MUMMY_INNERARM_EXTENDED" path="Zombie_mummy_innerarm_extended" />
+<Image id="MUMMY_INNERARM_HAND" path="Zombie_mummy_innerarm_hand" />
+<Image id="MUMMY_INNERARM_LOWER" path="Zombie_mummy_innerarm_lower" />
+<Image id="MUMMY_INNERARM_UPPER" path="Zombie_mummy_innerarm_upper" />
+<Image id="MUMMY_INNERLEG_FOOT" path="Zombie_mummy_innerleg_foot" />
+<Image id="MUMMY_INNERLEG_LOWER" path="Zombie_mummy_innerleg_lower" />
+<Image id="MUMMY_INNERLEG_UPPER" path="Zombie_mummy_innerleg_upper" />
+<Image id="MUMMY_OUTERARM_HAND" path="Zombie_mummy_outerarm_hand" />
+<Image id="MUMMY_OUTERARM_LOWER" path="Zombie_mummy_outerarm_lower" />
+<Image id="MUMMY_OUTERARM_UPPER" path="Zombie_mummy_outerarm_upper" />
+<Image id="MUMMY_OUTERARM_UPPER2" path="Zombie_mummy_outerarm_upper2" />
+<Image id="MUMMY_OUTERLEG_FOOT" path="Zombie_mummy_outerleg_foot" />
+<Image id="MUMMY_OUTERLEG_FOOT2" path="Zombie_mummy_outerleg_foot2" />
+<Image id="MUMMY_OUTERLEG_LOWER" path="Zombie_mummy_outerleg_lower" />
+<Image id="MUMMY_OUTERLEG_UPPER" path="Zombie_mummy_outerleg_upper" />
+<Image id="MUMMY_CONE1" path="Zombie_mummy_cone1" />
+<Image id="MUMMY_CONE2" path="Zombie_mummy_cone2" />
+<Image id="MUMMY_CONE3" path="Zombie_mummy_cone3" />
+<Image id="MUMMY_BUCKET1" path="Zombie_mummy_bucket1" />
+<Image id="MUMMY_BUCKET2" path="Zombie_mummy_bucket2" />
+<Image id="MUMMY_BUCKET3" path="Zombie_mummy_bucket3" />
+
+
 <Image id="WALLNUT_BODY" path="Wallnut_body" />
 <Image id="WALLNUT_CRACKED1" path="Wallnut_cracked1" />
 <Image id="WALLNUT_CRACKED2" path="Wallnut_cracked2" />

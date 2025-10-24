@@ -835,7 +835,7 @@ void Board::LoadBackgroundImages()
 	{
 	case BackgroundType::BACKGROUND_1_DAY:
 		TodLoadResources("DelayLoad_Background1");
-		if ((mApp->IsAdventureMode() && mLevel <= 4) || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED)
+		if ((mApp->IsAdventureMode() && mLevel <= 4) || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED)
 		{
 			TodLoadResources("DelayLoad_BackgroundUnsodded");
 		}
@@ -951,6 +951,7 @@ void Board::PickBackground()
 	case GameMode::GAMEMODE_CHALLENGE_ART_CHALLENGE_WALLNUT:
 	case GameMode::GAMEMODE_CHALLENGE_SUNNY_DAY:
 	case GameMode::GAMEMODE_CHALLENGE_RESODDED:
+	case GameMode::GAMEMODE_CHALLENGE_ONESODDED:
 	case GameMode::GAMEMODE_CHALLENGE_BIG_TIME:
 	case GameMode::GAMEMODE_CHALLENGE_ART_CHALLENGE_SUNFLOWER:
 	case GameMode::GAMEMODE_CHALLENGE_ICE:
@@ -1083,6 +1084,13 @@ void Board::PickBackground()
 		else if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED)
 		{
 			mPlantRow[0] = PlantRowType::PLANTROW_DIRT;
+			mPlantRow[4] = PlantRowType::PLANTROW_DIRT;
+		}
+		else if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED)
+		{
+			mPlantRow[0] = PlantRowType::PLANTROW_DIRT;
+			mPlantRow[1] = PlantRowType::PLANTROW_DIRT;
+			mPlantRow[3] = PlantRowType::PLANTROW_DIRT;
 			mPlantRow[4] = PlantRowType::PLANTROW_DIRT;
 		}
 	}
@@ -1256,6 +1264,13 @@ void Board::LoadBackgroundDebug(BackgroundType theBackground)
 		else if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED)
 		{
 			mPlantRow[0] = PlantRowType::PLANTROW_DIRT;
+			mPlantRow[4] = PlantRowType::PLANTROW_DIRT;
+		}
+		else if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED)
+		{
+			mPlantRow[0] = PlantRowType::PLANTROW_DIRT;
+			mPlantRow[1] = PlantRowType::PLANTROW_DIRT;
+			mPlantRow[3] = PlantRowType::PLANTROW_DIRT;
 			mPlantRow[4] = PlantRowType::PLANTROW_DIRT;
 		}
 	}
@@ -1826,9 +1841,9 @@ void Board::InitLawnMowers()
 
 	for (int aRow = 0; aRow < MAX_GRID_SIZE_Y; aRow++)
 	{
-		if (aGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED && aRow >= 5)
+		if ((aGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED || aGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED) && aRow >= 5)
 			continue;
-		if ((!mApp->IsScaryPotterLevel() || (mApp->IsAdventureMode() && (mLevel == 35 || mApp->mQuickLevel == 35))) && (aGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED || mPlantRow[aRow] != PlantRowType::PLANTROW_DIRT))
+		if ((!mApp->IsScaryPotterLevel() || (mApp->IsAdventureMode() && (mLevel == 35 || mApp->mQuickLevel == 35))) && (aGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED || aGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED || mPlantRow[aRow] != PlantRowType::PLANTROW_DIRT))
 		{
 			LawnMower* aLawnMower = mLawnMowers.DataArrayAlloc();
 			aLawnMower->LawnMowerInitialize(aRow);
@@ -2727,7 +2742,7 @@ bool Board::RowCanHaveZombieType(int theRow, ZombieType theZombieType)
 		return false;
 	}
 
-	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED && mPlantRow[theRow] == PlantRowType::PLANTROW_DIRT && mCurrentWave < 5)
+	if ((mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED) && mPlantRow[theRow] == PlantRowType::PLANTROW_DIRT && mCurrentWave < 5)
 	{
 		return false;  
 	}
@@ -6057,7 +6072,7 @@ bool Board::RowCanHaveZombies(int theRow)
 	if (theRow < 0 || theRow >= MAX_GRID_SIZE_Y)
 		return false;
 
-	return (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED && theRow <= 4) || mPlantRow[theRow] != PlantRowType::PLANTROW_DIRT;
+	return ((mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED) && theRow <= 4) || mPlantRow[theRow] != PlantRowType::PLANTROW_DIRT;
 }
 
 int Board::GetIceZPos(int theRow)
@@ -6114,7 +6129,7 @@ void Board::DrawBackdrop(Graphics* g)
 	default:											TOD_ASSERT();											break;
 	}
 
-	if (mLevel == 1 && mApp->IsFirstTimeAdventureMode())
+	if ((mLevel == 1 && mApp->IsFirstTimeAdventureMode()) || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ONESODDED)
 	{
 		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -BOARD_OFFSET, 0);
 		int aWidth = TodAnimateCurve(0, 1000, mSodPosition, 0, Sexy::IMAGE_SOD1ROW->GetWidth(), TodCurves::CURVE_LINEAR);
@@ -9184,6 +9199,10 @@ void Board::AddSunMoney(int theAmount)
 	if (mSunMoney > 9990)
 	{
 		mSunMoney = 9990;
+	}
+	if (mSunMoney < 0)
+	{
+		mSunMoney = 0;
 	}
 }
 

@@ -27,6 +27,7 @@ const int           IMITATER_DIALOG_HEIGHT = 600;
 const int			ADVENTURE_AREAS = 8;
 const int			LEVELS_PER_AREA = 10;
 const int           NUM_LEVELS = ADVENTURE_AREAS * LEVELS_PER_AREA;
+const int           LAST_SEED_LEVEL = 60;
 const int			FINAL_LEVEL = NUM_LEVELS;
 const int           FLAG_RAISE_TIME = 100;
 const int           LAST_STAND_FLAGS = 5;

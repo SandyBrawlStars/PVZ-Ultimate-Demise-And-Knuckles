@@ -172,6 +172,12 @@ ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS] = {
 	{ ReanimationType::REANIM_PEPPERPULT,                                 "reanim\\Pepperpult.reanim",                   0 },
 	{ ReanimationType::REANIM_HONEYDEWPULT,                                 "reanim\\honeypult.reanim",                   0 },
 	{ ReanimationType::REANIM_SNAPDRAGON,                                 "reanim\\SnapDragon.reanim",                   0 },
+	{ ReanimationType::REANIM_MUMMY,                                 "reanim\\Zombiemummy.reanim",                   0 },
+	{ ReanimationType::REANIM_ZOMBIE_RA,                                 "reanim\\Zombie_ra.reanim",                   0 },
+	{ ReanimationType::REANIM_ZOMBIE_EXPLORER,                                 "reanim\\Zombie_explorer.reanim",                   0 },
+	{ ReanimationType::REANIM_TOADSTOOL,                                 "reanim\\ToadStool.reanim",                   0 },
+	{ ReanimationType::REANIM_ZOMBIE_TOMB,                                 "reanim\\Zombie_tombraiser.reanim",                   0 },
+
 };
 
 ReanimatorTransform::ReanimatorTransform() :

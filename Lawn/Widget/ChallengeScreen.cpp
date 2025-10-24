@@ -97,6 +97,7 @@ ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_UPSELL,                               10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       3,  4,  _S("Upsell") },
 	{ GameMode::GAMEMODE_INTRO,                                10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  3,  _S("Intro") },
 	{ GameMode::GAMEMODE_LONE_GATLING,                         0,  ChallengePage::CHALLENGE_PAGE_CHALLENGE,    4,  0,  _S("All Alone") },
+	{ GameMode::GAMEMODE_CHALLENGE_ONESODDED,                   5,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       4,  1,  _S("Onesodded") },
 };
 
 ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)

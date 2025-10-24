@@ -197,6 +197,7 @@ public:
     bool                            EffectedByDamage(unsigned int theDamageRangeFlags);
     void                            PickRandomSpeed();
     void                            UpdateZombiePolevaulter();
+    void                            UpdateZombieExplorer();
     void                            UpdateZombieDolphinRider();
     void                            PickBungeeZombieTarget(int theColumn);
     int                             CountBungeesTargetingSunFlowers();
@@ -282,6 +283,7 @@ public:
     void                            UpdateReanim();
     void                            GetTrackPosition(const char* theTrackName, float& thePosX, float& thePosY);
     void                            LoadPlainZombieReanim();
+    void                            Mummify();
     void                            ShowDoorArms(bool theShow);
     /*inline*/ void                 ReanimShowTrack(const char* theTrackName, int theRenderGroup);
     /*inline*/ void                 PlayZombieAppearSound();
@@ -390,6 +392,8 @@ public:
     void                            BossHeadSpitEffect();
     void                            DrawBossFireBall(Graphics* g, const ZombieDrawPosition& theDrawPos);
     void                            UpdateZombiePeaHead();
+    void                            UpdateZombieRa();
+    void                            UpdateZombieTomb();
     void                            UpdateZombieBloverHead();
     void                            UpdateZombieMineHead();
     void                            UpdateZombieScaredyHead();

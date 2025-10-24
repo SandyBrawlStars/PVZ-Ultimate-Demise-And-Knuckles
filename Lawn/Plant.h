@@ -247,6 +247,7 @@ public:
     void                    LaunchStarFruit();
     bool                    FindStarFruitTarget();
     void                    UpdateChomper();
+    void                    UpdateToadstool();
     void                    DoBlink();
     void                    UpdateBlink();
     void                    PlayBodyReanim(const char* theTrackName, ReanimLoopType theLoopType, int theBlendTime, float theAnimRate);
