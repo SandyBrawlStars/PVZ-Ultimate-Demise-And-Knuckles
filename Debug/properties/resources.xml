@@ -292,6 +292,7 @@
 <SetDefaults path="reanim" idprefix="IMAGE_REANIM_" />
   
 <Image id="MUMMY_HEAD" path="Zombie_mummy_head" />
+<Image id="MUMMY_HEAD2" path="Zombie_jaw" />
 <Image id="MUMMY_BODY" path="Zombie_mummy_body" />
 <Image id="MUMMY_TIE" path="Zombie_mummy_tie" />
 <Image id="MUMMY_INNERARM_EXTENDED" path="Zombie_mummy_innerarm_extended" />

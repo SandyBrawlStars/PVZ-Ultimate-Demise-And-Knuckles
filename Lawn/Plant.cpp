@@ -1940,7 +1940,7 @@ void Plant::UpdateChomper()
             bool doBite = false;
             if (aZombie)
             {
-                if (aZombie->mZombieType == ZombieType::ZOMBIE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_GARG_BOSS || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_ALLSTAR || aZombie->mZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_HYPNO_FLAG || aZombie->mZombieType == ZombieType::ZOMBIE_VASE_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD ||
+                if (aZombie->mZombieType == ZombieType::ZOMBIE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_GIGA_FOOTBALL || aZombie->mZombieType == ZombieType::ZOMBIE_ZAMBONI || aZombie->mZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_GARG_BOSS || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_ALLSTAR || aZombie->mZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_HYPNO_FLAG || aZombie->mZombieType == ZombieType::ZOMBIE_VASE_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD ||
                     aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
                 {
                     doBite = true;
@@ -2028,7 +2028,7 @@ void Plant::UpdateToadstool()
             bool doBite = false;
             if (aZombie)
             {
-                if (aZombie->mZombieType == ZombieType::ZOMBIE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_GARG_BOSS || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_ALLSTAR || aZombie->mZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_HYPNO_FLAG || aZombie->mZombieType == ZombieType::ZOMBIE_VASE_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD ||
+                if (aZombie->mZombieType == ZombieType::ZOMBIE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_ZAMBONI || aZombie->mZombieType == ZombieType::ZOMBIE_GARG_BOSS || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_ALLSTAR || aZombie->mZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_HYPNO_FLAG || aZombie->mZombieType == ZombieType::ZOMBIE_VASE_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD || aZombie->mZombieType == ZombieType::ZOMBIE_GIGA_FOOTBALL ||
                     aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
                 {
                     doBite = true;
@@ -2076,7 +2076,7 @@ void Plant::UpdateToadstool()
             }
 
             mState = PlantState::STATE_CHOMPER_DIGESTING;
-            mStateCountdown = 3000;
+            mStateCountdown = 2700;
         }
     }
     else if (mState == PlantState::STATE_CHOMPER_DIGESTING)
@@ -2087,16 +2087,19 @@ void Plant::UpdateToadstool()
             mState = PlantState::STATE_CHOMPER_SWALLOWING;
         }
     }
-    else if ((mState == PlantState::STATE_CHOMPER_SWALLOWING || mState == PlantState::STATE_CHOMPER_BITING_MISSED) && aBodyReanim->mLoopCount > 0)
+    if (mState == PlantState::STATE_CHOMPER_SWALLOWING && aBodyReanim->mLoopCount > 0)
     {
-        PlayIdleAnim(aBodyReanim->mDefinition->mFPS);
-        mState = PlantState::STATE_READY;
         mBoard->AddCoin(mX, mY, CoinType::COIN_SUN, CoinMotion::COIN_MOTION_FROM_PLANT);
         mBoard->AddCoin(mX, mY, CoinType::COIN_SMALLSUN, CoinMotion::COIN_MOTION_FROM_PLANT);
         if (mShadowPowered > 0)
         {
             mBoard->AddCoin(mX, mY, CoinType::COIN_SUN, CoinMotion::COIN_MOTION_FROM_PLANT);
         }
+    }
+    if ((mState == PlantState::STATE_CHOMPER_SWALLOWING || mState == PlantState::STATE_CHOMPER_BITING_MISSED) && aBodyReanim->mLoopCount > 0)
+    {
+        PlayIdleAnim(aBodyReanim->mDefinition->mFPS);
+        mState = PlantState::STATE_READY;
     }
 }
 
@@ -5826,7 +5829,7 @@ Rect Plant::GetPlantAttackRect(PlantWeapon thePlantWeapon)
     case SeedType::SEED_LEFTPEATER:     aRect = Rect(0,             mY,             mX,                 mHeight);               break;
     case SeedType::SEED_SQUASH:         aRect = Rect(mX + 20,       mY,             mWidth - 35,        mHeight);               break;
     case SeedType::SEED_CHOMPER:        aRect = Rect(mX + 80,       mY,             40,                 mHeight);               break;
-    case SeedType::SEED_TOADSTOOL:        aRect = Rect(mX + 80, mY, 80, mHeight);               break;
+    case SeedType::SEED_TOADSTOOL:        aRect = Rect(mX + 40, mY, 150, mHeight);               break;
     case SeedType::SEED_SPIKEWEED:
     case SeedType::SEED_SPIKEROCK:      aRect = Rect(mX + 20,       mY,             mWidth - 50,        mHeight);               break;
     case SeedType::SEED_POTATOMINE:     aRect = Rect(mX,            mY,             mWidth - 25,        mHeight);               break;

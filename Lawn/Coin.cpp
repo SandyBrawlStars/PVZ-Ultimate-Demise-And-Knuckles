@@ -882,9 +882,16 @@ void Coin::Draw(Graphics* g)
 
     if (mAttachmentID != AttachmentID::ATTACHMENTID_NULL)
     {
+        if (mType == CoinType::COIN_ZOMBIE_SUN)
+        {
+            g->SetColorizeImages(true);
+            g->SetColor(Color(209, 47, 36, 255));
+        }
         Graphics theAttachmentGraphics(*g);
         MakeParentGraphicsFrame(&theAttachmentGraphics);
         AttachmentDraw(mAttachmentID, &theAttachmentGraphics, false);
+        g->SetColorizeImages(false);
+
     }
 
     if ((mType == CoinType::COIN_SILVER || mType == CoinType::COIN_GOLD) && mHitGround && !mIsBeingCollected)

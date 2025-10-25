@@ -484,75 +484,109 @@ Propeller Zombie
 
 [PEASHOOTER_DESCRIPTION]
 Peashooters are your first line of defense. They shoot peas at attacking zombies.
-{KEYWORD}Damage:{STAT} normal
-{KEYWORD}Modded Change: {STAT}+25 Sun Cost, -5 Projectile Damage, x1.9 Speed, x1.6 Health
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Damage:{STAT} 15/0.8 Sec
+{KEYWORD}  Cost:{STAT} 125 Sun
+{KEYWORD}  Recharge:{STAT} 3.75 Sec
+
 {FLAVOR}How can a single plant grow and shoot so many peas so quickly? Peashooter says, 
 "Hard work, commitment, and a healthy, well-balanced breakfast of sunlight and high-fiber 
 carbon dioxide make it all possible."
 
 [SUNFLOWER_DESCRIPTION]
 Sunflowers are essential for you to produce extra sun. Try planting as many as you can!
-{KEYWORD}Sun production:{STAT} normal
-{KEYWORD}Modded Change: {STAT}+25 Sun Cost, -10 Sun Worth, x2.2 Speed, x1.6 Health
+
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Sun Production:{STAT} 15/11 Sec
+{KEYWORD}  Cost:{STAT} 75 Sun
+{KEYWORD}  Recharge:{STAT} 3.75 Sec
+
 {FLAVOR}Sunflower can't resist bouncing to the beat. Which beat is that? Why, the 
 life-giving jazzy rhythm of the Earth itself, thumping at a frequency only Sunflower can hear.
 
 [WALL_NUT_DESCRIPTION]
 Wall-nuts have hard shells which you can use to protect your other plants.
-{KEYWORD}Toughness:{STAT} high
-{KEYWORD}Modded Change: {STAT}+50 Sun Cost, x1.25 Health
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Toughness:{STAT} 5000
+{KEYWORD}  Cost:{STAT} 100 Sun
+{KEYWORD}  Recharge:{STAT} 20 Sec
+
 {FLAVOR}"People wonder how I feel about getting constantly chewed on by zombies," says Wall-nut. 
 "What they don't realize is that with my limited senses all I can feel is a kind of tingling, like a relaxing back rub."
 
 [CHERRY_BOMB_DESCRIPTION]
 Cherry Bombs can blow up all zombies in an area. They have a short fuse so plant them near zombies.
-{KEYWORD}Damage:{STAT} massive
-{KEYWORD}Range:{STAT} all zombies in a medium area
-{KEYWORD}Usage:{STAT} single use, instant
-{KEYWORD}Modded Change: {STAT}+125 Sun Cost
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Damage:{STAT} 1800, Pierces All Armor
+{KEYWORD}  Cost:{STAT} 275 Sun
+{KEYWORD}  Recharge:{STAT} 35 Sec
+{KEYWORD}  Range:{STAT} 3x3
+
 {FLAVOR}"I wanna explode," says Cherry #1. "No, let's detonate instead!" says 
 his brother, Cherry #2. After intense consultation they agree to explodonate.
 
 [POTATO_MINE_DESCRIPTION]
 Potato Mines pack a powerful punch, but they need a while to arm themselves. You should plant them ahead of zombies. They will explode on contact.
-{KEYWORD}Damage:{STAT} massive
-{KEYWORD}Range:{STAT} all zombies in a small area
-{KEYWORD}Usage:{STAT} single use, delayed activation
-{KEYWORD}Modded Change: {STAT}+50 Sun Cost, x0.4 damage, x2 Arming Speed, x1.6 Health
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Damage:{STAT} 1800, Pierces Shields
+{KEYWORD}  Cost:{STAT} 75 Sun
+{KEYWORD}  Recharge:{STAT} 20 Sec
+{KEYWORD}  Range:{STAT} 1x1
+{KEYWORD}  Special - Arming Time:{STAT} 7.5 Sec
+
 {FLAVOR}Some folks say Potato Mine is lazy, that he leaves everything to the last 
 minute. Potato Mine says nothing. He's too busy thinking about his investment strategy.
 
 [REPEATER_DESCRIPTION]
 Repeaters fire two peas at a time.
-{KEYWORD}Damage:{STAT} normal (for each pea)
-{KEYWORD}Firing speed:{STAT} 2x
-{KEYWORD}Modded Change: {STAT}+100 Sun Cost, -5 Projectile Damage, x2.5 Speed, x1.6 Health
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Damage:{STAT} 30/0.6 Sec
+{KEYWORD}  Cost:{STAT} 300 Sun
+{KEYWORD}  Recharge:{STAT} 3.75 Sec
+
 {FLAVOR}Repeater is fierce. He's from the streets. He doesn't take attitude from anybody, 
 plant or zombie, and he shoots peas to keep people at a distance. Secretly, though, Repeater yearns for love.
 
 [SNOW_PEA_DESCRIPTION]
 Snow Peas shoot frozen peas that damage and slow the enemy.
-{KEYWORD}Damage:{STAT} normal, slows zombies
-{KEYWORD}Modded Change: {STAT}+100 Sun Cost, +5 Projectile Damage, x2.2 Speed, x1.6 Health
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Damage:{STAT} 25/0.7 Sec
+{KEYWORD}  Cost:{STAT} 275 Sun
+{KEYWORD}  Recharge:{STAT} 3.75 Sec
+{KEYWORD}  Special - Chill:{STAT} 10 Sec, x0.5 Speed
+
 {FLAVOR}Folks often tell Snow Pea how "cool" he is, or exhort him to "chill out." They 
 tell him to "stay frosty." Snow Pea just rolls his eyes. He's heard 'em all.
 
 [CHOMPER_DESCRIPTION]
 Chompers can devour a zombie whole, but they are vulnerable while chewing.
-{KEYWORD}Damage:{STAT} massive
-{KEYWORD}Range:{STAT} very short
-{KEYWORD}Special:{STAT} long delay between chomps
-{KEYWORD}Modded Change: {STAT}+100 Sun Cost, x2 Speed, x1.6 Health
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Damage:{STAT} Kill / 30 Sec
+{KEYWORD}  Cost:{STAT} 200 Sun
+{KEYWORD}  Recharge:{STAT} 3.75 Sec
+{KEYWORD}  Special - Chomp:{STAT} Can't hit Bosses, Large HP Minibosses, And Vase-Head Zombies
+
 {FLAVOR}Chomper almost got a gig doing stunts for The Little Shop of Horrors but it fell 
 through when his agent demanded too much on the front end. Chomper's not resentful, 
 though. He says it's just part of the business.
 
 [PUFF_SHROOM_DESCRIPTION]
 Puff-shrooms are cheap, but can only fire a short distance.
-{KEYWORD}Damage:{STAT} normal
-{KEYWORD}Range:{STAT} short
+
+{KEYWORD}Stat List:{STAT}
+{KEYWORD}  Damage:{STAT} 15/0.75 Sec
+{KEYWORD}  Cost:{STAT} 10 Sun
+{KEYWORD}  Recharge:{STAT} 3.75 Sec
 {NOCTURNAL}Sleeps during the day
-{KEYWORD}Modded Change: {STAT}+10 Sun Cost, -5 Projectile Damage, x2 Speed, x1.6 Health
+
 {FLAVOR}"I only recently became aware of the existence of zombies," says Puff-shroom. "Like many fungi, 
 I'd just assumed they were fairy tales or movie monsters. This whole experience has been a huge eye-opener for me."
 
@@ -3713,3 +3747,13 @@ Made by grassguy12
 
 [TOADSTOOL_DESCRIPTION]
 Made by grassguy12 and justalittlegray
+
+[RA_ZOMBIE_DESCRIPTION]
+Made by bandit
+
+[EXPLORER_ZOMBIE_DESCRIPTION]
+Made by bandit
+
+[TOMB_RAISER_ZOMBIE_DESCRIPTION]
+Made by bandit
+

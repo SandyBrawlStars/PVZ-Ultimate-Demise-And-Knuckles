@@ -8564,7 +8564,7 @@ void Board::KeyChar(SexyChar theChar)
 	}
 	if (mDebugObjectType == 4)
 	{
-		mDebugObjectLimit = BACKGROUND_7_BACKYARD;
+		mDebugObjectLimit = BACKGROUND_8_ANCIENT;
 	}
 	if (mDebugObjectType == 5)
 	{
@@ -8573,7 +8573,7 @@ void Board::KeyChar(SexyChar theChar)
 
 	int aMouseX = mApp->mWidgetManager->mLastMouseX - mX;
 	int aMouseY = mApp->mWidgetManager->mLastMouseY - mY;
-	int aGridX = PixelToGridX(aMouseX, aMouseY);
+	int aGridX = PixelToGridXKeepOnBoard(aMouseX, aMouseY);
 	int aGridY = PixelToGridYKeepOnBoard(aMouseX, aMouseY);
 
 	if (theChar == _S('d'))
@@ -8708,6 +8708,10 @@ void Board::KeyChar(SexyChar theChar)
 			if (aProjectile->mProjectileType == ProjectileType::PROJECTILE_FIREBALL)
 			{
 				aProjectile->ConvertToFireball(aGridX);
+			}
+			if (aProjectile->mProjectileType == ProjectileType::PROJECTILE_PEPPER)
+			{
+				aProjectile->StartAnimPepper();
 			}
 			if (aProjectile->mProjectileType == ProjectileType::PROJECTILE_SMALLSUN)
 			{
