@@ -79,6 +79,7 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_RA,              REANIM_ZOMBIE_RA,              3,      71,      5,      2000,      _S("RA_ZOMBIE")},
     { ZOMBIE_EXPLORER,              REANIM_ZOMBIE_EXPLORER,              4,      73,      5,      1500,      _S("EXPLORER_ZOMBIE")},
     { ZOMBIE_TOMB,              REANIM_ZOMBIE_TOMB,              4,      72,      5,      1250,      _S("TOMB_RAISER_ZOMBIE")},
+    { ZOMBIE_CAMEL,              REANIM_ZOMBIE,              4,      72,     5,      1000,   _S("CAMEL_ZOMBIE")},
 };
 
 static ZombieType gBossZombieList[] = {  
@@ -192,6 +193,8 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
     mMoweredReanimID = ReanimationID::REANIMATIONID_NULL;
     mLastPortalX = -1;
     mHoneyPuddle = 0;
+    mCamelType = 1;
+    mIsMummy = false;
 
     for (int i = 0; i < MAX_ZOMBIE_FOLLOWERS; i++)
     {
@@ -286,6 +289,15 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         mShieldType = ShieldType::SHIELDTYPE_DOOR;
         mShieldHealth = 1480;
         LoadPlainZombieReanim();
+        AttachShield();
+        break;
+
+    case ZombieType::ZOMBIE_CAMEL:
+        mShieldType = ShieldType::SHIELDTYPE_DOOR;
+        mShieldHealth = 500;
+        LoadPlainZombieReanim();
+        Mummify();
+        mIsMummy = true;
         AttachShield();
         break;
 
@@ -1440,6 +1452,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
     if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
     {
         Mummify();
+        mIsMummy = true;
     }
 
     if (IsOnBoard() && mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM)
@@ -1658,7 +1671,7 @@ void Zombie::Mummify()
         aBodyReanim->SetImageOverride("Zombie_body", IMAGE_REANIM_MUMMY_BODY);
         aBodyReanim->SetImageOverride("Zombie_tie", IMAGE_REANIM_MUMMY_TIE);
 
-        if (!IsZombotany(mZombieType))
+        if (aBodyReanim->GetTrackInstanceByName("anim_head1")->mImageOverride == nullptr)
         {
             aBodyReanim->GetTrackInstanceByName("anim_head1")->mImageOverride = IMAGE_REANIM_MUMMY_HEAD;
             aBodyReanim->GetTrackInstanceByName("anim_head2")->mImageOverride = IMAGE_REANIM_MUMMY_HEAD2;
@@ -1672,14 +1685,24 @@ void Zombie::Mummify()
         aBodyReanim->SetImageOverride("Zombie_innerleg_upper", IMAGE_REANIM_MUMMY_INNERLEG_UPPER);
         aBodyReanim->SetImageOverride("Zombie_outerarm_upper", IMAGE_REANIM_MUMMY_OUTERARM_UPPER);
         aBodyReanim->SetImageOverride("Zombie_outerarm_lower", IMAGE_REANIM_MUMMY_OUTERARM_LOWER);
-        aBodyReanim->SetImageOverride("Zombie_outerarm_screendoor", IMAGE_REANIM_MUMMY_OUTERARM_UPPER2);
+        aBodyReanim->SetImageOverride("Zombie_outerarm_screendoor", IMAGE_BLANK);
         aBodyReanim->SetImageOverride("Zombie_outerleg_foot", IMAGE_REANIM_MUMMY_OUTERLEG_FOOT);
         aBodyReanim->SetImageOverride("Zombie_outerleg_lower", IMAGE_REANIM_MUMMY_OUTERLEG_LOWER);
         aBodyReanim->SetImageOverride("Zombie_outerleg_upper", IMAGE_REANIM_MUMMY_OUTERLEG_UPPER);
         aBodyReanim->GetTrackInstanceByName("anim_cone")->mImageOverride = IMAGE_REANIM_MUMMY_CONE1;
         aBodyReanim->GetTrackInstanceByName("anim_bucket")->mImageOverride = IMAGE_REANIM_MUMMY_BUCKET1;
-
-        
+        if (mCamelType == 1)
+        {
+            aBodyReanim->GetTrackInstanceByName("anim_screendoor")->mImageOverride = IMAGE_REANIM_MUMMY_CAMEL1_1;
+        }
+        if (mCamelType == 2)
+        {
+            aBodyReanim->GetTrackInstanceByName("anim_screendoor")->mImageOverride = IMAGE_REANIM_MUMMY_CAMEL2_1;
+        }
+        if (mCamelType == 3)
+        {
+            aBodyReanim->GetTrackInstanceByName("anim_screendoor")->mImageOverride = IMAGE_REANIM_MUMMY_CAMEL3_1;
+        }
     }
 }
 
@@ -5486,7 +5509,7 @@ void Zombie::DropHead(unsigned int theDamageFlags)
         {
             aParticle->OverrideImage(nullptr, IMAGE_ZOMBIEDANCERHEAD);
         }
-        else  if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+        else  if (mIsMummy)
         {
             aParticle->OverrideImage(nullptr, IMAGE_REANIM_MUMMY_HEAD);
         }
@@ -5702,7 +5725,7 @@ void Zombie::SetupReanimForLostArm(unsigned int theDamageFlags)
             GetTrackPosition("Zombie_outerarm_lower", aPosX, aPosY);
             aBodyReanim->SetImageOverride("Zombie_outerarm_upper", IMAGE_REANIM_ZOMBIE_OUTERARM_UPPER2);
             const ZombieDefinition& aZombieDef = GetZombieDefinition(mZombieType);
-            if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+            if (mIsMummy)
             {
                 aBodyReanim->SetImageOverride("Zombie_outerarm_upper", IMAGE_REANIM_MUMMY_OUTERARM_UPPER2);
             }
@@ -5741,7 +5764,7 @@ void Zombie::SetupReanimForLostArm(unsigned int theDamageFlags)
             GetTrackPosition("Zombie_outerarm_lower", aPosX, aPosY);
             aBodyReanim->SetImageOverride("Zombie_outerarm_upper", IMAGE_REANIM_ZOMBIE_OUTERARM_UPPER2);
             const ZombieDefinition& aZombieDef = GetZombieDefinition(mZombieType);
-            if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+            if (mIsMummy)
             {
                 aBodyReanim->SetImageOverride("Zombie_outerarm_upper", IMAGE_REANIM_MUMMY_OUTERARM_UPPER2);
             }
@@ -5809,7 +5832,7 @@ void Zombie::SetupReanimForLostArm(unsigned int theDamageFlags)
                 break;
             }
             const ZombieDefinition& aZombieDef = GetZombieDefinition(mZombieType);
-            if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+            if (mIsMummy)
             {
                 aParticle->OverrideImage(nullptr, IMAGE_REANIM_MUMMY_OUTERARM_HAND);
             }
@@ -9792,6 +9815,19 @@ void Zombie::DropShield(unsigned int theDamageFlags)
             float aPosX, aPosY;
             GetTrackPosition("anim_screendoor", aPosX, aPosY);
             TodParticleSystem* aParticle = mApp->AddTodParticle(aPosX, aPosY, mRenderOrder + 1, ParticleEffect::PARTICLE_ZOMBIE_DOOR);
+            if (mCamelType == 1 && mIsMummy)
+            {
+                aParticle->OverrideImage(nullptr, IMAGE_REANIM_MUMMY_CAMEL1_3);
+            }
+            if (mCamelType == 2)
+            {
+                aParticle->OverrideImage(nullptr, IMAGE_REANIM_MUMMY_CAMEL2_3);
+
+            }
+            if (mCamelType == 3)
+            {
+                aParticle->OverrideImage(nullptr, IMAGE_REANIM_MUMMY_CAMEL2_3);
+            }
             OverrideParticleScale(aParticle);
         }
     }
@@ -9876,11 +9912,35 @@ int Zombie::TakeShieldDamage(int theDamage, unsigned int theDamageFlags)
         {
             TOD_ASSERT(aBodyReanim);
             aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_ZOMBIE_SCREENDOOR2);
+            if (mCamelType == 1 && mIsMummy)
+            {
+                aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_MUMMY_CAMEL1_2);
+            }
+            if (mCamelType == 2)
+            {
+                aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_MUMMY_CAMEL2_2);
+            }
+            if (mCamelType == 3)
+            {
+                aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_MUMMY_CAMEL3_2);
+            }
         }
         else if (mShieldType == ShieldType::SHIELDTYPE_DOOR && aDamageIndexAfterDamage == 2)
         {
             TOD_ASSERT(aBodyReanim);
             aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_ZOMBIE_SCREENDOOR3);
+            if (mCamelType == 1 && mIsMummy)
+            {
+                aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_MUMMY_CAMEL1_3);
+            }
+            if (mCamelType == 2)
+            {
+                aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_MUMMY_CAMEL2_3);
+            }
+            if (mCamelType == 3)
+            {
+                aBodyReanim->SetImageOverride("anim_screendoor", IMAGE_REANIM_MUMMY_CAMEL3_3);
+            }
         }
         else if (mShieldType == ShieldType::SHIELDTYPE_NEWSPAPER && aDamageIndexAfterDamage == 1)
         {
@@ -9959,6 +10019,14 @@ void Zombie::DropHelm(unsigned int theDamageFlags)
     if (!TestBit(theDamageFlags, (int)DamageFlags::DAMAGE_DOESNT_LEAVE_BODY) && aEffect != ParticleEffect::PARTICLE_NONE)
     {
         TodParticleSystem* aParticle = mApp->AddTodParticle(aPosX, aPosY, mRenderOrder + 1, aEffect);
+        if (mIsMummy&& aEffect == ParticleEffect::PARTICLE_ZOMBIE_TRAFFIC_CONE)
+        {
+            aParticle->OverrideImage(nullptr, IMAGE_REANIM_MUMMY_CONE3);
+        }
+        if (mIsMummy && aEffect == ParticleEffect::PARTICLE_ZOMBIE_PAIL)
+        {
+            aParticle->OverrideImage(nullptr, IMAGE_REANIM_MUMMY_BUCKET3);
+        }
         OverrideParticleScale(aParticle);
     }
 
@@ -9994,7 +10062,7 @@ int Zombie::TakeHelmDamage(int theDamage, unsigned int theDamageFlags)
         if (mHelmType == HelmType::HELMTYPE_TRAFFIC_CONE && aDamageIndexAfterDamage == 1 && aBodyReanim)
         {
             aBodyReanim->SetImageOverride("anim_cone", IMAGE_REANIM_ZOMBIE_CONE2);
-            if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+            if (mIsMummy)
             {
                 aBodyReanim->SetImageOverride("anim_cone", IMAGE_REANIM_MUMMY_CONE2);
             }
@@ -10002,7 +10070,7 @@ int Zombie::TakeHelmDamage(int theDamage, unsigned int theDamageFlags)
         else if (mHelmType == HelmType::HELMTYPE_TRAFFIC_CONE && aDamageIndexAfterDamage == 2 && aBodyReanim)
         {
             aBodyReanim->SetImageOverride("anim_cone", IMAGE_REANIM_ZOMBIE_CONE3);
-            if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+            if (mIsMummy)
             {
                 aBodyReanim->SetImageOverride("anim_cone", IMAGE_REANIM_MUMMY_CONE3);
             }
@@ -10010,7 +10078,7 @@ int Zombie::TakeHelmDamage(int theDamage, unsigned int theDamageFlags)
         else if (mHelmType == HelmType::HELMTYPE_PAIL && aDamageIndexAfterDamage == 1)
         {
             aBodyReanim->SetImageOverride("anim_bucket", IMAGE_REANIM_ZOMBIE_BUCKET2);
-            if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+            if (mIsMummy)
             {
                 aBodyReanim->SetImageOverride("anim_bucket", IMAGE_REANIM_MUMMY_BUCKET2);
             }
@@ -10019,7 +10087,7 @@ int Zombie::TakeHelmDamage(int theDamage, unsigned int theDamageFlags)
         {
             TOD_ASSERT(aBodyReanim);
             aBodyReanim->SetImageOverride("anim_bucket", IMAGE_REANIM_ZOMBIE_BUCKET3);
-            if (mBoard && mBoard->mBackground == BackgroundType::BACKGROUND_8_ANCIENT && aZombieDef.mReanimationType == ReanimationType::REANIM_ZOMBIE)
+            if (mIsMummy)
             {
                 aBodyReanim->SetImageOverride("anim_bucket", IMAGE_REANIM_MUMMY_BUCKET3);
             }
@@ -10566,10 +10634,6 @@ bool Zombie::IsZombotany(ZombieType theZombieType)
         theZombieType == ZombieType::ZOMBIE_SUNFLOWER_HEAD ||
         theZombieType == ZombieType::ZOMBIE_TWIN_SUNFLOWER_HEAD ||
         theZombieType == ZombieType::ZOMBIE_SNOW_PEA_HEAD ||
-        theZombieType == ZombieType::ZOMBIE_LETTER_HEAD ||
-        theZombieType == ZombieType::ZOMBIE_VASE_HEAD ||
-        theZombieType == ZombieType::ZOMBIE_SUPER_VASE_HEAD ||
-        theZombieType == ZombieType::ZOMBIE_SNOW_PEA_HEAD ||
         theZombieType == ZombieType::ZOMBIE_SQUASH_HEAD;
 }
 
@@ -10587,6 +10651,10 @@ bool Zombie::ZombieTypeCanGoInPool(ZombieType theZombieType)
         theZombieType == ZombieType::ZOMBIE_WALLNUT_HEAD || 
         theZombieType == ZombieType::ZOMBIE_JALAPENO_HEAD || 
         theZombieType == ZombieType::ZOMBIE_GATLING_HEAD || 
+        theZombieType == ZombieType::ZOMBIE_SUNFLOWER_HEAD ||
+        theZombieType == ZombieType::ZOMBIE_MINE_HEAD ||
+        theZombieType == ZombieType::ZOMBIE_VASE_HEAD ||
+        theZombieType == ZombieType::ZOMBIE_CONE_REPEATER_HEAD ||
         theZombieType == ZombieType::ZOMBIE_TALLNUT_HEAD;
 }
 
@@ -10701,19 +10769,20 @@ void Zombie::HitIceTrap()
     {
         UpdateZombieExplorer();
     }
-    
+    int aIceTrapCounter = 0;
     if (mInPool)
     {
-        mIceTrapCounter = 300;
+        aIceTrapCounter = 300;
     }
     else if (cold)
     {
-        mIceTrapCounter = RandRangeInt(300, 400);
+        aIceTrapCounter = RandRangeInt(300, 400);
     }
     else
     {
-        mIceTrapCounter = RandRangeInt(400, 600);
+        aIceTrapCounter = RandRangeInt(400, 600);
     }
+    mIceTrapCounter = max(aIceTrapCounter, mIceTrapCounter);
 
     StopZombieSound();
     if (mZombieType == ZombieType::ZOMBIE_BALLOON)
@@ -10744,19 +10813,20 @@ void Zombie::HitIceCabbage()
     {
         UpdateZombieExplorer();
     }
-
+    int aIceTrapCounter = 0;
     if (mInPool)
     {
-        mIceTrapCounter = 30;
+        aIceTrapCounter = 10;
     }
     else if (cold)
     {
-        mIceTrapCounter = RandRangeInt(30, 40);
+        aIceTrapCounter = RandRangeInt(10, 15);
     }
     else
     {
-        mIceTrapCounter = RandRangeInt(30, 50);
+        aIceTrapCounter = RandRangeInt(5, 15);
     }
+    mIceTrapCounter = max(aIceTrapCounter, mIceTrapCounter);
 
     StopZombieSound();
     if (mZombieType == ZombieType::ZOMBIE_BALLOON)
@@ -10783,7 +10853,11 @@ void Zombie::HitFrostBolt()
     {
         cold = true;
     }
-
+    if (mShieldType != ShieldType::SHIELDTYPE_NONE)
+    {
+        return;
+    }
+    int aIceTrapCounter = 0;
     ApplyChill(false);
     if (!CanBeFrozen())
         return;
@@ -10795,17 +10869,17 @@ void Zombie::HitFrostBolt()
 
     if (mInPool)
     {
-        mIceTrapCounter = 35;
+        aIceTrapCounter = 35;
     }
     else if (cold)
     {
-        mIceTrapCounter = RandRangeInt(30, 40);
+        aIceTrapCounter = RandRangeInt(30, 40);
     }
     else
     {
-        mIceTrapCounter = RandRangeInt(35, 55);
+        aIceTrapCounter = RandRangeInt(35, 55);
     }
-
+    mIceTrapCounter = max(aIceTrapCounter, mIceTrapCounter);
     StopZombieSound();
     if (mZombieType == ZombieType::ZOMBIE_BALLOON)
     {

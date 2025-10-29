@@ -679,7 +679,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		1, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 	} },
 	{ ZOMBIE_EXPLORER, {
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -689,7 +689,7 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+		1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 	} },
 	{ ZOMBIE_TOMB, {
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -699,7 +699,17 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+		1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
+	} },
+	{ ZOMBIE_CAMEL, {
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 	} },
 };
 
@@ -3006,6 +3016,11 @@ void Challenge::InitZombieWaves()
 				aList[ZOMBIE_NORMAL] = true;
 				aList[ZOMBIE_TRAFFIC_CONE] = true;
 				aList[ZOMBIE_PAIL] = true;
+				if (mApp->mGameMode == GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_8 || mApp->mGameMode == GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_8)
+				{
+					aList[ZOMBIE_RA] = true;
+					aList[ZOMBIE_CAMEL] = true;
+				}
 			}
 		}
 		else InitZombieWavesSurvival();

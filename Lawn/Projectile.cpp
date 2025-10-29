@@ -27,7 +27,7 @@ ProjectileDefinition gProjectileDefinition[] = {
 	{ ProjectileType::PROJECTILE_COBBIG,        0,  300,  _S("COBBIG") },
 	{ ProjectileType::PROJECTILE_BUTTER,        0,  55,  _S("BUTTER")  },
 	{ ProjectileType::PROJECTILE_ZOMBIE_PEA,    0,  15,  _S("ZOMBIE_PEA")  },
-	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  45,  _S("ICE_CABBAGE") },
+	{ ProjectileType::PROJECTILE_ICECABBAGE,    0,  35,  _S("ICE_CABBAGE") },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SPIKE,    0,  40,  _S("ZOMBIE_SPIKE") },
 	{ ProjectileType::PROJECTILE_ZOMBIE_HYPNO_PEA,    0,  25,  _S("ZOMBIE_HYPNO_PEA") },
 	{ ProjectileType::PROJECTILE_ZOMBIE_SNOW_PEA,    0,  20,  _S("ZOMBIE_SNOW_PEA") },

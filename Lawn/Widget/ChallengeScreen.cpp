@@ -25,20 +25,23 @@ ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_5,              4,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    0,  4,  _S("[SURVIVAL_ROOF_NORMAL]") },
 	{ GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_6,              11,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,   3,  0,  _S("[SURVIVAL_NIGHT_ROOF_NORMAL]") },
 	{ GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_7,              12,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,   3,  1,  _S("[SURVIVAL_DAVE_BACKYARD_NORMAL]") },
+	{ GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_8,              21,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,   3,  2,  _S("Survival: Egypt") },
 	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_1,                5,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    1,  0,  _S("[SURVIVAL_DAY_HARD]") },
 	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_2,                6,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    1,  1,  _S("[SURVIVAL_NIGHT_HARD]") },
 	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_3,                7,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    1,  2,  _S("[SURVIVAL_POOL_HARD]") },
 	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_4,                8,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    1,  3,  _S("[SURVIVAL_FOG_HARD]") },
 	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_5,                9,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    1,  4,  _S("[SURVIVAL_ROOF_HARD]") },
-	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_6,                11,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    4,  0,  _S("[SURVIVAL_NIGHT_ROOF_HARD]") },
-	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_7,                12,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    4,  1,  _S("[SURVIVAL_DAVE_BACKYARD_HARD]") },
-	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_1,             10,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  0,  _S("[SURVIVAL_DAY_ENDLESS]") },
-	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_2,             10,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  1,  _S("[SURVIVAL_NIGHT_ENDLESS]") },
+	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_6,                13,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    4,  0,  _S("[SURVIVAL_NIGHT_ROOF_HARD]") },
+	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_7,                14,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    4,  1,  _S("[SURVIVAL_DAVE_BACKYARD_HARD]") },
+	{ GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_8,                22,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    4,  2,  _S("Survival: Egypt (Hard)") },
+	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_1,             15,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  0,  _S("[SURVIVAL_DAY_ENDLESS]") },
+	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_2,             16,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  1,  _S("[SURVIVAL_NIGHT_ENDLESS]") },
 	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_3,             10,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  2,  _S("[SURVIVAL_POOL_ENDLESS]") },
-	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_4,             10,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  3,  _S("[SURVIVAL_FOG_ENDLESS]") },
-	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_5,             10,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  4,  _S("[SURVIVAL_ROOF_ENDLESS]") },
-	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_6,             11,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       5,  0,  _S("[SURVIVAL_NIGHT_ROOF_ENDLESS]") },
-	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_7,             12,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       5,  1,  _S("[SURVIVAL_DAVE_BACKYARD_ENDLESS]") },
+	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_4,             17,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  3,  _S("[SURVIVAL_FOG_ENDLESS]") },
+	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_5,             18,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       2,  4,  _S("[SURVIVAL_ROOF_ENDLESS]") },
+	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_6,             19,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       5,  0,  _S("[SURVIVAL_NIGHT_ROOF_ENDLESS]") },
+	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_7,             20,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       5,  1,  _S("[SURVIVAL_DAVE_BACKYARD_ENDLESS]") },
+	{ GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_8,             23,  ChallengePage::CHALLENGE_PAGE_SURVIVAL,       5,  2,  _S("Survival: Egypt (Endless)") },
 	{ GameMode::GAMEMODE_CHALLENGE_WAR_AND_PEAS,               0,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,   0,  0,  _S("[WAR_AND_PEAS]") },
 	{ GameMode::GAMEMODE_CHALLENGE_WALLNUT_BOWLING,            6,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,   0,  1,  _S("[WALL_NUT_BOWLING]") },
 	{ GameMode::GAMEMODE_CHALLENGE_SLOT_MACHINE,               2,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,   0,  2,  _S("[SLOT_MACHINE]") },
@@ -59,19 +62,19 @@ ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_CHALLENGE_WALLNUT_BOWLING_2,          6,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,   3,  2,  _S("[WALL_NUT_BOWLING_EXTREME]") },
 	{ GameMode::GAMEMODE_CHALLENGE_POGO_PARTY,                 14,  ChallengePage::CHALLENGE_PAGE_CHALLENGE,   3,  3,  _S("[POGO_PARTY]") },
 	{ GameMode::GAMEMODE_CHALLENGE_FINAL_BOSS,                 19,  ChallengePage::CHALLENGE_PAGE_CHALLENGE,   3,  4,  _S("[FINAL_BOSS]") },
-	{ GameMode::GAMEMODE_CHALLENGE_ART_CHALLENGE_WALLNUT,      0,   ChallengePage::CHALLENGE_PAGE_LIMBO,       0,  0,  _S("[ART_CHALLENGE_WALL_NUT]") },
-	{ GameMode::GAMEMODE_CHALLENGE_SUNNY_DAY,                  1,   ChallengePage::CHALLENGE_PAGE_LIMBO,       0,  1,  _S("[SUNNY_DAY]") },
-	{ GameMode::GAMEMODE_CHALLENGE_RESODDED,                   2,   ChallengePage::CHALLENGE_PAGE_LIMBO,       0,  2,  _S("[UNSODDED]") },
-	{ GameMode::GAMEMODE_CHALLENGE_BIG_TIME,                   3,   ChallengePage::CHALLENGE_PAGE_LIMBO,       0,  3,  _S("[BIG_TIME]") },
-	{ GameMode::GAMEMODE_CHALLENGE_ART_CHALLENGE_SUNFLOWER,    4,   ChallengePage::CHALLENGE_PAGE_LIMBO,       0,  4,  _S("[ART_CHALLENGE_SUNFLOWER]") },
-	{ GameMode::GAMEMODE_CHALLENGE_AIR_RAID,                   5,   ChallengePage::CHALLENGE_PAGE_LIMBO,       1,  0,  _S("[AIR_RAID]") },
+	{ GameMode::GAMEMODE_CHALLENGE_ART_CHALLENGE_WALLNUT,      22,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,    4,  0,  _S("[ART_CHALLENGE_WALL_NUT]") },
+	{ GameMode::GAMEMODE_CHALLENGE_SUNNY_DAY,                  23,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       4,  1,  _S("[SUNNY_DAY]") },
+	{ GameMode::GAMEMODE_CHALLENGE_RESODDED,                   24,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       4,  2,  _S("[UNSODDED]") },
+	{ GameMode::GAMEMODE_CHALLENGE_BIG_TIME,                   25,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       4,  3,  _S("[BIG_TIME]") },
+	{ GameMode::GAMEMODE_CHALLENGE_ART_CHALLENGE_SUNFLOWER,    26,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       4,  4,  _S("[ART_CHALLENGE_SUNFLOWER]") },
+	{ GameMode::GAMEMODE_CHALLENGE_AIR_RAID,                   27,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       5,  0,  _S("[AIR_RAID]") },
 	{ GameMode::GAMEMODE_CHALLENGE_ICE,                        6,   ChallengePage::CHALLENGE_PAGE_LIMBO,       1,  1,  _S("[ICE_LEVEL]") },
 	{ GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN,                 7,   ChallengePage::CHALLENGE_PAGE_LIMBO,       1,  2,  _S("[ZEN_GARDEN]") },
-	{ GameMode::GAMEMODE_CHALLENGE_HIGH_GRAVITY,               8,   ChallengePage::CHALLENGE_PAGE_LIMBO,       1,  3,  _S("[HIGH_GRAVITY]") },
-	{ GameMode::GAMEMODE_CHALLENGE_GRAVE_DANGER,               11,  ChallengePage::CHALLENGE_PAGE_LIMBO,       1,  4,  _S("[GRAVE_DANGER]") },
-	{ GameMode::GAMEMODE_CHALLENGE_SHOVEL,                     10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  0,  _S("[CAN_YOU_DIG_IT]") },
+	{ GameMode::GAMEMODE_CHALLENGE_HIGH_GRAVITY,               28,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       5,  1,  _S("[HIGH_GRAVITY]") },
+	{ GameMode::GAMEMODE_CHALLENGE_GRAVE_DANGER,               29,  ChallengePage::CHALLENGE_PAGE_CHALLENGE,       5,  2,  _S("[GRAVE_DANGER]") },
+	{ GameMode::GAMEMODE_CHALLENGE_SHOVEL,                     30,  ChallengePage::CHALLENGE_PAGE_CHALLENGE,       5,  3,  _S("[CAN_YOU_DIG_IT]") },
 	{ GameMode::GAMEMODE_CHALLENGE_STORMY_NIGHT,               13,  ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  1,  _S("[DARK_STORMY_NIGHT]") },
-	{ GameMode::GAMEMODE_CHALLENGE_BUNGEE_BLITZ,               9,   ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  2,  _S("[BUNGEE_BLITZ]") },
+	{ GameMode::GAMEMODE_CHALLENGE_BUNGEE_BLITZ,               31,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       5,  4,  _S("[BUNGEE_BLITZ]") },
 	{ GameMode::GAMEMODE_CHALLENGE_SQUIRREL,                   10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  3,  _S("Squirrel") },
 	{ GameMode::GAMEMODE_TREE_OF_WISDOM,                       10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  4,  _S("Tree Of Wisdom") },
 	{ GameMode::GAMEMODE_SCARY_POTTER_1,                       10,  ChallengePage::CHALLENGE_PAGE_PUZZLE,      0,  0,  _S("[SCARY_POTTER_1]") },
@@ -96,8 +99,8 @@ ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS,              11,  ChallengePage::CHALLENGE_PAGE_PUZZLE,      3,  4,  _S("[I_ZOMBIE_ENDLESS]") },
 	{ GameMode::GAMEMODE_UPSELL,                               10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       3,  4,  _S("Upsell") },
 	{ GameMode::GAMEMODE_INTRO,                                10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  3,  _S("Intro") },
-	{ GameMode::GAMEMODE_LONE_GATLING,                         0,  ChallengePage::CHALLENGE_PAGE_CHALLENGE,    4,  0,  _S("All Alone") },
-	{ GameMode::GAMEMODE_CHALLENGE_ONESODDED,                   5,   ChallengePage::CHALLENGE_PAGE_CHALLENGE,       4,  1,  _S("Onesodded") },
+	{ GameMode::GAMEMODE_LONE_GATLING,                         32,  ChallengePage::CHALLENGE_PAGE_CHALLENGE,    6,  0,  _S("All Alone") },
+	{ GameMode::GAMEMODE_CHALLENGE_ONESODDED,                   5,   ChallengePage::CHALLENGE_PAGE_LIMBO,       4,  1,  _S("Onesodded") },
 };
 
 ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
@@ -333,13 +336,13 @@ int ChallengeScreen::MoreTrophiesNeeded(int theChallengeIndex)
 		else
 		{
 			int aNumTrophies = mApp->GetNumTrophies(aDef.mPage);
-			if (aDef.mPage == CHALLENGE_PAGE_LIMBO || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_6 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_6 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_7 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_7)
+			if (aDef.mPage == CHALLENGE_PAGE_LIMBO || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_6 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_6 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_7 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_7 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_8 || aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_8)
 			{
 				return 0;
 			}
 			if (mApp->IsSurvivalEndless(aDef.mChallengeMode))
 			{
-				return 14 - aNumTrophies;
+				return 16 - aNumTrophies;
 			}
 			if (aDef.mChallengeMode == GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_6)
 			{

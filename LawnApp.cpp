@@ -1549,7 +1549,7 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 			if (aUnlockedNewChallenge && HasFinishedAdventure())
 			{
 				int aNumTrophies = GetNumTrophies(ChallengePage::CHALLENGE_PAGE_SURVIVAL);
-				if (aNumTrophies != 10)
+				if (aNumTrophies != 17)
 				{
 					mPlayerInfo->mHasNewSurvival = true;
 				}
@@ -2329,7 +2329,7 @@ bool LawnApp::IsAdventureMode()
 
 bool LawnApp::IsSurvivalMode()
 {
-	return mGameMode >= GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_1 && mGameMode <= GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_5;
+	return mGameMode >= GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_1 && mGameMode <= GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_8;
 }
 
 bool LawnApp::IsPuzzleMode()
@@ -2347,19 +2347,19 @@ bool LawnApp::IsChallengeMode()
 bool LawnApp::IsSurvivalNormal(GameMode theGameMode)
 {
 	int aLevel = theGameMode - GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_1;
-	return aLevel >= 0 && aLevel <= 6;
+	return aLevel >= 0 && aLevel <= 7;
 }
 
 bool LawnApp::IsSurvivalHard(GameMode theGameMode)
 {
 	int aLevel = theGameMode - GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_1;
-	return aLevel >= 0 && aLevel <= 6;
+	return aLevel >= 0 && aLevel <= 7;
 }
 
 bool LawnApp::IsSurvivalEndless(GameMode theGameMode)
 {
 	int aLevel = theGameMode - GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_1;
-	return aLevel >= 0 && aLevel <= 6;
+	return aLevel >= 0 && aLevel <= 7;
 }
 
 bool LawnApp::IsEndlessScaryPotter(GameMode theGameMode)
@@ -2571,7 +2571,7 @@ bool LawnApp::IsFinalBossLevel()
 		return true;
 
 	if (mPlayedQuickplay)
-		return mQuickLevel == 70;
+		return mQuickLevel == NUM_LEVELS;
 
 	return IsAdventureMode() && mPlayerInfo->mLevel == NUM_LEVELS;
 }
@@ -2601,11 +2601,11 @@ bool LawnApp::IsNight()
 
 	if (mPlayedQuickplay)
 	{
-		return (mQuickLevel >= 11 && mQuickLevel <= 20) || (mQuickLevel >= 31 && mQuickLevel <= 40) || (mQuickLevel >= 51 && mQuickLevel <= 60);
+		return (mQuickLevel >= 11 && mQuickLevel <= 20) || (mQuickLevel >= 31 && mQuickLevel <= 40) || (mQuickLevel >= 51 && mQuickLevel <= 60) || (mQuickLevel >= 71 && mQuickLevel <= 80);
 	}
 	else
 	{
-		return (mPlayerInfo->mLevel >= 11 && mPlayerInfo->mLevel <= 20) || (mPlayerInfo->mLevel >= 31 && mPlayerInfo->mLevel <= 40) || (mPlayerInfo->mLevel >= 51 && mPlayerInfo->mLevel <= 60);
+		return (mPlayerInfo->mLevel >= 11 && mPlayerInfo->mLevel <= 20) || (mPlayerInfo->mLevel >= 31 && mPlayerInfo->mLevel <= 40) || (mPlayerInfo->mLevel >= 51 && mPlayerInfo->mLevel <= 60) || (mPlayerInfo->mLevel >= 71 && mPlayerInfo->mLevel <= 80);
 	}
 }
 
@@ -3663,12 +3663,12 @@ int LawnApp::GetNumTrophies(ChallengePage thePage)
 
 int LawnApp::GetTotalTrophies(ChallengePage thePage)
 {
-	return thePage == CHALLENGE_PAGE_SURVIVAL ? 14 : thePage == CHALLENGE_PAGE_CHALLENGE ? 20 : thePage == CHALLENGE_PAGE_PUZZLE ? 18 : thePage == CHALLENGE_PAGE_LIMBO ? 0 : 0;
+	return thePage == CHALLENGE_PAGE_SURVIVAL ? 16 : thePage == CHALLENGE_PAGE_CHALLENGE ? 20 : thePage == CHALLENGE_PAGE_PUZZLE ? 18 : thePage == CHALLENGE_PAGE_LIMBO ? 0 : 0;
 }
 
 int LawnApp::TrophiesNeedForGoldSunflower()
 {
-	return 48 - GetNumTrophies(CHALLENGE_PAGE_SURVIVAL) - GetNumTrophies(CHALLENGE_PAGE_CHALLENGE) - GetNumTrophies(CHALLENGE_PAGE_PUZZLE);
+	return 55 - GetNumTrophies(CHALLENGE_PAGE_SURVIVAL) - GetNumTrophies(CHALLENGE_PAGE_CHALLENGE) - GetNumTrophies(CHALLENGE_PAGE_PUZZLE);
 }
 
 bool LawnApp::EarnedGoldTrophy()

@@ -67,7 +67,7 @@ PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES] = {
     { SeedType::SEED_SHADOW_SHROOM,       nullptr, ReanimationType::REANIM_SHADOW_SHROOM,   10, 75,    2000,   PlantSubClass::SUBCLASS_NORMAL,     0,      _S("SHADOW_SHROOM") },
     { SeedType::SEED_MOON_LAMP,           nullptr, ReanimationType::REANIM_PLANTERN,       27, 125,    375,    PlantSubClass::SUBCLASS_NORMAL,    1250,    _S("MOON_LAMP") },
     { SeedType::SEED_GOO_PEA,       nullptr, ReanimationType::REANIM_GOO_PEA,            10, 200,    375,   PlantSubClass::SUBCLASS_SHOOTER,     150,      _S("GOO_PEA") },
-    { SeedType::SEED_ICEBERG,           nullptr, ReanimationType::REANIM_ICEBERG,       27, 325,    375,    PlantSubClass::SUBCLASS_SHOOTER,    130,    _S("ICEBERG") },
+    { SeedType::SEED_ICEBERG,           nullptr, ReanimationType::REANIM_ICEBERG,       27, 200,    375,    PlantSubClass::SUBCLASS_SHOOTER,    180,    _S("ICEBERG") },
     { SeedType::SEED_INFINUT,           nullptr, ReanimationType::REANIM_INFINUT,       27, 150,    200,    PlantSubClass::SUBCLASS_NORMAL,    1000,    _S("INFINUT") },
     { SeedType::SEED_PEPPERPULT,           nullptr, ReanimationType::REANIM_PEPPERPULT,       27, 225,    375,    PlantSubClass::SUBCLASS_SHOOTER,    200,    _S("PEPPER_PULT") },
     { SeedType::SEED_HONEYDEWPULT,           nullptr, ReanimationType::REANIM_HONEYDEWPULT,       27, 275,    375,    PlantSubClass::SUBCLASS_SHOOTER,    300,    _S("HONEYDEW_PULT") },
@@ -299,7 +299,7 @@ void Plant::PlantInitialize(int theGridX, int theGridY, SeedType theSeedType, Se
         mBlinkCountdown = 1000 + Sexy::Rand(1000);
         break;
     case SeedType::SEED_EXPLODE_O_NUT:
-        mPlantHealth = 4000;
+        mPlantHealth = 3500;
         mBlinkCountdown = 1000 + Sexy::Rand(1000);
         aBodyReanim->mColorOverride = Color(255, 64, 64);
         break;
@@ -623,6 +623,7 @@ int Plant::GetDamageRangeFlags(PlantWeapon thePlantWeapon)
     case SeedType::SEED_JALAPENO:
     case SeedType::SEED_COBCANNON:
     case SeedType::SEED_DOOMSHROOM:
+    case SeedType::SEED_EXPLODE_O_NUT:
         return 127;
     case SeedType::SEED_MELONPULT:
     case SeedType::SEED_HONEYDEWPULT:
@@ -3631,9 +3632,9 @@ void Plant::UpdateShooting()
     {
         if (mApp->mGameMode == GameMode::GAMEMODE_LONE_GATLING)
         {
-            if (mShootingCounter == 20 || mShootingCounter == 30 || mShootingCounter == 40 || mShootingCounter == 50 || mShootingCounter == 60 || mShootingCounter == 70)
+            if (mShootingCounter == 20 || mShootingCounter == 30 || mShootingCounter == 40 || mShootingCounter == 50)
             {
-                if (RandRangeInt(1, 8) == 8)
+                if (RandRangeInt(1, 3) == 3)
                 {
                     int aRowAbove = mRow - 1;
                     int aRowBelow = mRow + 1;
@@ -5040,7 +5041,7 @@ void Plant::Fire(Zombie* theTargetZombie, int theRow, PlantWeapon thePlantWeapon
         aProjectileType = ProjectileType::PROJECTILE_PEA;
         if (mApp->mGameMode == GameMode::GAMEMODE_LONE_GATLING)
         {
-            if (RandRangeInt(1, 5) == 5)
+            if (RandRangeInt(1, 4) == 4)
             {
                 if (RandRangeInt(1, 2) == 2)
                 {
@@ -5590,6 +5591,22 @@ void Plant::Die()
         {
             aZombie->DieWithLoot();
         }
+    }
+    if (IsOnBoard() && mSeedType == SeedType::SEED_EXPLODE_O_NUT)
+    {
+        int aPosX = mX + mWidth / 2;
+        int aPosY = mY + mHeight / 2;
+        int aDamageRangeFlags = GetDamageRangeFlags(PlantWeapon::WEAPON_PRIMARY);
+
+        mApp->PlayFoley(FoleyType::FOLEY_CHERRYBOMB);
+        mApp->PlayFoley(FoleyType::FOLEY_JUICY);
+
+        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1, true, aDamageRangeFlags, false);
+
+
+        mApp->AddTodParticle(aPosX, aPosY, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_POWIE);
+        mBoard->ShakeBoard(3, -4);
+
     }
 
     mDead = true;

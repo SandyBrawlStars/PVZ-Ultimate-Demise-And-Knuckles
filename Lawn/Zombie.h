@@ -169,6 +169,8 @@ public:
     int                             mPeaCounter;
     int                             mPeaType;
     int                             mHoneyPuddle;
+    int                             mCamelType;
+    bool                            mIsMummy;
 
 public:
     Zombie();

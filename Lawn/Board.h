@@ -507,6 +507,6 @@ public:
 	BackgroundType                      mBackgroundType; // zombie identifier ex: ZOMBIE_NORMAL
 	const SexyChar* mBackgroundName;
 };
-extern BackgroundDefinition gBackgroundDefs[BACKGROUND_7_BACKYARD + 1];
+extern BackgroundDefinition gBackgroundDefs[NUM_ADVENTURE_BACKGROUNDS];
 
 #endif // __BOARD_H__

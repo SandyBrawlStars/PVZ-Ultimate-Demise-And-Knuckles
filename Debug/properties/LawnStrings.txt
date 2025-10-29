@@ -3757,3 +3757,5 @@ Made by bandit
 [TOMB_RAISER_ZOMBIE_DESCRIPTION]
 Made by bandit
 
+[BANANA_LAUNCHER_DESCRIPTION]
+Made by grassguy12 and rice_flipnote

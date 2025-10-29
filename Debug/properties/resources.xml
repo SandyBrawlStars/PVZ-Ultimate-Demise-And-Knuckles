@@ -316,6 +316,16 @@
 <Image id="MUMMY_BUCKET1" path="Zombie_mummy_bucket1" />
 <Image id="MUMMY_BUCKET2" path="Zombie_mummy_bucket2" />
 <Image id="MUMMY_BUCKET3" path="Zombie_mummy_bucket3" />
+<Image id="MUMMY_CAMEL1_1" path="Zombie_camel_wall1" />
+<Image id="MUMMY_CAMEL1_2" path="Zombie_camel_wall1_2" />
+<Image id="MUMMY_CAMEL1_3" path="Zombie_camel_wall1_3" />
+<Image id="MUMMY_CAMEL2_1" path="Zombie_camel_wall2" />
+<Image id="MUMMY_CAMEL2_2" path="Zombie_camel_wall2_2" />
+<Image id="MUMMY_CAMEL2_3" path="Zombie_camel_wall2_3" />
+<Image id="MUMMY_CAMEL3_1" path="Zombie_camel_wall3" />
+<Image id="MUMMY_CAMEL3_2" path="Zombie_camel_wall3_2" />
+<Image id="MUMMY_CAMEL3_3" path="Zombie_camel_wall3_3" />
+
 
 
 <Image id="WALLNUT_BODY" path="Wallnut_body" />
@@ -747,8 +757,8 @@
 <Image id="CHALLENGE_WINDOW" path="Challenge_Window" />
 <Image id="CHALLENGE_WINDOW_HIGHLIGHT" path="Challenge_Window_Highlight" />
 <Image id="CHALLENGE_BLANK" path="Challenge_Blank" />
-<Image id="CHALLENGE_THUMBNAILS" path="Challenge_Thumbnails" cols="22" />
-<Image id="SURVIVAL_THUMBNAILS" path="Survival_Thumbnails" cols="13" />
+<Image id="CHALLENGE_THUMBNAILS" path="Challenge_Thumbnails" cols="33" />
+<Image id="SURVIVAL_THUMBNAILS" path="Survival_Thumbnails" cols="24" />
 <Image id="LOCK" path="lock" />
 <Image id="LOCK_OPEN" path="lock_open" />
 </Resources>  

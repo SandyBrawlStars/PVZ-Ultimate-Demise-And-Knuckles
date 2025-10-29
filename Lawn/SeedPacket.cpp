@@ -768,6 +768,10 @@ void SeedPacket::MouseDown(int x, int y, int theClickCount)
 			{
 				mBoard->DisplayAdvice(_S("[ADVICE_PLANT_NEEDS_PEASHOOTER]"), MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_PLANT_NEEDS_REPEATER);
 			}
+			else if (aUseSeedType == SeedType::SEED_TATERPULT)
+			{
+				mBoard->DisplayAdvice(_S("[ADVICE_PLANT_NEEDS_CABBAGEPULT]"), MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_PLANT_NEEDS_REPEATER);
+			}
 			else if (aUseSeedType == SeedType::SEED_WINTERMELON)
 			{
 				mBoard->DisplayAdvice(_S("[ADVICE_PLANT_NEEDS_MELONPULT]"), MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_PLANT_NEEDS_MELONPULT);

@@ -39,7 +39,7 @@
 
 bool gShownMoreSunTutorial = false;
 
-BackgroundDefinition gBackgroundDefs[BACKGROUND_7_BACKYARD + 1] = {
+BackgroundDefinition gBackgroundDefs[NUM_ADVENTURE_BACKGROUNDS] = {
 
 	{BACKGROUND_1_DAY,  _S("DAY")},
 	{BACKGROUND_2_NIGHT,  _S("NIGHT")},
@@ -48,6 +48,7 @@ BackgroundDefinition gBackgroundDefs[BACKGROUND_7_BACKYARD + 1] = {
 	{BACKGROUND_5_ROOF,  _S("ROOF")},
 	{BACKGROUND_6_BOSS,  _S("NIGHT_ROOF")},
 	{BACKGROUND_7_BACKYARD,  _S("DAVE_BACKYARD")},
+	{BACKGROUND_8_ANCIENT,  _S("ANCIENT_EGYPT")},
 };
 
 Board::Board(LawnApp* theApp)
@@ -1039,6 +1040,12 @@ void Board::PickBackground()
 		mBackground = BackgroundType::BACKGROUND_7_BACKYARD;
 		break;
 
+	case GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_8:
+	case GameMode::GAMEMODE_SURVIVAL_HARD_STAGE_8:
+	case GameMode::GAMEMODE_SURVIVAL_ENDLESS_STAGE_8:
+		mBackground = BackgroundType::BACKGROUND_8_ANCIENT;
+		break;
+
 	case GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM:
 		mBackground = BackgroundType::BACKGROUND_ZOMBIQUARIUM;
 		break;
@@ -1274,7 +1281,7 @@ void Board::LoadBackgroundDebug(BackgroundType theBackground)
 			mPlantRow[4] = PlantRowType::PLANTROW_DIRT;
 		}
 	}
-	else if (mBackground == BackgroundType::BACKGROUND_2_NIGHT)
+	else if (mBackground == BackgroundType::BACKGROUND_2_NIGHT || mBackground == BackgroundType::BACKGROUND_8_ANCIENT)
 	{
 		mPlantRow[0] = PlantRowType::PLANTROW_NORMAL;
 		mPlantRow[1] = PlantRowType::PLANTROW_NORMAL;
@@ -5165,7 +5172,22 @@ void Board::SpawnZombieWave()
 			}
 			else
 			{
-				AddZombie(aZombieType, mCurrentWave);
+				Zombie* aZombie = AddZombie(aZombieType, mCurrentWave);
+				if (aZombieType == ZombieType::ZOMBIE_CAMEL)
+				{
+					aZombie->mCamelType = 1;
+					Zombie* aZombie2 = AddZombieInRow(ZombieType::ZOMBIE_CAMEL, aZombie->mRow, Zombie::ZOMBIE_WAVE_DEBUG);
+					aZombie2->mCamelType = 2;
+					aZombie2->mPosX += 100;
+					aZombie2->mVelX = aZombie->mVelX;
+					Zombie* aZombie3 = AddZombieInRow(ZombieType::ZOMBIE_CAMEL, aZombie->mRow, Zombie::ZOMBIE_WAVE_DEBUG);
+					aZombie3->mCamelType = 3;
+					aZombie3->mPosX += 180;
+					aZombie3->mVelX = aZombie->mVelX;
+					aZombie->Mummify();
+					aZombie2->Mummify();
+					aZombie3->Mummify();
+				}
 			}
 		}
 	}
@@ -8544,7 +8566,11 @@ void Board::KeyChar(SexyChar theChar)
 			return;
 		}
 	}
-
+	if (theChar == _S('o'))
+	{
+		FadeOutLevel();
+		return;
+	}
 
 	if (mDebugObjectType == 0)
 	{
@@ -8683,14 +8709,34 @@ void Board::KeyChar(SexyChar theChar)
 		{
 			
 				ZombieType aDebugZombieType = static_cast<ZombieType>(mDebugObjectSelection);
-				AddZombieInRow(aDebugZombieType, aGridY , Zombie::ZOMBIE_WAVE_DEBUG);
+				Zombie* aZombie = AddZombieInRow(aDebugZombieType, aGridY , Zombie::ZOMBIE_WAVE_DEBUG);
+				if (aZombie->mZombieType == ZombieType::ZOMBIE_CAMEL)
+				{
+					aZombie->mCamelType = 1;
+					Zombie* aZombie2 = AddZombieInRow(ZombieType::ZOMBIE_CAMEL, aZombie->mRow, Zombie::ZOMBIE_WAVE_DEBUG);
+					aZombie2->mCamelType = 2;
+					aZombie2->mPosX = aZombie->mPosX + 80;
+					aZombie2->mVelX = aZombie->mVelX;
+					Zombie* aZombie3 = AddZombieInRow(ZombieType::ZOMBIE_CAMEL, aZombie->mRow, Zombie::ZOMBIE_WAVE_DEBUG);
+					aZombie3->mCamelType = 3;
+					aZombie3->mPosX = aZombie->mPosX + 160;
+					aZombie3->mVelX = aZombie->mVelX;
+					aZombie->Mummify();
+					aZombie2->Mummify();
+					aZombie3->Mummify();
+				}
 				return;
 			
 		}
 		if (mDebugObjectType == 1)
 		{
+			SeedType aImitaterType = SeedType::SEED_NONE;
 			SeedType aDebugPlantType = static_cast<SeedType>(mDebugObjectSelection);
-			AddPlant(aGridX, aGridY, aDebugPlantType, SEED_NONE);
+			if (aDebugPlantType == SeedType::SEED_IMITATER)
+			{
+				aImitaterType = static_cast<SeedType>(RandRangeInt(0,NUM_SEED_TYPES - 1));
+			}
+			AddPlant(aGridX, aGridY, aDebugPlantType, aImitaterType);
 			return;
 		}
 		if (mDebugObjectType == 2)
