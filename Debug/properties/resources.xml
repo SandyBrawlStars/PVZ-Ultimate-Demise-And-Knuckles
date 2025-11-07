@@ -757,7 +757,7 @@
 <Image id="CHALLENGE_WINDOW" path="Challenge_Window" />
 <Image id="CHALLENGE_WINDOW_HIGHLIGHT" path="Challenge_Window_Highlight" />
 <Image id="CHALLENGE_BLANK" path="Challenge_Blank" />
-<Image id="CHALLENGE_THUMBNAILS" path="Challenge_Thumbnails" cols="33" />
+<Image id="CHALLENGE_THUMBNAILS" path="Challenge_Thumbnails" cols="34" />
 <Image id="SURVIVAL_THUMBNAILS" path="Survival_Thumbnails" cols="24" />
 <Image id="LOCK" path="lock" />
 <Image id="LOCK_OPEN" path="lock_open" />

@@ -65,7 +65,7 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_ICE_SHROOM_HEAD,     REANIM_ZOMBIE,              4,      18,     10,     1500,   _S("ICE_SHROOM_ZOMBIE")},
     { ZOMBIE_SUPER_POLE_VAULTER,     REANIM_POLEVAULTER,       13,      48,     15,     1000,   _S("SUPERJUMP_POLE_VAULTER_ZOMBIE")},
     { ZOMBIE_MELON_PULT_HEAD,          REANIM_ZOMBIE,          5,      54,     10,      1500,   _S("MELON_PULT_ZOMBIE")},
-    { ZOMBIE_BUTTER_PULT_HEAD,          REANIM_ZOMBIE,         3,      53,     10,      4500,   _S("BUTTER_PULT_ZOMBIE")},
+    { ZOMBIE_BUTTER_PULT_HEAD,          REANIM_ZOMBIE,         3,      66,     10,      4500,   _S("BUTTER_PULT_ZOMBIE")},
     { ZOMBIE_SUPER_VASE_HEAD,               REANIM_ZOMBIE,     15,      56,     10,      1000,   _S("MYSTERY_VASE_HEAD_ZOMBIE")},
     { ZOMBIE_GARG_BOSS,              REANIM_GARGANTUAR,        10,     55,     1,      0,      _S("BOSS2")},
     { ZOMBIE_GIGA_FOOTBALL,          REANIM_GIGA_FOOTBALL,     14,      44,     10,      1000,   _S("GIGA_FOOTBALL_ZOMBIE")},
@@ -79,7 +79,8 @@ ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES] = {
     { ZOMBIE_RA,              REANIM_ZOMBIE_RA,              3,      71,      5,      2000,      _S("RA_ZOMBIE")},
     { ZOMBIE_EXPLORER,              REANIM_ZOMBIE_EXPLORER,              4,      73,      5,      1500,      _S("EXPLORER_ZOMBIE")},
     { ZOMBIE_TOMB,              REANIM_ZOMBIE_TOMB,              4,      72,      5,      1250,      _S("TOMB_RAISER_ZOMBIE")},
-    { ZOMBIE_CAMEL,              REANIM_ZOMBIE,              4,      72,     5,      1000,   _S("CAMEL_ZOMBIE")},
+    { ZOMBIE_CAMEL,              REANIM_ZOMBIE,              4,      74,     5,      1000,   _S("CAMEL_ZOMBIE")},
+    { ZOMBIE_UMBRELLA_HEAD,      REANIM_ZOMBIE,              4,      53,     5,      2000,   _S("UMBRELLA_ZOMBIE")},
 };
 
 static ZombieType gBossZombieList[] = {  
@@ -1324,6 +1325,27 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         break;
     }
 
+    case ZombieType::ZOMBIE_UMBRELLA_HEAD:
+    {
+        LoadPlainZombieReanim();
+        ReanimShowPrefix("anim_hair", RENDER_GROUP_HIDDEN);
+        ReanimShowPrefix("anim_head", RENDER_GROUP_HIDDEN);
+        ReanimShowPrefix("Zombie_tie", RENDER_GROUP_HIDDEN);
+
+        Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
+        ReanimatorTrackInstance* aTrackInstance = aBodyReanim->GetTrackInstanceByName("Zombie_body");
+        Reanimation* aHeadReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_UMBRELLALEAF);
+        aHeadReanim->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
+        mSpecialHeadReanimID = mApp->ReanimationGetID(aHeadReanim);
+        AttachEffect* aAttachEffect = AttachReanim(aTrackInstance->mAttachmentID, aHeadReanim, 0.0f, 0.0f);
+        aBodyReanim->mFrameBasePose = 0;
+        TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 60.0f, -15.0f, 0.2f, -0.9f, 0.9f);
+
+        mBodyHealth = 700;
+        mVariant = false;
+        break;
+    }
+
     case ZombieType::ZOMBIE_TALLNUT_HEAD:  
     {
         LoadPlainZombieReanim();
@@ -1513,14 +1535,11 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
     }
 }
 
-void Zombie::SpawnZombie(int theX, int theRow, ZombieType theZombieType)
+Zombie* Zombie::SpawnZombie(int theX, int theRow, ZombieType theZombieType)
 {
-    if (!mBoard->RowCanHaveZombieType(mRow, theZombieType))
-        return;
-
     Zombie* aZombie = mBoard->AddZombie(theZombieType, 0);
     if (aZombie == nullptr)
-        return;
+        return aZombie;
 
     aZombie->mPosX = theX;
     aZombie->SetRow(theRow);
@@ -1536,6 +1555,8 @@ void Zombie::SpawnZombie(int theX, int theRow, ZombieType theZombieType)
 
     aZombie->mAltitude = 0;
     aZombie->mPhaseCounter = 150;
+
+    return aZombie;
 }
 void Zombie::SetupDoorArms(Reanimation* aReanim, bool theShow)
 {
@@ -2950,7 +2971,7 @@ void Zombie::UpdateZombieJackInTheBox()
                 mBoard->KillAllPlantsInRadius(aPosX, aPosY, JackInTheBoxPlantRadius);
             }
 
-            mApp->AddTodParticle(aPosX, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
+            TodParticleSystem* aParticle = mApp->AddTodParticle(aPosX, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
             mBoard->ShakeBoard(4, -6);
             DieNoLoot();
 
@@ -2996,26 +3017,11 @@ void Zombie::UpdateZombieSuperJack()
             else
             {
                 mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 255, false);
-                mBoard->KillAllPlantsInRadius(aPosX, aPosY, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX + 80, aPosY + 0, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX - 80, aPosY + 0, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX + 160, aPosY + 0, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX - 160, aPosY + 0, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX + 0, aPosY + 80, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX + 0, aPosY - 80, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX + 0, aPosY + 160, JackInTheBoxPlantRadius);
-                mBoard->KillAllPlantsInRadius(aPosX + 0, aPosY - 160, JackInTheBoxPlantRadius);
+                mBoard->KillAllPlantsInRadius(aPosX, aPosY, JackInTheBoxPlantRadius * 2);
             }
 
-            mApp->AddTodParticle(aPosX, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX + 80, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX - 80, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX, aPosY + 80, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX, aPosY - 80, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX + 160, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX - 160, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX, aPosY + 160, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
-            mApp->AddTodParticle(aPosX, aPosY - 160, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
+            TodParticleSystem* aParticle = mApp->AddTodParticle(aPosX, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
+            aParticle->OverrideScale(nullptr, 2.0f);
             mBoard->ShakeBoard(4, -6);
             DieNoLoot();
 

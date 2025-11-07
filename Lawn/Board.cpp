@@ -625,6 +625,8 @@ void Board::PickZombieWaves()
 			mNumWaves = 30;
 		else if (aGameMode == GameMode::GAMEMODE_LONE_GATLING)
 			mNumWaves = 20;
+		else if (aGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
+			mNumWaves = 30;
 
 		else
 			mNumWaves = 40;
@@ -653,6 +655,11 @@ void Board::PickZombieWaves()
 		}
 
 		if (mApp->mGameMode == GameMode::GAMEMODE_LONE_GATLING && aWave % 5 == 3)
+		{
+			PutZombieInWave(ZombieType::ZOMBIE_CHERRY_BUNGEE, aWave, &aZombiePicker);
+		}
+
+		if (mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT && aWave % 5 == 3)
 		{
 			PutZombieInWave(ZombieType::ZOMBIE_CHERRY_BUNGEE, aWave, &aZombiePicker);
 		}
@@ -718,6 +725,10 @@ void Board::PickZombieWaves()
 			aZombiePoints *= 6;
 		}
 		else if (mApp->mGameMode == GameMode::GAMEMODE_LONE_GATLING)
+		{
+			aZombiePoints *= 2.2;
+		}
+		else if (mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
 		{
 			aZombiePoints *= 2.2;
 		}
@@ -959,6 +970,7 @@ void Board::PickBackground()
 	case GameMode::GAMEMODE_CHALLENGE_SHOVEL:
 	case GameMode::GAMEMODE_CHALLENGE_SQUIRREL:
 	case GameMode::GAMEMODE_LONE_GATLING:
+	case GameMode::GAMEMODE_LONE_STARFRUIT:
 		mBackground = BackgroundType::BACKGROUND_1_DAY;
 		break;
 
@@ -1765,6 +1777,12 @@ void Board::InitLevel()
 		mSeedBank->mSeedPackets[0].SetPacketType(SeedType::SEED_CHERRYBOMB);
 		AddPlant(0, 2, SeedType::SEED_GATLINGPEA, SeedType::SEED_NONE);
 	}
+	if (aGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
+	{
+		mSeedBank->mNumPackets = 1;
+		mSeedBank->mSeedPackets[0].SetPacketType(SeedType::SEED_CHERRYBOMB);
+		AddPlant(0, 2, SeedType::SEED_SUPER_STARFRUIT, SeedType::SEED_NONE);
+	}
 
 	
 	mPaused = false;
@@ -1866,6 +1884,7 @@ bool Board::ChooseSeedsOnCurrentLevel()
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE || 
 		mApp->mGameMode == GameMode::GAMEMODE_LONE_GATLING ||
+		mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED_TWIST || 
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM)
@@ -1885,7 +1904,12 @@ void Board::StartLevel()
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_LONE_GATLING)
 	{
-		DisplayAdvice("Move Your Gatling Pea With WASD!", MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		DisplayAdvice("Move Your Gatling Pea With WASD!\n If you get stuck, pause and unpause!", MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+	}
+
+	if (mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
+	{
+		DisplayAdvice("Move Your Starfruit With WASD!\n If you get stuck, pause and unpause!", MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
 	}
 
 	if (mApp->IsSurvivalEndless(mApp->mGameMode) && GetSurvivalFlagsCompleted() >= 20)
@@ -8161,6 +8185,52 @@ void Board::KeyChar(SexyChar theChar)
 			}
 		}
 	}
+	else if (mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
+	{
+		Plant* aPlant = nullptr;
+		while (IteratePlants(aPlant))
+		{
+			if (aPlant->mSeedType == SeedType::SEED_SUPER_STARFRUIT)
+			{
+				if (theChar == _S('d'))
+				{
+					if (aPlant->mBoard->PixelToGridX(aPlant->mX, aPlant->mY) < 8)
+					{
+						aPlant->mX += 80;
+						aPlant->mPlantCol += 1;
+						return;
+					}
+				}
+				if (theChar == _S('a'))
+				{
+					if (aPlant->mBoard->PixelToGridX(aPlant->mX, aPlant->mY) > 0)
+					{
+						aPlant->mX -= 80;
+						aPlant->mPlantCol -= 1;
+						return;
+					}
+				}
+				if (theChar == _S('s'))
+				{
+					if (aPlant->mBoard->PixelToGridYKeepOnBoard(aPlant->mX, aPlant->mY) < 4)
+					{
+						aPlant->mY += 100;
+						aPlant->mRow += 1;
+						return;
+					}
+				}
+				if (theChar == _S('w'))
+				{
+					if (aPlant->mBoard->PixelToGridYKeepOnBoard(aPlant->mX, aPlant->mY) > 0)
+					{
+						aPlant->mY -= 100;
+						aPlant->mRow -= 1;
+						return;
+					}
+				}
+			}
+		}
+	}
 	else if (tolower(theChar) == _S('s') && canUseKeybinds && mShowShovel)
 	{
 		if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_SHOVEL)
@@ -8212,7 +8282,7 @@ void Board::KeyChar(SexyChar theChar)
 			return;
 		}
 
-		if (theChar == _S('a'))
+		if (theChar == _S('A'))
 		{
 			if (!mApp->mZenGarden->IsZenGardenFull(true))
 			{
@@ -8295,7 +8365,6 @@ void Board::KeyChar(SexyChar theChar)
 			{
 				mApp->mZenGarden->ResetStinkyTimers();
 			}
-			return;
 		}
 
 		if (theChar == _S('c'))
@@ -8572,6 +8641,18 @@ void Board::KeyChar(SexyChar theChar)
 		return;
 	}
 
+	if (theChar == _S('E'))
+	{
+		mCurrentWave = mNumWaves - 1;
+		SpawnZombieWave();
+		Zombie* aZombie = nullptr;
+		while (IterateZombies(aZombie))
+		{
+			aZombie->DieNoLoot();
+		}
+		return;
+	}
+
 	if (mDebugObjectType == 0)
 	{
 		mDebugObjectLimit = NUM_ZOMBIE_TYPES - 1;
@@ -8595,6 +8676,10 @@ void Board::KeyChar(SexyChar theChar)
 	if (mDebugObjectType == 5)
 	{
 		mDebugObjectLimit = NUM_ZOMBIE_TYPES - 1;
+	}
+	if (mDebugObjectType == 6)
+	{
+		mDebugObjectLimit = NUM_GRID_ITEM_TYPES - 1;
 	}
 
 	int aMouseX = mApp->mWidgetManager->mLastMouseX - mX;
@@ -8644,8 +8729,14 @@ void Board::KeyChar(SexyChar theChar)
 			string aName = gZombieDefs[mDebugObjectSelection].mZombieName;
 			DisplayAdvice("Selected Hypno Zombie Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
 		}
+		else if (mDebugObjectType == 6)
+		{
+			string aName = gGridItemDefs[mDebugObjectSelection].mItemName;
+			DisplayAdvice("Selected Grid Item Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
 		return;
 	}
+
 
 	if (theChar == _S('a'))
 	{
@@ -8688,17 +8779,22 @@ void Board::KeyChar(SexyChar theChar)
 			string aName = gZombieDefs[mDebugObjectSelection].mZombieName;
 			DisplayAdvice("Selected Hypno Zombie Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
 		}
+		else if (mDebugObjectType == 6)
+		{
+			string aName = gGridItemDefs[mDebugObjectSelection].mItemName;
+			DisplayAdvice("Selected Grid Item Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
+		}
 		return;
 	}
 
 	if (theChar == _S('s'))
 	{
 		mDebugObjectType++;
-		if (mDebugObjectType > 5)
+		if (mDebugObjectType > 6)
 		{
 			mDebugObjectType = 0;
 		}
-		string aName = mDebugObjectType == 0 ? "Zombie" : mDebugObjectType == 1 ? "Plant" : mDebugObjectType == 2 ? "Coin" : mDebugObjectType == 3 ? "Projectile": mDebugObjectType == 4 ? "Background" : mDebugObjectType == 5 ? "Hypno Zombie" : "Nothing";
+		string aName = mDebugObjectType == 0 ? "Zombie" : mDebugObjectType == 1 ? "Plant" : mDebugObjectType == 2 ? "Coin" : mDebugObjectType == 3 ? "Projectile": mDebugObjectType == 4 ? "Background" : mDebugObjectType == 5 ? "Hypno Zombie" : mDebugObjectType == 6 ? "Grid Item" : "Nothing";
 		DisplayAdvice("Selected Object Type " + aName, MessageStyle::MESSAGE_STYLE_HINT_LONG, AdviceType::ADVICE_NONE);
 		return;
 	}
@@ -8780,6 +8876,38 @@ void Board::KeyChar(SexyChar theChar)
 				aZombie->StartMindControlled();
 				return;
 			
+		}
+		if (mDebugObjectType == 6)
+		{
+			GridItemType aDebugItemType = static_cast<GridItemType>(mDebugObjectSelection);
+			GridItem* aGraveStone = mGridItems.DataArrayAlloc();
+			aGraveStone->mGridItemType = aDebugItemType;
+			aGraveStone->mGridItemCounter = -Rand(50);
+			aGraveStone->mGridX = aGridX;
+			aGraveStone->mGridY = aGridY;
+			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_HONEYDEW_PUDDLE)
+			{
+				aGraveStone->mGridItemCounter = 700;
+			}
+			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_LADDER)
+			{
+				aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_PLANT, aGridY, 800);
+			}
+			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_CRATER)
+			{
+				aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_GROUND, aGridY, 1);
+			}
+			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_PORTAL_CIRCLE || aGraveStone->mGridItemType == GridItemType::GRIDITEM_PORTAL_SQUARE)
+			{
+				aGraveStone->OpenPortal();
+			}
+			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_GRAVESTONE)
+			{
+				aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_GRAVE_STONE, aGridY, 3);
+				aGraveStone->AddGraveStoneParticles();
+			}
+			return;
+
 		}
 		return;
 	}
@@ -9438,6 +9566,10 @@ int Board::GetNumSeedsInBank()
 		return 9;
 	}
 	if (mApp->mGameMode == GameMode::GAMEMODE_LONE_GATLING)
+	{
+		return 1;
+	}
+	if (mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
 	{
 		return 1;
 	}
@@ -10205,6 +10337,20 @@ Plant* Board::FindUmbrellaPlant(int theGridX, int theGridY)
 	}
 	return nullptr;
 }
+
+Zombie* Board::FindUmbrellaZombie(int theGridX, int theGridY)
+{
+	Zombie* aZombie = nullptr;
+	while (IterateZombies(aZombie))
+	{
+		if (aZombie->mZombieType == ZombieType::ZOMBIE_UMBRELLA_HEAD && GridInRange(theGridX, theGridY, PixelToGridXKeepOnBoard(aZombie->mPosX, aZombie->mPosY), aZombie->mRow, 1, 1))
+		{
+			return aZombie;
+		}
+	}
+	return nullptr;
+}
+
 
 void Board::DoFwoosh(int theRow)
 {

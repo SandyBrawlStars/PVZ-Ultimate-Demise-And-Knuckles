@@ -711,6 +711,17 @@ ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 	} },
+	{ ZOMBIE_UMBRELLA_HEAD, {
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	} },
+
 };
 
 
@@ -3146,6 +3157,13 @@ void Challenge::InitZombieWaves()
 		aList[ZOMBIE_SQUASH_HEAD] = true;
 		aList[ZOMBIE_MINE_HEAD] = true;
 		aList[ZOMBIE_BLOVER_HEAD] = true;
+	}
+	else if (aGameMode == GAMEMODE_LONE_STARFRUIT)
+	{
+		aList[ZOMBIE_NORMAL] = true;
+		aList[ZOMBIE_TRAFFIC_CONE] = true;
+		aList[ZOMBIE_PAIL] = true;
+		
 	}
 	else if (aGameMode == GAMEMODE_CHALLENGE_COLUMN)
 	{

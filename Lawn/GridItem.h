@@ -75,4 +75,12 @@ public:
 	/*inline*/ bool			IsOpenPortal();
 };
 
+class GridItemDefinition
+{
+public:
+	GridItemType                      mGridItemType; // zombie identifier ex: ZOMBIE_NORMAL
+	const SexyChar* mItemName;
+};
+extern GridItemDefinition gGridItemDefs[NUM_GRID_ITEM_TYPES];
+
 #endif

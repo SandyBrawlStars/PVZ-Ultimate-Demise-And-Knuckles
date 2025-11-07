@@ -484,7 +484,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 		GetZombiePosition(aZombieType, aPosX, aPosY);
 		ZombieDefinition aZombieDefiniton = GetZombieDefinition(aZombieType);
 		if (aZombieType != ZombieType::ZOMBIE_INVALID)
-		{
+		{                        
 			if (!ZombieIsShown(aZombieType))
 				g->DrawImage(Sexy::IMAGE_ALMANAC_ZOMBIEBLANK, aPosX, aPosY);
 			else

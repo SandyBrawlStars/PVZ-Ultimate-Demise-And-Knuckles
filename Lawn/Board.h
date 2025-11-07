@@ -385,6 +385,7 @@ public:
 	/*inline*/ int					PlantingPixelToGridX(int theX, int theY, SeedType theSeedType);
 	/*inline*/ int					PlantingPixelToGridY(int theX, int theY, SeedType theSeedType);
 	Plant*							FindUmbrellaPlant(int theGridX, int theGridY);
+	Zombie*						    FindUmbrellaZombie(int theGridX, int theGridY);
 	void							SetTutorialState(TutorialState theTutorialState);
 	void							DoFwoosh(int theRow);
 	void							UpdateFwoosh();

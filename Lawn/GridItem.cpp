@@ -15,6 +15,24 @@
 
 using namespace Sexy;
 
+GridItemDefinition gGridItemDefs[NUM_GRID_ITEM_TYPES] = {
+
+    {GRIDITEM_NONE,  _S("None")},
+    {GRIDITEM_GRAVESTONE,  _S("Grave")},
+    {GRIDITEM_CRATER,  _S("Crater")},
+    {GRIDITEM_LADDER,  _S("Ladder")},
+    {GRIDITEM_PORTAL_CIRCLE,  _S("Portal 1")},
+    {GRIDITEM_PORTAL_SQUARE,  _S("Portal 2")},
+    {GRIDITEM_BRAIN,  _S("Brain")},
+    {GRIDITEM_SCARY_POT,  _S("Pot")},
+    {GRIDITEM_SQUIRREL,  _S("Squirrel")},
+    {GRIDITEM_ZEN_TOOL,  _S("Zen Tool")},
+    {GRIDITEM_STINKY,  _S("Stinky")},
+    {GRIDITEM_RAKE,  _S("Rake")},
+    {GRIDITEM_IZOMBIE_BRAIN,  _S("I, Zombie Brain")},
+    {GRIDITEM_HONEYDEW_PUDDLE,  _S("Honey")},
+};
+
 GridItem::GridItem()
 {
     mApp = (LawnApp*)gSexyAppBase;
