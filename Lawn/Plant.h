@@ -195,6 +195,7 @@ public:
     int                     mHealCounter;
     int                     mShootCounter;
     int                     mSolarPeaCounter;
+    int                     mPlantAge;
 
 public:
     Plant();

@@ -54,6 +54,7 @@ public:
     int                     mLastPortalX;      
     unsigned int            mPiercedZombies[3];
     int                     mNumPierced;
+    Reanimation*            mPepperReanim;
 
 public:
     Projectile();
@@ -83,6 +84,7 @@ public:
     void                    SpawnSmallSun();
     void                    StartAnimPepper();
     void                    ConvertToPea(int theGridX);
+    void                    ConvertToSnowPea(int theGridX);
     bool                    IsSplashDamage(Zombie* theZombie/* = nullptr*/);
     void                    PlayImpactSound(Zombie* theZombie);
     bool                    IsZombieHitBySplash(Zombie* theZombie);

@@ -2407,16 +2407,8 @@ bool LawnApp::IsIZombieLevel()
 		return false;
 
 	return
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_1 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_2 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_3 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_4 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_5 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_6 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_7 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_8 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_9 ||
-		mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS;
+		mGameMode >= GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_1 &&
+		mGameMode <= GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS;
 }
 
 bool LawnApp::IsShovelLevel()
@@ -3663,12 +3655,12 @@ int LawnApp::GetNumTrophies(ChallengePage thePage)
 
 int LawnApp::GetTotalTrophies(ChallengePage thePage)
 {
-	return thePage == CHALLENGE_PAGE_SURVIVAL ? 16 : thePage == CHALLENGE_PAGE_CHALLENGE ? 20 : thePage == CHALLENGE_PAGE_PUZZLE ? 18 : thePage == CHALLENGE_PAGE_LIMBO ? 0 : 0;
+	return thePage == CHALLENGE_PAGE_SURVIVAL ? 16 : thePage == CHALLENGE_PAGE_CHALLENGE ? 20 : thePage == CHALLENGE_PAGE_PUZZLE ? 19 : thePage == CHALLENGE_PAGE_LIMBO ? 0 : 0;
 }
 
 int LawnApp::TrophiesNeedForGoldSunflower()
 {
-	return 55 - GetNumTrophies(CHALLENGE_PAGE_SURVIVAL) - GetNumTrophies(CHALLENGE_PAGE_CHALLENGE) - GetNumTrophies(CHALLENGE_PAGE_PUZZLE);
+	return 57 - GetNumTrophies(CHALLENGE_PAGE_SURVIVAL) - GetNumTrophies(CHALLENGE_PAGE_CHALLENGE) - GetNumTrophies(CHALLENGE_PAGE_PUZZLE);
 }
 
 bool LawnApp::EarnedGoldTrophy()

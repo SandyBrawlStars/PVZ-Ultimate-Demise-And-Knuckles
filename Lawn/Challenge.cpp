@@ -2878,7 +2878,7 @@ void Challenge::DrawBackdrop(Graphics* g)
 	{
 		g->DrawImage(Sexy::IMAGE_WALLNUT_BOWLINGSTRIPE, 352, 73);
 	}
-	if (mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_6 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_7 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_8 ||
+	if (mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_6 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_10 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_7 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_8 ||
 		mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS)
 	{
 		g->DrawImage(Sexy::IMAGE_WALLNUT_BOWLINGSTRIPE, 432, 73);
@@ -2926,7 +2926,7 @@ PlantingReason Challenge::CanPlantAt(int theGridX, int theGridY, SeedType theSee
 		{
 			aLimit = 4;
 		}
-		if (mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_6 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_7 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_8 ||
+		if (mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_6 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_7 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_8 || mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_10 ||
 			mApp->mGameMode == GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS)
 		{
 			aLimit = 5;
@@ -5115,6 +5115,26 @@ void Challenge::IZombieInitLevel()
 		IZombiePlacePlants(SEED_SPLITPEA, 1, 4);
 		IZombiePlacePlants(SEED_MAGNETSHROOM, 1, 4);
 		break;
+	case GAMEMODE_PUZZLE_I_ZOMBIE_10:
+	{
+		IZombiePlacePlants(SEED_SUNFLOWER, 1, 0);
+		IZombiePlacePlants(SEED_SUNFLOWER, 1, 1);
+		IZombiePlacePlants(SEED_SUNFLOWER, 1, 2);
+		IZombiePlacePlants(SEED_SUNFLOWER, 1, 3);
+		IZombiePlacePlants(SEED_SUNFLOWER, 1, 4);
+		IZombiePlacePlants(SEED_SUNFLOWER, 2, -1);
+		IZombiePlacePlants(SEED_PEPPERPULT, 1, 1);
+		IZombiePlacePlants(SEED_PEPPERPULT, 1, 2);
+		IZombiePlacePlants(SEED_PEPPERPULT, 1, 3);
+		IZombiePlacePlants(SEED_POTATOMINE, 2, -1);
+		IZombiePlacePlants(SEED_HONEYDEWPULT, 2, -1);
+		IZombiePlacePlants(SEED_KERNELPULT, 2, -1);
+		IZombiePlacePlants(SEED_SNOWPEA, 2, -1);
+		IZombiePlacePlants(SEED_SCAREDYSHROOM, 2, -1);
+		IZombiePlacePlants(SEED_PEASHOOTER, 5, -1);
+
+		break;
+	}
 	case GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS:
 	{
 		if (mSurvivalStage == 10)

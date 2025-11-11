@@ -70,6 +70,7 @@ void Projectile::ProjectileInitialize(int theX, int theY, int theRenderOrder, in
 	mFrame = 0;
 	mNumFrames = 1;
 	mRow = theRow;
+	mPepperReanim = nullptr;
 	mCobTargetX = 0.0f;
 	mDamageRangeFlags = 0;
 	mDead = false;
@@ -1028,7 +1029,7 @@ void Projectile::UpdateLobMotion()
 		}
 		else if (mProjectileType == ProjectileType::PROJECTILE_PEPPER)
 		{
-			aImage = nullptr;
+			aImage = IMAGE_REANIM_PEPPERPULT_PEPPER;
 		}
 		else if (mProjectileType == ProjectileType::PROJECTILE_TATER)
 		{
@@ -1871,6 +1872,7 @@ void Projectile::StartAnimPepper()
 	aFirePeaReanim->mAnimRate = RandRangeFloat(50.0f, 80.0f);
 	aFirePeaReanim->SetImageOverride("FirePea", IMAGE_REANIM_PEPPERPULT_PEPPER);
 	AttachReanim(mAttachmentID, aFirePeaReanim, aOffsetX, aOffsetY);
+	mPepperReanim = aFirePeaReanim;
 }
 
 void Projectile::SpawnSmallSun()
@@ -1900,6 +1902,20 @@ void Projectile::ConvertToPea(int theGridX)
 	mProjectileType = ProjectileType::PROJECTILE_PEA;
 	mHitTorchwoodGridX = theGridX;
 	mApp->PlayFoley(FoleyType::FOLEY_THROW);
+}
+
+void Projectile::ConvertToSnowPea(int theGridX)
+{
+	if (mHitTorchwoodGridX == theGridX)
+		return;
+
+	AttachmentDie(mAttachmentID);
+	mProjectileType = ProjectileType::PROJECTILE_SNOWPEA;
+	mHitTorchwoodGridX = theGridX;
+	mApp->PlayFoley(FoleyType::FOLEY_THROW);
+
+	TodParticleSystem* aParticle = mApp->AddTodParticle(mPosX + 8.0f, mPosY + 13.0f, 400000, ParticleEffect::PARTICLE_SNOWPEA_TRAIL);
+	AttachParticle(mAttachmentID, aParticle, 8.0f, 13.0f);
 }
 
 ProjectileDefinition& Projectile::GetProjectileDef()

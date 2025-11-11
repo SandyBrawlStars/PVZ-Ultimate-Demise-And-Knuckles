@@ -1052,7 +1052,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
         TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 70.0f, -10.0f, 0.2f, -1.0f, 1.0f);
 
         mPhaseCounter = 1000;
-        mBodyHealth = 1350;
+        mBodyHealth = 1000;
         mVariant = false;
         break;
     }
@@ -2048,7 +2048,8 @@ void Zombie::BungeeLanding()
 
             aPlant->mPlantHealth -= 100;
 
-            mApp->AddTodParticle(aPosX, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
+            TodParticleSystem* aParticle = mApp->AddTodParticle(aPosX, aPosY, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ParticleEffect::PARTICLE_JACKEXPLODE);
+            aParticle->OverrideScale(nullptr, 0.5f);
             mBoard->ShakeBoard(4, -6);
             DieNoLoot();
         }

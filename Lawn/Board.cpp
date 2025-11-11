@@ -626,7 +626,7 @@ void Board::PickZombieWaves()
 		else if (aGameMode == GameMode::GAMEMODE_LONE_GATLING)
 			mNumWaves = 20;
 		else if (aGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
-			mNumWaves = 30;
+			mNumWaves = 25;
 
 		else
 			mNumWaves = 40;
@@ -730,7 +730,7 @@ void Board::PickZombieWaves()
 		}
 		else if (mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
 		{
-			aZombiePoints *= 2.2;
+			aZombiePoints *= 1.6;
 		}
 		else if (mApp->IsLittleTroubleLevel() || mApp->IsWallnutBowlingLevel())
 		{
@@ -1001,6 +1001,7 @@ void Board::PickBackground()
 	case GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_7:
 	case GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_8:
 	case GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_9:
+	case GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_10:
 	case GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS:
 		mBackground = BackgroundType::BACKGROUND_2_NIGHT;
 		break;
@@ -1667,6 +1668,14 @@ void Board::InitLevel()
 		mSeedBank->mSeedPackets[0].SetPacketType(SeedType::SEED_ZOMBIE_NORMAL);
 		mSeedBank->mSeedPackets[1].SetPacketType(SeedType::SEED_ZOMBIE_PAIL);
 		mSeedBank->mSeedPackets[2].SetPacketType(SeedType::SEED_ZOMBIE_FOOTBALL);
+	}
+	else if (aGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_10)
+	{
+		TOD_ASSERT(mSeedBank->mNumPackets == 4);
+		mSeedBank->mSeedPackets[0].SetPacketType(SeedType::SEED_ZOMBIE_NORMAL);
+		mSeedBank->mSeedPackets[1].SetPacketType(SeedType::SEED_ZOMBIE_PAIL);
+		mSeedBank->mSeedPackets[2].SetPacketType(SeedType::SEED_ZOMBIE_FOOTBALL);
+		mSeedBank->mSeedPackets[3].SetPacketType(SeedType::SEED_ZOMBIE_BLOVER_HEAD);
 	}
 	else if (aGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_2)
 	{
@@ -8882,6 +8891,7 @@ void Board::KeyChar(SexyChar theChar)
 			GridItemType aDebugItemType = static_cast<GridItemType>(mDebugObjectSelection);
 			GridItem* aGraveStone = mGridItems.DataArrayAlloc();
 			aGraveStone->mGridItemType = aDebugItemType;
+			aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_PLANT, aGridY, 800);
 			aGraveStone->mGridItemCounter = -Rand(50);
 			aGraveStone->mGridX = aGridX;
 			aGraveStone->mGridY = aGridY;
@@ -8896,15 +8906,26 @@ void Board::KeyChar(SexyChar theChar)
 			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_CRATER)
 			{
 				aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_GROUND, aGridY, 1);
+				aGraveStone->mGridItemCounter = 18000;
 			}
 			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_PORTAL_CIRCLE || aGraveStone->mGridItemType == GridItemType::GRIDITEM_PORTAL_SQUARE)
 			{
+				aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_PARTICLE, aGridY, 0);
 				aGraveStone->OpenPortal();
 			}
 			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_GRAVESTONE)
 			{
 				aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_GRAVE_STONE, aGridY, 3);
 				aGraveStone->AddGraveStoneParticles();
+			}
+			if (aGraveStone->mGridItemType == GridItemType::GRIDITEM_SCARY_POT)
+			{
+				aGraveStone->mRenderOrder = MakeRenderOrder(RenderLayer::RENDER_LAYER_PLANT, aGridY, 800);
+				aGraveStone->mScaryPotType = static_cast<ScaryPotType>(RandRangeInt(ScaryPotType::SCARYPOT_SEED, ScaryPotType::SCARYPOT_SUN));
+				aGraveStone->mSeedType = static_cast<SeedType>(RandRangeInt(0, NUM_SEED_TYPES - 1));
+				aGraveStone->mZombieType = static_cast<ZombieType>(RandRangeInt(0, NUM_ZOMBIE_TYPES - 1));
+				aGraveStone->mGridItemState = GridItemState::GRIDITEM_STATE_SCARY_POT_ZOMBIE;
+				aGraveStone->mSunCount = 5;
 			}
 			return;
 
@@ -9572,6 +9593,10 @@ int Board::GetNumSeedsInBank()
 	if (mApp->mGameMode == GameMode::GAMEMODE_LONE_STARFRUIT)
 	{
 		return 1;
+	}
+	if (mApp->mGameMode == GameMode::GAMEMODE_PUZZLE_I_ZOMBIE_10)
+	{
+		return 4;
 	}
 
 	int aNumSeeds = mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PACKET_UPGRADE] + 6;
@@ -10343,7 +10368,7 @@ Zombie* Board::FindUmbrellaZombie(int theGridX, int theGridY)
 	Zombie* aZombie = nullptr;
 	while (IterateZombies(aZombie))
 	{
-		if (aZombie->mZombieType == ZombieType::ZOMBIE_UMBRELLA_HEAD && GridInRange(theGridX, theGridY, PixelToGridXKeepOnBoard(aZombie->mPosX, aZombie->mPosY), aZombie->mRow, 1, 1))
+		if (aZombie->mZombieType == ZombieType::ZOMBIE_UMBRELLA_HEAD && GridInRange(theGridX, theGridY, PixelToGridXKeepOnBoard(aZombie->mPosX, aZombie->mPosY), aZombie->mRow, 1, 1) && aZombie->mBodyHealth > aZombie->mBodyMaxHealth/3)
 		{
 			return aZombie;
 		}
